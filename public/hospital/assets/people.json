@@ -1,0 +1,736 @@
+{
+  "coordinateSystem": {
+    "up": "+Y",
+    "rigFront": "+Z",
+    "rigLeft": "+X",
+    "yaw": "Radians around +Y; +Z canonical front rotates toward +X for positive yaw. Derived from each original torso local -Z projected to XZ.",
+    "position": "World-space model ground anchor; standing wrapper.position. Use hipPosition for seated root target.",
+    "seatedPlacement": "If wrapper has no scale, wrapper.position = hipPosition - [0,0.63,0] for Steve. Animation root retains canonical rest translation [0,0.63,0].",
+    "floorHeights": {
+      "courtyard": 0.125,
+      "groundInterior": 0.3125,
+      "upperRoom": 3.625
+    }
+  },
+  "characters": [
+    {
+      "id": "lobby-seated-east-sofa",
+      "role": "seated",
+      "rig": "steve",
+      "position": [
+        5.80298632,
+        0.3125,
+        -9.36818541
+      ],
+      "hipPosition": [
+        5.80298632,
+        0.69573086,
+        -9.36818541
+      ],
+      "yaw": 3.14159265,
+      "removeMeshNodes": [
+        482,
+        484,
+        486,
+        488,
+        490,
+        492
+      ],
+      "sourceTorsoMesh": 484
+    },
+    {
+      "id": "lobby-seated-north-sofa",
+      "role": "seated",
+      "rig": "steve",
+      "position": [
+        -1.0625,
+        0.125,
+        3.68750012
+      ],
+      "hipPosition": [
+        -1.0625,
+        0.68375,
+        3.68750012
+      ],
+      "yaw": 3.14159265,
+      "removeMeshNodes": [
+        904,
+        906,
+        908,
+        910,
+        912,
+        914
+      ],
+      "sourceTorsoMesh": 906
+    },
+    {
+      "id": "lobby-seated-south-sofa",
+      "role": "seated",
+      "rig": "steve",
+      "position": [
+        -1.0625,
+        0.125,
+        -8.56249997
+      ],
+      "hipPosition": [
+        -1.0625,
+        0.68375,
+        -8.56249997
+      ],
+      "yaw": 3.14159265,
+      "removeMeshNodes": [
+        917,
+        919,
+        921,
+        923,
+        925,
+        927
+      ],
+      "sourceTorsoMesh": 919
+    },
+    {
+      "id": "lobby-seated-west-sofa",
+      "role": "seated",
+      "rig": "steve",
+      "position": [
+        -1.05711004,
+        0.125,
+        -5.72873516
+      ],
+      "hipPosition": [
+        -1.05711004,
+        0.69573078,
+        -5.72873516
+      ],
+      "yaw": 0.0,
+      "removeMeshNodes": [
+        930,
+        932,
+        934,
+        936,
+        938,
+        940
+      ],
+      "sourceTorsoMesh": 932
+    },
+    {
+      "id": "lobby-seated-center-sofa",
+      "role": "seated",
+      "rig": "steve",
+      "position": [
+        -4.72408636,
+        0.125,
+        0.67898514
+      ],
+      "hipPosition": [
+        -4.72408636,
+        0.69573084,
+        0.67898514
+      ],
+      "yaw": -1.09083079,
+      "removeMeshNodes": [
+        943,
+        945,
+        947,
+        949,
+        951,
+        953
+      ],
+      "sourceTorsoMesh": 945
+    },
+    {
+      "id": "lobby-seated-west-chair",
+      "role": "seated",
+      "rig": "steve",
+      "position": [
+        -2.42550639,
+        0.125,
+        -2.39169378
+      ],
+      "hipPosition": [
+        -2.42550639,
+        0.72129038,
+        -2.39169378
+      ],
+      "yaw": 1.57079633,
+      "removeMeshNodes": [
+        956,
+        958,
+        960,
+        962,
+        964,
+        966
+      ],
+      "sourceTorsoMesh": 958
+    },
+    {
+      "id": "lobby-seated-east-chair",
+      "role": "seated",
+      "rig": "steve",
+      "position": [
+        5.32449353,
+        0.3125,
+        -2.57919377
+      ],
+      "hipPosition": [
+        5.32449353,
+        0.97129039,
+        -2.57919377
+      ],
+      "yaw": 1.57079633,
+      "removeMeshNodes": [
+        968,
+        970,
+        972,
+        974,
+        976,
+        978
+      ],
+      "sourceTorsoMesh": 972
+    },
+    {
+      "id": "lobby-seated-floor",
+      "role": "seated",
+      "rig": "steve",
+      "position": [
+        5.53148432,
+        0.3125,
+        2.04423088
+      ],
+      "hipPosition": [
+        5.53148432,
+        0.4275,
+        2.04423088
+      ],
+      "yaw": -1.65806279,
+      "removeMeshNodes": [
+        980,
+        982,
+        984,
+        986,
+        988,
+        990
+      ],
+      "sourceTorsoMesh": 990,
+      "note": "Original low seated/slumped figure beside lobby chair. Hip anchor is only 0.03379 above local floor; use floor-sit/relaxed pose or raise hip to 0.64 for ordinary chair-sit.",
+      "floorSit": true
+    },
+    {
+      "id": "lobby-red-south",
+      "role": "standing",
+      "rig": "red-staff",
+      "position": [
+        -0.68360353,
+        0.125,
+        -10.60784916
+      ],
+      "yaw": 0.0,
+      "removeMeshNodes": [
+        581,
+        583,
+        585,
+        587,
+        589,
+        591,
+        593,
+        595,
+        597
+      ],
+      "sourceTorsoMesh": 585,
+      "sourcePelvisMesh": 595,
+      "routeEnd": [
+        -0.6836,
+        0.125,
+        -9.51
+      ]
+    },
+    {
+      "id": "lobby-white-east",
+      "role": "standing",
+      "rig": "white-staff",
+      "position": [
+        5.15736979,
+        0.3125,
+        3.32291367
+      ],
+      "yaw": -1.57079633,
+      "removeMeshNodes": [
+        734,
+        736,
+        738,
+        740,
+        742,
+        744,
+        746,
+        748,
+        750
+      ],
+      "sourceTorsoMesh": 736,
+      "sourcePelvisMesh": 738,
+      "routeEnd": [
+        4.3,
+        0.3125,
+        3.323
+      ]
+    },
+    {
+      "id": "lobby-white-pharmacy-approach",
+      "role": "standing",
+      "rig": "white-staff",
+      "position": [
+        7.65148434,
+        0.3125,
+        -4.48304674
+      ],
+      "yaw": 3.14159265,
+      "removeMeshNodes": [
+        753,
+        755,
+        757,
+        759,
+        761,
+        763,
+        765,
+        767,
+        769
+      ],
+      "sourceTorsoMesh": 755,
+      "sourcePelvisMesh": 769,
+      "routeEnd": [
+        7.6515,
+        0.3125,
+        -5.4
+      ]
+    },
+    {
+      "id": "lobby-white-south-east",
+      "role": "standing",
+      "rig": "white-staff",
+      "position": [
+        8.71986975,
+        0.3125,
+        -7.80208623
+      ],
+      "yaw": -1.57079633,
+      "removeMeshNodes": [
+        790,
+        792,
+        794,
+        796,
+        798,
+        800,
+        802,
+        804,
+        806
+      ],
+      "sourceTorsoMesh": 806,
+      "sourcePelvisMesh": 790,
+      "routeEnd": [
+        7.9,
+        0.3125,
+        -7.802
+      ]
+    },
+    {
+      "id": "lobby-red-center",
+      "role": "standing",
+      "rig": "red-staff",
+      "position": [
+        -0.20878089,
+        0.125,
+        -2.17773146
+      ],
+      "yaw": -1.57079633,
+      "removeMeshNodes": [
+        809,
+        811,
+        813,
+        815,
+        817,
+        819,
+        821,
+        823,
+        825
+      ],
+      "sourceTorsoMesh": 811,
+      "sourcePelvisMesh": 813,
+      "routeEnd": [
+        -0.209,
+        0.125,
+        -3.1
+      ]
+    },
+    {
+      "id": "lobby-red-west",
+      "role": "standing",
+      "rig": "red-staff",
+      "position": [
+        -6.03689814,
+        0.125,
+        1.68229972
+      ],
+      "yaw": 0.0,
+      "removeMeshNodes": [
+        828,
+        830,
+        832,
+        834,
+        836,
+        838,
+        840,
+        842,
+        844
+      ],
+      "sourceTorsoMesh": 830,
+      "sourcePelvisMesh": 844,
+      "routeEnd": [
+        -6.037,
+        0.125,
+        2.5
+      ]
+    },
+    {
+      "id": "lobby-red-north",
+      "role": "standing",
+      "rig": "red-staff",
+      "position": [
+        -0.88874996,
+        0.125,
+        2.61764311
+      ],
+      "yaw": 3.14159265,
+      "removeMeshNodes": [
+        847,
+        849,
+        851,
+        853,
+        855,
+        857,
+        859,
+        861,
+        863
+      ],
+      "sourceTorsoMesh": 849,
+      "sourcePelvisMesh": 863,
+      "routeEnd": [
+        -0.88875,
+        0.125,
+        1.78
+      ]
+    },
+    {
+      "id": "lobby-nurse-west",
+      "role": "standing",
+      "rig": "room-nurse",
+      "position": [
+        -5.12855775,
+        0.125,
+        -3.00222959
+      ],
+      "yaw": 2.78489674,
+      "removeMeshNodes": [
+        885,
+        887,
+        889,
+        891,
+        893,
+        895,
+        897,
+        899,
+        901
+      ],
+      "sourceTorsoMesh": 887,
+      "sourcePelvisMesh": 901,
+      "routeEnd": [
+        -5.1286,
+        0.125,
+        -3.85
+      ]
+    },
+    {
+      "id": "pharmacist",
+      "role": "pharmacist",
+      "rig": "white-staff",
+      "position": [
+        8.09486976,
+        0.3125,
+        -1.48958621
+      ],
+      "yaw": -1.57079633,
+      "removeMeshNodes": [
+        772,
+        774,
+        776,
+        778,
+        780,
+        782,
+        784,
+        786,
+        788
+      ],
+      "sourceTorsoMesh": 774,
+      "sourcePelvisMesh": 788
+    },
+    {
+      "id": "upper-room-nurse",
+      "role": "room-nurse",
+      "rig": "room-nurse",
+      "position": [
+        7.20275627,
+        3.625,
+        3.67851233
+      ],
+      "yaw": 3.04802862,
+      "removeMeshNodes": [
+        866,
+        868,
+        870,
+        872,
+        874,
+        876,
+        878,
+        880,
+        882
+      ],
+      "sourceTorsoMesh": 868,
+      "sourcePelvisMesh": 870
+    }
+  ],
+  "removeMeshNodes": [
+    482,
+    484,
+    486,
+    488,
+    490,
+    492,
+    581,
+    583,
+    585,
+    587,
+    589,
+    591,
+    593,
+    595,
+    597,
+    734,
+    736,
+    738,
+    740,
+    742,
+    744,
+    746,
+    748,
+    750,
+    753,
+    755,
+    757,
+    759,
+    761,
+    763,
+    765,
+    767,
+    769,
+    772,
+    774,
+    776,
+    778,
+    780,
+    782,
+    784,
+    786,
+    788,
+    790,
+    792,
+    794,
+    796,
+    798,
+    800,
+    802,
+    804,
+    806,
+    809,
+    811,
+    813,
+    815,
+    817,
+    819,
+    821,
+    823,
+    825,
+    828,
+    830,
+    832,
+    834,
+    836,
+    838,
+    840,
+    842,
+    844,
+    847,
+    849,
+    851,
+    853,
+    855,
+    857,
+    859,
+    861,
+    863,
+    866,
+    868,
+    870,
+    872,
+    874,
+    876,
+    878,
+    880,
+    882,
+    885,
+    887,
+    889,
+    891,
+    893,
+    895,
+    897,
+    899,
+    901,
+    904,
+    906,
+    908,
+    910,
+    912,
+    914,
+    917,
+    919,
+    921,
+    923,
+    925,
+    927,
+    930,
+    932,
+    934,
+    936,
+    938,
+    940,
+    943,
+    945,
+    947,
+    949,
+    951,
+    953,
+    956,
+    958,
+    960,
+    962,
+    964,
+    966,
+    968,
+    970,
+    972,
+    974,
+    976,
+    978,
+    980,
+    982,
+    984,
+    986,
+    988,
+    990
+  ],
+  "excludedAlreadyDynamicPatientMeshNodes": [
+    282,
+    284,
+    286,
+    288,
+    290,
+    292
+  ],
+  "preserveMeshNodes": "All furniture, seats, counters, structural geometry and source character containers. Hide/remove the 138 listed meshes only. In particular retain group 902 and nested person group 915 containers while replacing their six meshes each.",
+  "sign": {
+    "sourceMeshNode": 280,
+    "frontCorners": {
+      "TL": [
+        12.03816883,
+        2.9346965,
+        -2.03281064
+      ],
+      "TR": [
+        10.23032867,
+        2.9346965,
+        0.12168935
+      ],
+      "BL": [
+        11.76944876,
+        0.27018843,
+        -2.25829355
+      ],
+      "BR": [
+        9.9616086,
+        0.27018843,
+        -0.10379356
+      ]
+    },
+    "normal": [
+      -0.75949083,
+      0.13052619,
+      -0.63728847
+    ],
+    "vertexOrder": [
+      "TL",
+      "TR",
+      "BL",
+      "BR"
+    ],
+    "note": "Place sign replacement on this front plane, offset about 0.006 along normal to prevent z-fighting. Corners are exact supplied source front positions.",
+    "vertices": [
+      [
+        12.03816883,
+        2.9346965,
+        -2.03281064
+      ],
+      [
+        10.23032867,
+        2.9346965,
+        0.12168935
+      ],
+      [
+        11.76944876,
+        0.27018843,
+        -2.25829355
+      ],
+      [
+        9.9616086,
+        0.27018843,
+        -0.10379356
+      ]
+    ]
+  },
+  "routeNotes": "No speculative routes supplied. Pharmacist stays behind its counter. Standing lobby and room nurse anchors are ground-projected source pelvis centers. Validate short routes against chairs and counters before walking.",
+  "verification": {
+    "npcCount": 18,
+    "seated": 8,
+    "standingLobby": 8,
+    "pharmacist": 1,
+    "upperNurse": 1,
+    "removedMeshCount": 138,
+    "completeMaterialCoverage": true,
+    "allSourceCharacterMaterials": [
+      1,
+      2,
+      4,
+      5
+    ],
+    "excludedPatientMeshCount": 6
+  },
+  "ventilator": {
+    "source": "model-source/medical__ventilator/scene.gltf",
+    "controlFrontAxis": "+X",
+    "controlFrontVector": [
+      1,
+      0,
+      0
+    ],
+    "yawForDesiredXZFront": "atan2(-desiredZ, desiredX), because the asset control panel starts facing +X. Three.js rotateY(yaw) maps +X to [cos(yaw),0,-sin(yaw)].",
+    "verification": "Verified textured four-way orthographic render: blue monitor screen and control knobs visible from +X; back case visible from -X. Preview is character-upgrade-audit/ventilator-views.png.",
+    "sourceGroundY": 0.0006707310526653798
+  }
+}

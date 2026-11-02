@@ -1,0 +1,84 @@
+[
+  {
+    "name": "Mini Characters",
+    "creator": "Kenney",
+    "url": "https://kenney.nl/assets/mini-characters",
+    "download": "https://kenney.nl/media/pages/assets/mini-characters/bfc7e272b4-1774770718/kenney_mini-characters.zip",
+    "preview": "./assets/kit-0.png",
+    "license": "CC0; optional credit",
+    "cost": "Free",
+    "formats_verified": [
+      "GLB",
+      "FBX"
+    ],
+    "notes": "12 rigged characters with walking, idle, sitting and wheelchair animations, plus mobility and medical accessories. A resting pose for the bed needs to be created. GLB and FBX included."
+  },
+  {
+    "name": "Furniture Kit",
+    "creator": "Kenney",
+    "url": "https://kenney.nl/assets/furniture-kit",
+    "download": "https://kenney.nl/media/pages/assets/furniture-kit/440e0608a4-1677580847/kenney_furniture-kit.zip",
+    "preview": "./assets/kit-1.png",
+    "license": "CC0; optional credit",
+    "cost": "Free",
+    "notes": "140 beds, chairs, cabinets and other furniture pieces. Add rails, wheels and a blanket to adapt an ordinary bed for the ward."
+  },
+  {
+    "name": "Building Kit",
+    "creator": "Kenney",
+    "url": "https://kenney.nl/assets/building-kit",
+    "download": "https://kenney.nl/media/pages/assets/building-kit/0de7aaa492-1743244741/kenney_building-kit.zip",
+    "preview": "./assets/kit-2.png",
+    "license": "CC0; optional credit",
+    "cost": "Free",
+    "notes": "80 modular building pieces for walls, doors and adjoining rooms. Useful for expanding the hospital beyond a single room."
+  },
+  {
+    "name": "Hospital Bed",
+    "creator": "Logan S.",
+    "url": "https://sketchfab.com/3d-models/hospital-bed-50bbd85b31284005b09cc5ee03563f74",
+    "license": "CC Attribution (retain creator credit, source and license)",
+    "cost": "Free",
+    "notes": "A hospital bed with 1k textures. Check the available download formats before importing it into the game."
+  },
+  {
+    "name": "ECG Monitor",
+    "creator": "demagdev",
+    "url": "https://sketchfab.com/3d-models/ecg-monitor-47e72cd57f45414aa82e41342b299b5b",
+    "license": "CC Attribution",
+    "cost": "Free",
+    "notes": "A static ECG monitor with 14.6k triangles. Animate the screen separately and recolor the casing to match the ward."
+  },
+  {
+    "name": "IV Stand",
+    "creator": "teeart",
+    "url": "https://sketchfab.com/3d-models/iv-stand-dd3115aafb0e4a628f261d0de7a787b9",
+    "license": "CC Attribution",
+    "cost": "Free",
+    "notes": "A static IV stand with 5.1k triangles. Fit the hanging bag and tubing to your patient and bed."
+  },
+  {
+    "name": "Medical_ Ventilator",
+    "creator": "Dawn",
+    "url": "https://sketchfab.com/3d-models/medical--ventilator-25e3227fa67b4bc08be957d7c18d501d",
+    "license": "CC Attribution",
+    "cost": "Free",
+    "notes": "A detailed ventilator with 66.9k triangles. Simplify it for browser use, then fit tubing and a mask to the patient."
+  },
+  {
+    "name": "Doctor's Office - Assets",
+    "creator": "Evan Petrov",
+    "url": "https://sketchfab.com/3d-models/doctors-office-assets-3facd48dff0945f7b96f95ad31c4beb5",
+    "license": "CC Attribution",
+    "cost": "Free",
+    "notes": "A collection of medical props including an IV, stethoscope, cabinet, bandages, syringe and tray. Import just the objects the ward needs."
+  },
+  {
+    "name": "Mixamo",
+    "creator": "Adobe",
+    "url": "https://www.mixamo.com/",
+    "license": "Royalty-free use in personal, commercial and nonprofit games; not CC0",
+    "cost": "Free · Adobe ID required",
+    "notes": "A free humanoid animation library and auto-rigger. Use matching character and animation files; another rig may need retargeting. Adobe ID required."
+  }
+]

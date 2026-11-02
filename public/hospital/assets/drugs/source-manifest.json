@@ -1,0 +1,360 @@
+{
+  "created_date": "2026-10-25",
+  "sources": [
+    {
+      "id": "rxnorm_active",
+      "title": "NLM RxNorm active generic concepts (IN, PIN and MIN)",
+      "url": "https://lhncbc.nlm.nih.gov/RxNav/APIs/api-RxNorm.getAllConceptsByTTY.html",
+      "data_urls": [
+        "https://rxnav.nlm.nih.gov/REST/allconcepts.json?tty=IN",
+        "https://rxnav.nlm.nih.gov/REST/allconcepts.json?tty=PIN",
+        "https://rxnav.nlm.nih.gov/REST/allconcepts.json?tty=MIN"
+      ],
+      "version": "05-Oct-2026",
+      "retrieved": "2026-10-25"
+    },
+    {
+      "id": "rxnorm_atc",
+      "title": "ATC ingredient-class mappings supplied by NLM RxClass",
+      "url": "https://lhncbc.nlm.nih.gov/RxNav/APIs/api-RxClass.getClassMembers.html",
+      "data_url_template": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json?classId={ATC1}&relaSource=ATC&ttys=IN%20PIN%20MIN&trans=0",
+      "version": "2026_01_28",
+      "retrieved": "2026-10-25"
+    },
+    {
+      "id": "rxclass_dailymed",
+      "title": "RxClass DailyMed Established Pharmacologic Class relations",
+      "url": "https://lhncbc.nlm.nih.gov/RxNav/APIs/api-RxClass.getClassByRxNormDrugId.html",
+      "data_url_template": "https://rxnav.nlm.nih.gov/REST/rxclass/class/byRxcui.json?rxcui={RXCUI}&relaSource=DAILYMED&relas=has_EPC",
+      "version": "Rolling source; no release version supplied",
+      "retrieved": "2026-10-25"
+    },
+    {
+      "id": "rxclass_fdaspl",
+      "title": "RxClass FDA Structured Product Labeling pharmacologic-class relations",
+      "url": "https://lhncbc.nlm.nih.gov/RxNav/applications/RxClassIntro.html",
+      "data_url_template": "https://rxnav.nlm.nih.gov/REST/rxclass/class/byRxcui.json?rxcui={RXCUI}&relaSource=FDASPL",
+      "retrieved": "2026-10-25"
+    },
+    {
+      "id": "rxclass_additional",
+      "title": "RxClass additional mechanism-of-action, disposition or chemical-class relationships; relationship sources retained per record",
+      "url": "https://lhncbc.nlm.nih.gov/RxNav/applications/RxClassIntro.html",
+      "data_url_template": "https://rxnav.nlm.nih.gov/REST/rxclass/class/byRxcui.json?rxcui={RXCUI}",
+      "retrieved": "2026-10-25"
+    },
+    {
+      "id": "rxclass_atcprod",
+      "title": "NLM ATCPROD: generic product classification used for explicitly marked browsing memberships",
+      "url": "https://lhncbc.nlm.nih.gov/RxNav/applications/RxClass-ATC-product-classes-ATCPROD.html",
+      "retrieved": "2026-10-25"
+    },
+    {
+      "id": "whocc_index",
+      "title": "WHO Collaborating Centre for Drug Statistics Methodology: ATC/DDD Index",
+      "url": "https://atcddd.fhi.no/atc_ddd_index/",
+      "data_url_template": "https://atcddd.fhi.no/atc_ddd_index/?code={ATC5}&showdescription=no",
+      "retrieved": "2026-10-25"
+    },
+    {
+      "id": "who_whopar_artenimol",
+      "title": "WHO Public Assessment Report: artenimol (dihydroartemisinin)",
+      "url": "https://extranet.who.int/prequal/sites/default/files/whopar_files/MA093%20part1v3.pdf",
+      "retrieved": "2026-10-25"
+    },
+    {
+      "id": "rxnorm_exact_lookup",
+      "title": "RxNorm exact-name identifier lookup; accepted only for a unique matching RxCUI",
+      "url": "https://lhncbc.nlm.nih.gov/RxNav/APIs/api-RxNorm.findRxcuiByString.html",
+      "data_url_template": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name={NAME}&search=0",
+      "retrieved": "2026-10-25"
+    },
+    {
+      "id": "who_eeml",
+      "title": "WHO electronic Essential Medicines List: exact medicine-name cross-checks only",
+      "url": "https://list.essentialmeds.org/",
+      "retrieved": "2026-10-25",
+      "limitation": "Name-only matches, not complete EML coverage, recommendation status, therapeutic equivalence or dose-form verification."
+    },
+    {
+      "id": "fda_tallman",
+      "title": "FDA Name Differentiation Project",
+      "url": "https://www.fda.gov/drugs/medication-errors-related-cder-regulated-drug-products/fda-name-differentiation-project",
+      "retrieved": "2026-10-25"
+    },
+    {
+      "id": "medlineplus_catecholamines",
+      "title": "MedlinePlus: Catecholamine Tests",
+      "url": "https://medlineplus.gov/lab-tests/catecholamine-tests/",
+      "retrieved": "2026-10-25"
+    },
+    {
+      "id": "medlineplus_cotrimoxazole",
+      "title": "MedlinePlus: Co-trimoxazole",
+      "url": "https://medlineplus.gov/druginfo/meds/a684026.html",
+      "retrieved": "2026-10-25"
+    },
+    {
+      "id": "nhs_coamoxiclav",
+      "title": "NHS: Co-amoxiclav; generic combination also checked against the product SmPC",
+      "url": "https://www.nhs.uk/medicines/co-amoxiclav/",
+      "additional_url": "https://www.medicines.org.uk/emc/product/4347/smpc",
+      "retrieved": "2026-10-25"
+    },
+    {
+      "id": "dailymed_nirmatrelvir_ritonavir",
+      "title": "DailyMed: nirmatrelvir tablets and ritonavir tablets, co-packaged",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=8a99d6d6-fd9e-45bb-b1bf-48c7f761232a",
+      "retrieved": "2026-10-25"
+    },
+    {
+      "id": "author_curated",
+      "title": "Author-selected study organization and additional identity guards",
+      "url": null,
+      "retrieved": "2026-10-25",
+      "limitation": "Educational organization, not a documented utilization-frequency dataset or a comprehensive medication-error list."
+    },
+    {
+      "id": "class_check_neutralizing_sars_cov_2_antibodies",
+      "title": "Primary-source check for study class: SARS-CoV-2 neutralizing monoclonal antibodies",
+      "url": "https://www.fda.gov/media/145610/download",
+      "retrieved": "2026-10-25",
+      "limitation": "Author-assigned study class supported by the cited source; not a claim of direct ATC ingredient mapping."
+    },
+    {
+      "id": "class_check_cftr_modulators",
+      "title": "Primary-source check for study class: CFTR modulators",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/218730s000lbl.pdf",
+      "retrieved": "2026-10-25",
+      "limitation": "Author-assigned study class supported by the cited source; not a claim of direct ATC ingredient mapping."
+    },
+    {
+      "id": "class_check_pyrimidine_nucleoside_replacement",
+      "title": "Primary-source check for study class: Pyrimidine nucleosides used for replacement therapy",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/219792s000lbl.pdf",
+      "retrieved": "2026-10-25",
+      "limitation": "Author-assigned study class supported by the cited source; not a claim of direct ATC ingredient mapping."
+    },
+    {
+      "id": "class_check_beta_lactamase_inhibitors",
+      "title": "Primary-source check for study class: Beta-lactamase inhibitors",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2023/216974s000lbl.pdf",
+      "retrieved": "2026-10-25",
+      "limitation": "Author-assigned study class supported by the cited source; not a claim of direct ATC ingredient mapping."
+    },
+    {
+      "id": "class_check_cns_stimulant_prodrugs",
+      "title": "Primary-source check for study class: CNS stimulant prodrugs",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=00b5e716-5564-4bbd-acaf-df2bc45a5663",
+      "retrieved": "2026-10-25",
+      "limitation": "Author-assigned study class supported by the cited source; not a claim of direct ATC ingredient mapping."
+    },
+    {
+      "id": "class_check_hcv_ns5a_inhibitors",
+      "title": "Primary-source check for study class: Hepatitis C NS5A inhibitors",
+      "url": "https://www.cancer.gov/publications/dictionaries/cancer-drug/def/ombitasvir-paritaprevir-ritonavir",
+      "retrieved": "2026-10-25",
+      "limitation": "Author-assigned study class supported by the cited source; not a claim of direct ATC ingredient mapping."
+    },
+    {
+      "id": "class_check_hcv_ns3_4a_inhibitors",
+      "title": "Primary-source check for study class: Hepatitis C NS3/4A protease inhibitors",
+      "url": "https://www.cancer.gov/publications/dictionaries/cancer-drug/def/ombitasvir-paritaprevir-ritonavir",
+      "retrieved": "2026-10-25",
+      "limitation": "Author-assigned study class supported by the cited source; not a claim of direct ATC ingredient mapping."
+    },
+    {
+      "id": "class_check_muscarinic_agonists",
+      "title": "Primary-source check for study class: Muscarinic receptor agonists",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/216158s000lbl.pdf",
+      "retrieved": "2026-10-25",
+      "limitation": "Author-assigned study class supported by the cited source; not a claim of direct ATC ingredient mapping."
+    },
+    {
+      "id": "class_check_penem_antibacterials",
+      "title": "Primary-source check for study class: Penem antibacterial active moieties",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/213972s000lbl.pdf",
+      "retrieved": "2026-10-25",
+      "limitation": "Author-assigned study class supported by the cited source; not a claim of direct ATC ingredient mapping."
+    },
+    {
+      "id": "class_check_streptogramins",
+      "title": "Primary-source check for study class: Streptogramin antibiotics",
+      "url": "https://medlineplus.gov/druginfo/meds/a603007.html",
+      "retrieved": "2026-10-25",
+      "limitation": "Author-assigned study class supported by the cited source; not a claim of direct ATC ingredient mapping."
+    },
+    {
+      "id": "class_check_progestins",
+      "title": "Primary-source check for study class: Progestins",
+      "url": "https://evsexplore.semantics.cancer.gov/evsexplore/concept/ncit/C776",
+      "retrieved": "2026-10-25",
+      "limitation": "Author-assigned study class supported by the cited source; not a claim of direct ATC ingredient mapping."
+    },
+    {
+      "id": "class_check_digestive_enzymes",
+      "title": "Primary-source check for study class: Digestive enzymes",
+      "url": "https://www.cancer.gov/publications/dictionaries/cancer-drug/def/pancrelipase",
+      "retrieved": "2026-10-25",
+      "limitation": "Author-assigned study class supported by the cited source; not a claim of direct ATC ingredient mapping."
+    },
+    {
+      "id": "class_check_sulfonamide_antibacterials",
+      "title": "Primary-source check for study class: Sulfonamide antibacterials",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Sulfametrole",
+      "retrieved": "2026-10-25",
+      "limitation": "Author-assigned study class supported by the cited source; not a claim of direct ATC ingredient mapping."
+    },
+    {
+      "id": "class_check_estrogen_hormones",
+      "title": "Primary-source check for study class: Estrogen hormones",
+      "url": "https://medlineplus.gov/druginfo/meds/a682922.html",
+      "retrieved": "2026-10-25",
+      "limitation": "Author-assigned study class supported by the cited source; not a claim of direct ATC ingredient mapping."
+    },
+    {
+      "id": "class_check_electrolyte_components",
+      "title": "Primary-source check for study class: Electrolyte components",
+      "url": "https://medlineplus.gov/potassium.html",
+      "retrieved": "2026-10-25",
+      "limitation": "Author-assigned study class supported by the cited source; not a claim of direct ATC ingredient mapping."
+    },
+    {
+      "id": "class_check_bacterial_dhfr_inhibitors",
+      "title": "Primary-source check for study class: Bacterial dihydrofolate reductase inhibitors",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/43863/",
+      "retrieved": "2026-10-25",
+      "limitation": "Author-assigned study class supported by the cited source; not a claim of direct ATC ingredient mapping."
+    }
+  ],
+  "main_source_response_checksums": [
+    {
+      "source_id": "rxnorm_atc",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json?classId=A&relaSource=ATC&ttys=IN+PIN+MIN&trans=0",
+      "retrieved_date": "2026-10-25",
+      "sha256": "6eb66823b4273c869c9406605b34a90cb5e6c83f7137d42f1952cbc11d3466fa",
+      "response_bytes": 105494
+    },
+    {
+      "source_id": "rxnorm_atc",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json?classId=B&relaSource=ATC&ttys=IN+PIN+MIN&trans=0",
+      "retrieved_date": "2026-10-25",
+      "sha256": "14e8bb368b8392de53822df5d4f5bb022eed8665687eae3336671908b845013f",
+      "response_bytes": 43109
+    },
+    {
+      "source_id": "rxnorm_atc",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json?classId=C&relaSource=ATC&ttys=IN+PIN+MIN&trans=0",
+      "retrieved_date": "2026-10-25",
+      "sha256": "cfe477f1680a93bb3d4983c648e10da4bc583b63469cd0cc2a2434946ad1fbea",
+      "response_bytes": 79143
+    },
+    {
+      "source_id": "rxnorm_atc",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json?classId=D&relaSource=ATC&ttys=IN+PIN+MIN&trans=0",
+      "retrieved_date": "2026-10-25",
+      "sha256": "d8fda825cb4826e12e44bcffa2f53306c108145423abcc9d549a23d63635c60b",
+      "response_bytes": 63418
+    },
+    {
+      "source_id": "rxnorm_atc",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json?classId=G&relaSource=ATC&ttys=IN+PIN+MIN&trans=0",
+      "retrieved_date": "2026-10-25",
+      "sha256": "652bde6787e88509c39c89a77f9699785c70f477e13c2571131dc7589ba2a831",
+      "response_bytes": 41367
+    },
+    {
+      "source_id": "rxnorm_atc",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json?classId=H&relaSource=ATC&ttys=IN+PIN+MIN&trans=0",
+      "retrieved_date": "2026-10-25",
+      "sha256": "35c82d38456d294e8e4c477bddd804ff01fe7c26790ef03e13496b3a9a31c9cd",
+      "response_bytes": 16777
+    },
+    {
+      "source_id": "rxnorm_atc",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json?classId=J&relaSource=ATC&ttys=IN+PIN+MIN&trans=0",
+      "retrieved_date": "2026-10-25",
+      "sha256": "82df5324da067d5718d4646adf91d66a90c0044c350f193d6eb80fdd456376c4",
+      "response_bytes": 83575
+    },
+    {
+      "source_id": "rxnorm_atc",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json?classId=L&relaSource=ATC&ttys=IN+PIN+MIN&trans=0",
+      "retrieved_date": "2026-10-25",
+      "sha256": "9484e16fdfb025d57606690506fb240d34f103766708ee1c806aedec2efde7e1",
+      "response_bytes": 99429
+    },
+    {
+      "source_id": "rxnorm_atc",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json?classId=M&relaSource=ATC&ttys=IN+PIN+MIN&trans=0",
+      "retrieved_date": "2026-10-25",
+      "sha256": "61a42937f985b29688a06760c76c15382e9b0c007b273186a30778050605a5e9",
+      "response_bytes": 35554
+    },
+    {
+      "source_id": "rxnorm_atc",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json?classId=N&relaSource=ATC&ttys=IN+PIN+MIN&trans=0",
+      "retrieved_date": "2026-10-25",
+      "sha256": "d5fdbe49ab15e3b38b21809320e64072e84aad7728b2164944b344a0b53bb103",
+      "response_bytes": 107548
+    },
+    {
+      "source_id": "rxnorm_atc",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json?classId=P&relaSource=ATC&ttys=IN+PIN+MIN&trans=0",
+      "retrieved_date": "2026-10-25",
+      "sha256": "54f7b4dabf83fc0832bc19143d3044e971d7140008d7ef07592397c926530286",
+      "response_bytes": 18525
+    },
+    {
+      "source_id": "rxnorm_atc",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json?classId=R&relaSource=ATC&ttys=IN+PIN+MIN&trans=0",
+      "retrieved_date": "2026-10-25",
+      "sha256": "5f23ddb21a0c273a9f874f25818bb8ad41bd1472ba12e3b1618ab922c80803a0",
+      "response_bytes": 55782
+    },
+    {
+      "source_id": "rxnorm_atc",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json?classId=S&relaSource=ATC&ttys=IN+PIN+MIN&trans=0",
+      "retrieved_date": "2026-10-25",
+      "sha256": "09064487f9ff0c87667887f8f6c1f0d74f795e05aacb8874231ff7c1a083475b",
+      "response_bytes": 48581
+    },
+    {
+      "source_id": "rxnorm_atc",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json?classId=V&relaSource=ATC&ttys=IN+PIN+MIN&trans=0",
+      "retrieved_date": "2026-10-25",
+      "sha256": "fa8451309b625132874e5eab91f66e400dcdb1ee5dcd1bc1c21409db885e5b31",
+      "response_bytes": 39550
+    },
+    {
+      "source_id": "rxnorm_active",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/allconcepts.json?tty=IN",
+      "retrieved_date": "2026-10-25",
+      "sha256": "456770a8ad61e6d1c3d7d15d73922b3d643c630f4026cb4842b2a1b299ffc278",
+      "response_bytes": 926041
+    },
+    {
+      "source_id": "rxnorm_active",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/allconcepts.json?tty=PIN",
+      "retrieved_date": "2026-10-25",
+      "sha256": "aa39635d2da7459b3c0db48491c6d66d7094b8aed793ecac3ebbd932e0160ba9",
+      "response_bytes": 242593
+    },
+    {
+      "source_id": "rxnorm_active",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/allconcepts.json?tty=MIN",
+      "retrieved_date": "2026-10-25",
+      "sha256": "df51141eecd5fd01ec04a1858511b5ff165c3b4defc4b6ce0175d7d1f1780e82",
+      "response_bytes": 330010
+    },
+    {
+      "source_id": "rxnorm_atc",
+      "request_url": "https://rxnav.nlm.nih.gov/REST/rxclass/allClasses.json?classTypes=ATC1-4",
+      "retrieved_date": "2026-10-25",
+      "sha256": "d7b9af1c8d274a5b560fd5d005726d8e13228377a9bc140bbb533d2478ebf597",
+      "response_bytes": 113104
+    }
+  ],
+  "enrichment_response_count": 505,
+  "notes": "Source hashes document the source responses used in this build. Source contents and versions may change on later retrieval. This package is a dated snapshot, not a live mirror."
+}

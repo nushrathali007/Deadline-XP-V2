@@ -1,0 +1,21 @@
+{
+  "enabled": true,
+  "catalog_version": "2026-10-25.1",
+  "owner_choices_approved": "2026-10-25",
+  "integration": "dictionary_adapter_preserving_question_grading",
+  "suggestion_timing": "after_submit",
+  "fuzzy_confirmation": "always",
+  "tolerance": "conservative_5_to_7_one_edit_8_plus_up_to_two_similarity_0.80",
+  "suggestion_vocabulary": "entire_game_vocabulary",
+  "exact_lookup": "entire_catalog",
+  "verified_generic_synonyms": true,
+  "precise_names": "separate_except_explicit_question_equivalences",
+  "complete_combinations": "plus_or_slash_either_order_all_components_required",
+  "brands_and_abbreviations": "existing_explicit_question_mappings_only",
+  "unknown_names": "free_edit_or_submit_anyway",
+  "attempts": "seven_actual_clinical_submissions_no_cost_for_clarification",
+  "timer": "none_existing",
+  "class_membership": "never_automatically_changes_grading",
+  "display_names": "existing_game_convention",
+  "reversible": "How to play: Drug spelling helper switch"
+}

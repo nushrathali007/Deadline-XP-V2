@@ -1,0 +1,61 @@
+{
+  "format": "PCM WAV action extracts",
+  "default_master_gain": 0.5,
+  "maximum_master_gain": 0.75,
+  "cues": [
+    {
+      "name": "footstep",
+      "source": "freesound_community-walking-96582.mp3",
+      "start": 0.345,
+      "end": 0.66,
+      "duration": 0.315,
+      "event": "foot contact while walking",
+      "volume": 0.25
+    },
+    {
+      "name": "sit-contact",
+      "source": "freesound_community-sitting-on-bed-97752.mp3",
+      "start": 0.2,
+      "end": 1.35,
+      "duration": 1.15,
+      "event": "hips contact bed during sit transition",
+      "volume": 0.28
+    },
+    {
+      "name": "bed-creak",
+      "source": "freesound_community-laying-down-on-getting-off-of-creaky-bed-31085.mp3",
+      "start": 2.25,
+      "end": 3.1,
+      "duration": 0.85,
+      "event": "body contacts mattress during lie/get-up transition",
+      "volume": 0.22
+    },
+    {
+      "name": "cough-single",
+      "source": "freesound_community-cough-86774.mp3",
+      "start": 1.42,
+      "end": 1.8,
+      "duration": 0.38,
+      "event": "visible cough impulse",
+      "volume": 0.3
+    },
+    {
+      "name": "laboured-breath",
+      "source": "freesound_community-male-heavy-breathing-67325.mp3",
+      "start": 3.05,
+      "end": 5.85,
+      "duration": 2.8,
+      "event": "visible laboured breathing cycle",
+      "volume": 0.18
+    },
+    {
+      "name": "monitor-beep",
+      "source": "fadingembersaudio-heart-monitor-hospital-ambience-430219.mp3",
+      "start": 0.58,
+      "end": 0.76,
+      "duration": 0.18,
+      "event": "displayed ECG beat",
+      "volume": 0.13
+    }
+  ]
+}

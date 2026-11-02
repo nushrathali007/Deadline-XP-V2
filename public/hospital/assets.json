@@ -1,0 +1,108 @@
+[
+  {
+    "name": "Hospital arrival",
+    "creator": "bezdeploma",
+    "url": "https://sketchfab.com/3d-models/minecraft-hospital-ded3dfd3d7f945ce96253cf3cb4133c3",
+    "license": "CC BY 4.0 · daylight palette and materials adapted",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "cost": "Uploaded by you",
+    "included": true,
+    "notes": "Your earlier full hospital scene, brightened to match the original ward. The opening camera moves toward Room 07, then gameplay stays in the individual room."
+  },
+  {
+    "name": "Mini Characters",
+    "creator": "Kenney",
+    "url": "https://kenney.nl/assets/mini-characters",
+    "download": "https://kenney.nl/media/pages/assets/mini-characters/bfc7e272b4-1774770718/kenney_mini-characters.zip",
+    "preview": "./assets/kit-0.png",
+    "license": "CC0; optional credit",
+    "cost": "Free",
+    "formats_verified": [
+      "GLB",
+      "FBX"
+    ],
+    "notes": "The same rigged patient now animates in both graphics modes, with walking, standing and sitting. The resting pose is fitted to the hospital bed. The model is self-contained.",
+    "included": true
+  },
+  {
+    "name": "Furniture Kit",
+    "creator": "Kenney",
+    "url": "https://kenney.nl/assets/furniture-kit",
+    "download": "https://kenney.nl/media/pages/assets/furniture-kit/440e0608a4-1677580847/kenney_furniture-kit.zip",
+    "preview": "./assets/kit-1.png",
+    "license": "CC0; optional credit",
+    "cost": "Free",
+    "notes": "The uploaded bedside cabinet, lamp and cushioned chair add detail while keeping the original room layout and colours.",
+    "included": true
+  },
+  {
+    "name": "Building Kit",
+    "creator": "Kenney",
+    "url": "https://kenney.nl/assets/building-kit",
+    "download": "https://kenney.nl/media/pages/assets/building-kit/0de7aaa492-1743244741/kenney_building-kit.zip",
+    "preview": "./assets/kit-2.png",
+    "license": "CC0; optional credit",
+    "cost": "Free",
+    "notes": "The uploaded door fits the original room shell. Its matching animation gives the arrival a small finishing touch.",
+    "included": true
+  },
+  {
+    "name": "Hospital Bed",
+    "creator": "Logan S.",
+    "url": "https://sketchfab.com/3d-models/hospital-bed-50bbd85b31284005b09cc5ee03563f74",
+    "license": "CC BY 4.0 · colours/materials/detail adapted",
+    "cost": "Free",
+    "notes": "Your uploaded hospital bed, fitted to the existing room and patient positions. Materials are recoloured to the original soft hospital palette.",
+    "included": true,
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  {
+    "name": "ECG Monitor",
+    "creator": "demagdev",
+    "url": "https://sketchfab.com/3d-models/ecg-monitor-47e72cd57f45414aa82e41342b299b5b",
+    "license": "CC BY 4.0 · colours/materials/detail adapted",
+    "cost": "Free",
+    "notes": "Your uploaded monitor housing with the original live ECG fitted to its screen. Unneeded cables were removed for a smoother game.",
+    "included": true,
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  {
+    "name": "IV Stand",
+    "creator": "teeart",
+    "url": "https://sketchfab.com/3d-models/iv-stand-dd3115aafb0e4a628f261d0de7a787b9",
+    "license": "CC BY 4.0 · colours/materials/detail adapted",
+    "cost": "Free",
+    "notes": "Your uploaded IV stand, scaled to the room and paired with the hanging bag and tubing.",
+    "included": true,
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  {
+    "name": "Medical_ Ventilator",
+    "creator": "Dawn",
+    "url": "https://sketchfab.com/3d-models/medical--ventilator-25e3227fa67b4bc08be957d7c18d501d",
+    "license": "CC BY 4.0 · colours/materials/detail adapted",
+    "cost": "Free",
+    "notes": "Your uploaded ventilator, simplified and recoloured. The patient tubing appears when ventilator support is needed.",
+    "included": true,
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  {
+    "name": "Doctor's Office - Assets",
+    "creator": "Evan Petrov",
+    "url": "https://sketchfab.com/3d-models/doctors-office-assets-3facd48dff0945f7b96f95ad31c4beb5",
+    "license": "CC BY 4.0 · colours/materials/detail adapted",
+    "cost": "Free",
+    "notes": "A collection of medical props including an IV, stethoscope, cabinet, bandages, syringe and tray. Import just the objects the ward needs.",
+    "included": false,
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  {
+    "name": "Mixamo",
+    "creator": "Adobe",
+    "url": "https://www.mixamo.com/",
+    "license": "Royalty-free use in personal, commercial and nonprofit games; not CC0",
+    "cost": "Free · Adobe ID required",
+    "notes": "A free humanoid animation library and auto-rigger. Use matching character and animation files; another rig may need retargeting. Adobe ID required.",
+    "included": false
+  }
+]

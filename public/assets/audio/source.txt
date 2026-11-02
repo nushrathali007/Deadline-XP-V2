@@ -1,0 +1,1 @@
+Source: user-supplied Windows XP.soundpack. Extracted WAV assets only; no executables or package configuration are run. Original Microsoft Windows XP audio; no open-source redistribution licence inferred. This prototype retains the existing owner-private audience.

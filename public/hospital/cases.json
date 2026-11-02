@@ -1,0 +1,2303 @@
+[
+  {
+    "id": "treadmill-ward",
+    "specialty": "Psychiatry",
+    "title": "The ward is not a treadmill",
+    "memeTop": "THE STEP COUNTER SAYS PERSONAL BEST",
+    "memeBottom": "THE MEDICATION CHART SAYS AKATHISIA",
+    "question": "Three days after starting haloperidol, a patient says, 'My legs have subscribed to premium cardio.' He feels intense inner restlessness and keeps pacing, without fever or muscle rigidity. Name the nonselective beta blocker commonly used to relieve antipsychotic-induced akathisia.",
+    "answer": "Propranolol",
+    "options": [
+      "Propranolol",
+      "Metoprolol",
+      "Benztropine",
+      "Dantrolene"
+    ],
+    "aliases": [
+      "propranolol hydrochloride",
+      "propranolol hcl",
+      "Inderal"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "metoprolol",
+          "atenolol",
+          "bisoprolol",
+          "nadolol",
+          "carvedilol",
+          "labetalol"
+        ],
+        "points": 65,
+        "relation": "Same broad drug class: beta blocker. Propranolol is the intended nonselective agent; class credit does not mean the other drug is an equivalent akathisia treatment."
+      },
+      {
+        "terms": [
+          "beta blocker",
+          "beta blockers",
+          "beta adrenergic blocker",
+          "nonselective beta blocker",
+          "non selective beta blocker",
+          "beta antagonist"
+        ],
+        "points": 30,
+        "relation": "Correct drug-family concept, but the question asks for a specific medication."
+      }
+    ],
+    "explanation": "The restlessness and pacing after an antipsychotic suggest akathisia. Propranolol blocks beta-1 and beta-2 receptors, and placebo-controlled trials support its use for antipsychotic-induced akathisia. Metoprolol is relatively beta-1 selective; benztropine and dantrolene are not beta blockers. The game awards class points for related knowledge, not treatment equivalence.",
+    "source": {
+      "label": "Placebo-controlled propranolol trial, British Journal of Psychiatry",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/2877708/"
+    },
+    "additionalSources": [
+      {
+        "label": "DailyMed: propranolol prescribing information",
+        "url": "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=fce3539f-82f3-4bb5-a6ba-c38171c67c06"
+      }
+    ],
+    "answerType": "drug"
+  },
+  {
+    "id": "spicy-night-shift",
+    "specialty": "Gastroenterology",
+    "title": "Spicy food: 1. Esophagus: 0.",
+    "memeTop": "I CAN HANDLE THE EXTRA HOT SAUCE",
+    "memeBottom": "THE ESOPHAGUS WOULD LIKE A WORD",
+    "question": "A student with recurrent reflux calls his latest late-night chili challenge 'a randomized controlled mistake.' His clinician prescribes Prilosec, a proton-pump inhibitor. What is its generic active ingredient?",
+    "answer": "Omeprazole",
+    "options": [
+      "Omeprazole",
+      "Pantoprazole",
+      "Famotidine",
+      "Sucralfate"
+    ],
+    "aliases": [
+      "omeprazole magnesium",
+      "omeprazole sodium"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "pantoprazole",
+          "esomeprazole",
+          "lansoprazole",
+          "dexlansoprazole",
+          "rabeprazole"
+        ],
+        "points": 65,
+        "relation": "Same drug class: proton-pump inhibitor, but a different active ingredient."
+      },
+      {
+        "terms": [
+          "proton pump inhibitor",
+          "proton pump inhibitors",
+          "ppi",
+          "ppis",
+          "famotidine",
+          "h2 blocker",
+          "h2 receptor antagonist"
+        ],
+        "points": 30,
+        "relation": "Related acid-suppression concept; name the specific ingredient in Prilosec for full credit."
+      }
+    ],
+    "explanation": "Prilosec contains omeprazole, a proton-pump inhibitor used for acid-related disorders including GERD. Pantoprazole is another PPI, while famotidine is an H2-receptor antagonist. Sharing an indication or drug class earns game partial credit rather than identifying the named product.",
+    "source": {
+      "label": "FDA: Prilosec prescribing information",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2023/022056s026lbl.pdf"
+    },
+    "answerType": "drug"
+  },
+  {
+    "id": "bladder-notifications",
+    "specialty": "Nephrology",
+    "title": "Bladder notifications: enabled",
+    "memeTop": "THE PATIENT ASKED FOR MORE STEPS",
+    "memeBottom": "THE BATHROOM PROVIDED THE ROUTE",
+    "question": "A patient being treated for edema says his bladder has turned on push notifications. The chart lists Lasix, a loop diuretic. Which generic medication is this?",
+    "answer": "Furosemide",
+    "options": [
+      "Furosemide",
+      "Bumetanide",
+      "Hydrochlorothiazide",
+      "Spironolactone"
+    ],
+    "aliases": [
+      "frusemide",
+      "furosemide sodium"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "bumetanide",
+          "torsemide",
+          "torasemide",
+          "ethacrynic acid"
+        ],
+        "points": 65,
+        "relation": "Same drug class: loop diuretic, but a different medication."
+      },
+      {
+        "terms": [
+          "loop diuretic",
+          "loop diuretics",
+          "diuretic",
+          "water pill",
+          "hydrochlorothiazide",
+          "chlorthalidone",
+          "spironolactone"
+        ],
+        "points": 30,
+        "relation": "Related diuretic knowledge; full credit requires the generic ingredient in Lasix."
+      }
+    ],
+    "explanation": "Lasix is the brand name for furosemide, a loop diuretic used for edema. Bumetanide and torsemide are also loop diuretics. Hydrochlorothiazide and spironolactone belong to other diuretic classes; this question identifies a product rather than choosing a treatment regimen.",
+    "source": {
+      "label": "DailyMed: Lasix prescribing information",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=2c9b4d8f-0770-482d-a9e6-9c616a440b1a"
+    },
+    "answerType": "drug"
+  },
+  {
+    "id": "stairs-final-boss",
+    "specialty": "Pulmonology",
+    "title": "The stairs are the final boss",
+    "memeTop": "ONE FLIGHT OF STAIRS",
+    "memeBottom": "WHY IS THE BOSS MUSIC PLAYING?",
+    "question": "A runner with exercise-induced bronchospasm jokes that the stairs have better stamina than he does. His prescribed rescue inhaler is Ventolin HFA. Name its short-acting beta-2 agonist ingredient; either the US or international generic name is accepted.",
+    "answer": "Albuterol",
+    "options": [
+      "Albuterol",
+      "Levalbuterol",
+      "Salmeterol",
+      "Ipratropium"
+    ],
+    "aliases": [
+      "salbutamol",
+      "albuterol sulfate",
+      "salbutamol sulfate"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "levalbuterol",
+          "levosalbutamol",
+          "terbutaline"
+        ],
+        "points": 65,
+        "relation": "Same broad short-acting beta-2 agonist family, but not the ingredient in Ventolin HFA."
+      },
+      {
+        "terms": [
+          "saba",
+          "short acting beta agonist",
+          "short acting beta2 agonist",
+          "short acting beta 2 agonist",
+          "beta2 agonist",
+          "beta 2 agonist",
+          "bronchodilator",
+          "salmeterol",
+          "formoterol"
+        ],
+        "points": 30,
+        "relation": "Related bronchodilator or beta-agonist knowledge; the question asks for the specific Ventolin ingredient."
+      }
+    ],
+    "explanation": "Ventolin HFA contains albuterol sulfate. Albuterol is called salbutamol internationally; both names identify the same drug. Levalbuterol is a different active ingredient. Salmeterol is long acting, and ipratropium is an antimuscarinic bronchodilator.",
+    "source": {
+      "label": "DailyMed: Ventolin HFA prescribing information",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d92c5d6b-ff10-4087-36a2-1cfc464cb967"
+    },
+    "additionalSources": [
+      {
+        "label": "DailyMed: albuterol and salbutamol naming",
+        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f454947c-6055-474b-bf35-29a379e01aa3"
+      }
+    ],
+    "answerType": "drug"
+  },
+  {
+    "id": "bedroom-carousel",
+    "specialty": "Neurology",
+    "title": "Free bedroom carousel",
+    "memeTop": "ROLLED OVER TO CHECK MY PHONE",
+    "memeBottom": "UNLOCKED THE ROOM-SPINNING FEATURE",
+    "question": "A patient says rolling over in bed unlocks a free 20-second carousel ride. The Dix-Hallpike maneuver provokes brief vertigo with torsional, upbeating nystagmus; there is no hearing loss or focal neurologic deficit. What is the most likely diagnosis?",
+    "answer": "Benign paroxysmal positional vertigo",
+    "options": [
+      "Benign paroxysmal positional vertigo",
+      "Vestibular neuritis",
+      "Meniere disease",
+      "Orthostatic hypotension"
+    ],
+    "aliases": [
+      "BPPV",
+      "posterior canal BPPV",
+      "posterior semicircular canal BPPV",
+      "benign positional vertigo",
+      "benign paroxysmal position vertigo"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "vertigo",
+          "positional vertigo",
+          "peripheral vertigo",
+          "vestibular disorder"
+        ],
+        "points": 30,
+        "relation": "Identifies the symptom or a broader vestibular category, but not the full diagnosis."
+      }
+    ],
+    "explanation": "Brief position-triggered vertigo with torsional, upbeating nystagmus on Dix-Hallpike testing supports posterior-canal BPPV. A broad answer such as 'vertigo' recognizes the symptom but does not identify its cause.",
+    "source": {
+      "label": "AAO-HNS: BPPV clinical practice guideline fact sheet",
+      "url": "https://www.entnet.org/resource/aao-hnsf-updated-cpg-bppv-press-release-fact-sheet/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "cholesterol-hdmi",
+    "specialty": "Cardiology",
+    "title": "LDL is not a Wi-Fi password",
+    "memeTop": "THE PATIENT THOUGHT HDL WAS HDMI",
+    "memeBottom": "WE HAVE A LITTLE COUNSELLING TO DO",
+    "question": "A patient with high LDL asks whether his cholesterol report needs a software update. His prescription lists Lipitor, an HMG-CoA reductase inhibitor. What is the generic drug?",
+    "answer": "Atorvastatin",
+    "options": [
+      "Atorvastatin",
+      "Rosuvastatin",
+      "Ezetimibe",
+      "Fenofibrate"
+    ],
+    "aliases": [
+      "atorvastatin calcium"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "rosuvastatin",
+          "simvastatin",
+          "pravastatin",
+          "fluvastatin",
+          "lovastatin",
+          "pitavastatin"
+        ],
+        "points": 65,
+        "relation": "Same drug class: statin, but a different active ingredient."
+      },
+      {
+        "terms": [
+          "statin",
+          "statins",
+          "hmg coa reductase inhibitor",
+          "hmg-coa reductase inhibitor",
+          "ezetimibe",
+          "fenofibrate",
+          "lipid lowering drug"
+        ],
+        "points": 30,
+        "relation": "Related lipid-lowering knowledge; full credit requires the ingredient in Lipitor."
+      }
+    ],
+    "explanation": "Lipitor contains atorvastatin, a statin that inhibits HMG-CoA reductase. Rosuvastatin is another statin. Ezetimibe and fenofibrate lower lipids through different mechanisms.",
+    "source": {
+      "label": "DailyMed: Lipitor prescribing information",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=a3c08a6d-f986-4efc-9f96-3f0e652704dc"
+    },
+    "answerType": "drug"
+  },
+  {
+    "id": "detector-battery",
+    "specialty": "Emergency medicine",
+    "title": "The detector battery was not a spare",
+    "memeTop": "BORROWED THE ALARM BATTERY FOR THE CONTROLLER",
+    "memeBottom": "THAT WAS NOT THE SIDE QUEST TO ACCEPT",
+    "question": "Two nonsmoking roommates develop headache and nausea while a faulty fuel-burning heater runs indoors. One has a conventional pulse-oximeter reading of 99%, but blood co-oximetry shows carboxyhemoglobin of 18%. What is the diagnosis?",
+    "answer": "Carbon monoxide poisoning",
+    "options": [
+      "Carbon monoxide poisoning",
+      "Methemoglobinemia",
+      "Panic attack",
+      "Acute gastroenteritis"
+    ],
+    "aliases": [
+      "CO poisoning",
+      "carbon monoxide toxicity",
+      "carbon monoxide intoxication",
+      "CO intoxication",
+      "carboxyhemoglobinemia"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "toxic inhalation",
+          "inhalational poisoning",
+          "inhalation poisoning",
+          "dyshemoglobinemia"
+        ],
+        "points": 30,
+        "relation": "Recognizes a broad exposure or hemoglobin problem, but does not identify carbon monoxide."
+      }
+    ],
+    "explanation": "Shared symptoms after indoor combustion exposure and elevated carboxyhemoglobin strongly support carbon monoxide poisoning. A conventional two-wavelength pulse oximeter can appear reassuring because it cannot reliably distinguish carboxyhemoglobin from oxyhemoglobin.",
+    "source": {
+      "label": "CDC: Clinical guidance for carbon monoxide poisoning",
+      "url": "https://www.cdc.gov/carbon-monoxide/hcp/clinical-guidance/index.html"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "pizza-alert",
+    "specialty": "Internal medicine",
+    "title": "Free pizza, expensive gravity",
+    "memeTop": "HEARD THERE WAS FREE PIZZA",
+    "memeBottom": "BLOOD PRESSURE DID NOT GET THE MEMO",
+    "question": "A patient stands quickly when someone announces free pizza and becomes lightheaded. After five minutes supine, BP is 128/78 mmHg; after one minute standing it is 102/64 mmHg, and at three minutes it remains 104/64 mmHg. What finding explains the dizziness?",
+    "answer": "Orthostatic hypotension",
+    "options": [
+      "Orthostatic hypotension",
+      "Benign paroxysmal positional vertigo",
+      "Hypertensive emergency",
+      "Hypoglycemia"
+    ],
+    "aliases": [
+      "postural hypotension",
+      "orthostatic low blood pressure",
+      "orthostatic BP drop",
+      "orthostatic blood pressure drop"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "hypotension",
+          "blood pressure drop",
+          "low blood pressure"
+        ],
+        "points": 30,
+        "relation": "Recognizes the pressure change, but omits its specific relationship to standing."
+      }
+    ],
+    "explanation": "The systolic pressure falls by 26 mmHg and the diastolic pressure by 14 mmHg after standing. This meets the usual orthostatic threshold of at least a 20-mmHg systolic or 10-mmHg diastolic fall within three minutes. The numbers identify the finding; the underlying cause still needs assessment.",
+    "source": {
+      "label": "CDC STEADI: Measuring orthostatic blood pressure",
+      "url": "https://www.cdc.gov/steadi/media/pdfs/steadi-assessment-measuringbp-508.pdf"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-a-fridge-records",
+    "specialty": "Pediatrics",
+    "title": "The fridge has the receipts",
+    "memeTop": "PARENT ARRIVES WITH A LAMINATED VACCINE RECORD",
+    "memeBottom": "THE FRIDGE ADMINISTRATOR HAS DONE THE WORK",
+    "question": "A healthy 6-year-old gets a small, superficial cut from a clean sheet of craft paper. The wound has no dirt, puncture component, or devitalized tissue. A parent produces the vaccine record with the confidence of a game-show finalist: the primary tetanus series is complete, and the last dose was two years ago. What tetanus-related management is appropriate today?",
+    "answer": "Wound care without a tetanus booster or TIG",
+    "answerType": "clinical",
+    "options": [
+      "Wound care without a tetanus booster or TIG",
+      "Wound care plus a tetanus booster",
+      "Wound care plus tetanus immune globulin",
+      "Wound care plus a tetanus booster and TIG"
+    ],
+    "aliases": [
+      "clean the wound with no tetanus booster or immune globulin",
+      "wound care only",
+      "no additional tetanus prophylaxis",
+      "no tetanus booster or TIG"
+    ],
+    "partials": [],
+    "explanation": "Clean the wound and provide ordinary local care. A person who completed the primary series and received the last tetanus-containing vaccine less than five years ago does not need another dose for wound management. Tetanus immune globulin is never indicated for a clean, minor wound. The decision uses the wound assessment and documented immunization history; the craft project's dramatic soundtrack does not change the schedule.",
+    "source": {
+      "label": "CDC: wound management to prevent tetanus",
+      "url": "https://www.cdc.gov/tetanus/hcp/clinical-guidance/index.html"
+    }
+  },
+  {
+    "id": "exp-a-shared-calendar",
+    "specialty": "Reproductive Medicine",
+    "title": "The calendar cannot do every test",
+    "memeTop": "TWELVE MONTHS OF CAREFULLY TIMED CALENDAR INVITES",
+    "memeBottom": "TIME TO EVALUATE BOTH PARTNERS",
+    "question": "A 27-year-old woman and her male partner have not conceived after 12 months of regular unprotected intercourse. Her cycles occur every 28 days, and neither partner reports a relevant medical history. Their shared calendar has become impressively color-coded. While her evaluation proceeds, which basic laboratory test should be included in the male partner's initial fertility assessment?",
+    "answer": "Semen analysis",
+    "answerType": "clinical",
+    "options": [
+      "Semen analysis",
+      "Sperm DNA fragmentation testing",
+      "Karyotype analysis",
+      "Y-chromosome microdeletion testing"
+    ],
+    "aliases": [
+      "semen analysis testing",
+      "analysis of semen",
+      "sperm count and semen analysis"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "sperm count"
+        ],
+        "points": 30,
+        "relation": "Sperm concentration is one component of semen analysis, which also assesses other semen and sperm characteristics."
+      }
+    ],
+    "explanation": "The initial assessment of an infertile couple includes concurrent evaluation of both partners. The male evaluation includes a reproductive history and one or more semen analyses; regular cycles in the female partner do not remove that step. Specialized genetic and sperm DNA tests are reserved for selected indications rather than ordered routinely first. A beautiful calendar is useful, but it cannot report sperm concentration or motility.",
+    "source": {
+      "label": "AUA/ASRM guideline: initial evaluation of male infertility",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33295257/"
+    },
+    "additionalSources": [
+      {
+        "label": "ASRM: full guideline and semen-analysis recommendation",
+        "url": "https://www.asrm.org/practice-guidance/practice-committee-documents/diagnosis-and-treatment-of-infertility-in-men-auaasrm-guideline-part-i-2020/"
+      },
+      {
+        "label": "ASRM: timing of infertility evaluation",
+        "url": "https://www.asrm.org/practice-guidance/practice-committee-documents/definition-of-infertility/"
+      }
+    ]
+  },
+  {
+    "id": "exp-a-rowing-reply-all",
+    "specialty": "Psychiatry",
+    "title": "Reply all, row harder",
+    "memeTop": "THE EMAIL THREAD HAS FORTY-SEVEN REPLIES",
+    "memeBottom": "THE ROWING MACHINE RECEIVES THE COMPETITIVE ENERGY",
+    "question": "A junior architect feels strong aggressive and competitive impulses after a frustrating team project. Rather than insulting coworkers, he channels that same drive into training for a community rowing competition and helps his crew improve. His rowing machine now gets more attention than the reply-all button. Which defense mechanism best describes transforming those impulses into this socially acceptable activity?",
+    "answer": "Sublimation",
+    "answerType": "clinical",
+    "options": [
+      "Sublimation",
+      "Displacement",
+      "Projection",
+      "Reaction formation"
+    ],
+    "aliases": [
+      "sublimation defense mechanism"
+    ],
+    "partials": [],
+    "explanation": "Sublimation channels potentially maladaptive impulses or affects into a constructive, socially acceptable outlet. The key is the functional link between the original aggressive or competitive drive and the new activity. Displacement redirects an emotion toward another target without this constructive transformation. Projection attributes one's own impulses to someone else, while reaction formation expresses their opposite. Here the competitive energy becomes organized sport rather than an office argument.",
+    "source": {
+      "label": "Defense Mechanisms Rating Scales: definitions and examples",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34721167/"
+    },
+    "additionalSources": [
+      {
+        "label": "Full text: sublimation and other defense mechanisms",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8555762/"
+      }
+    ]
+  },
+  {
+    "id": "exp-a-femur-plot-twist",
+    "specialty": "Emergency Medicine",
+    "title": "The delayed plot twist",
+    "memeTop": "THE FEMUR WAS SUPPOSED TO BE THE MAIN EVENT",
+    "memeBottom": "THIRTY-SIX HOURS LATER, THREE SYSTEMS JOIN THE HANDOVER",
+    "question": "Thirty-six hours after a closed femoral shaft fracture, a previously alert 24-year-old develops tachypnea, oxygen saturation of 85% on room air, and confusion. Small petechiae appear across the upper chest and conjunctivae. There was no head injury, and chest imaging now shows bilateral diffuse opacities. The handover suddenly needs more pages. Which syndrome best unifies the delayed respiratory, neurologic, and skin findings?",
+    "answer": "Fat embolism syndrome",
+    "answerType": "clinical",
+    "options": [
+      "Fat embolism syndrome",
+      "Thrombotic pulmonary embolism",
+      "Aspiration pneumonitis",
+      "Cardiogenic pulmonary edema"
+    ],
+    "aliases": [
+      "fat embolism",
+      "FES"
+    ],
+    "partials": [],
+    "explanation": "Fat embolism syndrome classically develops after long-bone trauma, often following a delay of 24–72 hours. Hypoxemic respiratory dysfunction, neurologic changes, and a petechial rash form its characteristic clinical triad. Fat entering the circulation and the resulting inflammatory injury can affect several microvascular beds. A thrombotic pulmonary embolus remains an important differential diagnosis, but it does not explain this entire pattern as well. These findings require urgent clinical assessment and supportive management.",
+    "source": {
+      "label": "Emergency management of fat embolism syndrome",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19561953/"
+    },
+    "additionalSources": [
+      {
+        "label": "Full text: timing, clinical triad, and supportive treatment",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2700578/"
+      }
+    ]
+  },
+  {
+    "id": "exp-a-birth-day-duo",
+    "specialty": "Pediatrics",
+    "title": "The birth-day double booking",
+    "memeTop": "FIRST DAY ON EARTH",
+    "memeBottom": "TWO PROTECTIVE APPOINTMENTS ALREADY BOOKED",
+    "question": "A clinically stable term newborn weighs 3.2 kg. The mother's prenatal record confirms hepatitis B surface antigen positivity, including a repeat positive result near delivery. The baby is two hours old and has so far completed only the important task of looking unimpressed by the ceiling lights. Which immediate immunoprophylaxis should the newborn receive to reduce perinatal hepatitis B transmission?",
+    "answer": "Hepatitis B vaccine plus HBIG within 12 hours of birth",
+    "answerType": "clinical",
+    "options": [
+      "Hepatitis B vaccine plus HBIG within 12 hours of birth",
+      "Hepatitis B vaccine alone at the two-month visit",
+      "HBIG alone now, with no vaccine series",
+      "Hepatitis B vaccine plus HBIG at six weeks"
+    ],
+    "aliases": [
+      "hepatitis B vaccine and hepatitis B immune globulin within 12 hours",
+      "HepB vaccine and HBIG within 12 hours",
+      "hepatitis B vaccine plus HBIG",
+      "HepB vaccine plus hepatitis B immunoglobulin"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "hepatitis B vaccine alone",
+          "HBIG alone"
+        ],
+        "points": 30,
+        "relation": "This identifies one component of postexposure prophylaxis, but an infant born to an HBsAg-positive mother needs both the vaccine and HBIG promptly."
+      }
+    ],
+    "explanation": "An infant born to an HBsAg-positive mother should receive a dose of single-antigen hepatitis B vaccine and hepatitis B immune globulin within 12 hours of birth, using separate injection sites. Vaccine initiates active immunity, while HBIG supplies immediate passive protection. Both are needed; neither replaces the other. The infant then needs completion of the vaccine series and appropriate follow-up testing. The first-day schedule is busy for a good reason.",
+    "source": {
+      "label": "CDC: perinatal hepatitis B immunoprophylaxis",
+      "url": "https://www.cdc.gov/hepatitis-b/hcp/perinatal-provider-overview/vaccine-administration.html"
+    },
+    "additionalSources": [
+      {
+        "label": "CDC: separate injection sites, vaccine-series completion, and follow-up testing",
+        "url": "https://www.cdc.gov/vaccines/programs/perinatal-hepb/downloads/HepB-Provider-tipsheet-508.pdf"
+      }
+    ]
+  },
+  {
+    "id": "exp-a-confident-scale",
+    "specialty": "Research Methods",
+    "title": "Consistently overconfident",
+    "memeTop": "THE SCALE GIVES THE SAME ANSWER EVERY TIME",
+    "memeBottom": "IT IS ALSO TWO KILOGRAMS WRONG EVERY TIME",
+    "question": "A research clinic checks a digital scale using certified reference weights. Across repeated trials and several weight values, the readings cluster tightly but remain exactly 2 kg above the reference. The scale's consistency earns admiration until someone reads the calibration sheet. What type of measurement error is illustrated by this reproducible shift in the same direction?",
+    "answer": "Systematic measurement error",
+    "answerType": "clinical",
+    "options": [
+      "Systematic measurement error",
+      "Random measurement error",
+      "Sampling error",
+      "Confounding"
+    ],
+    "aliases": [
+      "systematic error",
+      "systematic measurement bias",
+      "calibration bias",
+      "instrument bias"
+    ],
+    "partials": [],
+    "explanation": "A stable calibration offset is systematic measurement error: measurements repeatedly depart from the true value in the same direction. The readings can be highly precise while still being inaccurate. Repeating and averaging them does not remove that fixed offset; the instrument needs its calibration addressed. Random error instead produces unpredictable variation. Sampling error concerns which observations enter a sample, and confounding concerns interpretation of relationships between variables.",
+    "source": {
+      "label": "Measurement error: systematic versus random error",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24945512/"
+    },
+    "additionalSources": [
+      {
+        "label": "NCI: types of measurement error",
+        "url": "https://epi.grants.cancer.gov/dietary-assessment-primer/concepts/error/error-types.html"
+      }
+    ]
+  },
+  {
+    "id": "exp-a-retire-lighter",
+    "specialty": "Pulmonology",
+    "title": "One item to retire",
+    "memeTop": "THE INHALER TECHNIQUE IS EXCELLENT",
+    "memeBottom": "THE LIGHTER IS READY FOR RETIREMENT",
+    "question": "A 58-year-old who smokes one pack daily has stable COPD and uses prescribed inhalers correctly. Resting oxygen saturation is 97% on room air, with no documented exertional hypoxemia. He asks which additional step has evidence for improving long-term survival, rather than simply adding another item to his bedside shelf. Which intervention is the best choice among those listed?",
+    "answer": "Smoking cessation",
+    "answerType": "clinical",
+    "options": [
+      "Smoking cessation",
+      "Routine long-term home oxygen",
+      "Maintenance oral prednisolone",
+      "Increasing rescue albuterol use without reassessment"
+    ],
+    "aliases": [
+      "stop smoking",
+      "quitting smoking",
+      "tobacco smoking cessation",
+      "cessation of cigarette smoking"
+    ],
+    "partials": [],
+    "explanation": "Smoking cessation is a central disease-modifying intervention in COPD. The randomized Lung Health Study found lower long-term all-cause mortality in the smoking-cessation intervention group. This vignette does not provide an indication for long-term oxygen: its survival benefit applies to appropriately selected patients with severe chronic resting hypoxemia, not a normal resting saturation. Continued inhaler optimization and other indicated care still matter; the answer here is supported smoking cessation.",
+    "source": {
+      "label": "Lung Health Study: smoking intervention and 14.5-year mortality",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15710956/"
+    },
+    "additionalSources": [
+      {
+        "label": "ATS guideline: appropriate use of home oxygen",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/33185464/"
+      }
+    ]
+  },
+  {
+    "id": "exp-a-finger-pop-up",
+    "specialty": "Dermatology",
+    "title": "The finger has a pop-up",
+    "memeTop": "THE FINGER STARTED WITH A TINGLE",
+    "memeBottom": "THE SCALPEL DOES NOT NEED TO JOIN THE CHAT",
+    "question": "An adult has a painful recurrent eruption on one fingertip that began with tingling 12 hours ago. Examination shows grouped clear vesicles without a fluctuant abscess. A previous identical episode was PCR-positive for herpes simplex virus. The patient calls it an unwanted finger notification. Which listed oral antiviral can shorten an early recurrent episode of herpetic whitlow?",
+    "answer": "Acyclovir",
+    "answerType": "drug",
+    "options": [
+      "Acyclovir",
+      "Cephalexin",
+      "Fluconazole",
+      "Oseltamivir"
+    ],
+    "aliases": [
+      "aciclovir",
+      "Zovirax"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "valacyclovir",
+          "valaciclovir",
+          "famciclovir"
+        ],
+        "points": 65,
+        "relation": "Other oral anti-HSV antivirals may also be used for herpetic whitlow; acyclovir is the agent among the listed options and has a small placebo-controlled hand-infection trial."
+      },
+      {
+        "terms": [
+          "anti-HSV antiviral",
+          "herpes antiviral"
+        ],
+        "points": 30,
+        "relation": "Correct antiviral treatment concept; name the intended medication for full credit."
+      }
+    ],
+    "explanation": "The vesicles, prodrome, and prior HSV result support recurrent herpetic whitlow. A small double-blind crossover trial found that oral acyclovir started during the earliest phase shortened recurrent HSV infection of the hand. Antiviral treatment can be considered especially when begun early. Protect the lesion and provide supportive care. Incision and drainage are inappropriate for uncomplicated herpetic whitlow and may cause bacterial superinfection; clear vesicles are not a bacterial abscess.",
+    "source": {
+      "label": "Placebo-controlled trial: early oral acyclovir for recurrent HSV of the hand",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/1850971/"
+    },
+    "additionalSources": [
+      {
+        "label": "Herpetic whitlow: management and avoidance of incision and drainage",
+        "url": "https://www.ncbi.nlm.nih.gov/books/NBK482379/"
+      }
+    ]
+  },
+  {
+    "id": "exp-a-pituitary-inbox",
+    "specialty": "Endocrinology",
+    "title": "The pituitary is over-posting",
+    "memeTop": "THE PITUITARY HAS SENT 1,200 PROLACTIN NOTIFICATIONS",
+    "memeBottom": "ENDOCRINOLOGY WOULD LIKE TO MUTE THE SOURCE",
+    "question": "A 32-year-old woman has amenorrhea and galactorrhea, prolactin of 1,200 ng/mL, and a 2.4-cm pituitary mass contacting the optic chiasm. Perimetry shows a mild stable bitemporal field defect, but visual acuity is preserved; there is no sudden headache, hemorrhage, or rapid deterioration. The hormone inbox is overflowing. Which dopamine agonist is generally preferred for initial medical treatment?",
+    "answer": "Cabergoline",
+    "answerType": "drug",
+    "options": [
+      "Cabergoline",
+      "Bromocriptine",
+      "Octreotide",
+      "Pegvisomant"
+    ],
+    "aliases": [
+      "Dostinex"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "bromocriptine",
+          "quinagolide"
+        ],
+        "points": 65,
+        "relation": "Other dopamine agonists can treat prolactinomas, but cabergoline is generally preferred for efficacy and tolerability in this scenario."
+      },
+      {
+        "terms": [
+          "dopamine agonist",
+          "D2 receptor agonist",
+          "D2 agonist"
+        ],
+        "points": 30,
+        "relation": "Correct treatment family; the question asks for the generally preferred drug."
+      }
+    ],
+    "explanation": "A very high prolactin level with a macroadenoma supports a macroprolactinoma. Cabergoline usually lowers prolactin and shrinks the tumor and is generally more effective and better tolerated than bromocriptine. A stable visual field defect does not automatically require surgery before a dopamine agonist. This case explicitly excludes rapidly threatened acuity and recent hemorrhage, which change urgent management. Specialist treatment needs close assessment of vision, prolactin, and tumor response.",
+    "source": {
+      "label": "Endotext: prolactinoma management, including visual field defects",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25905397/"
+    },
+    "additionalSources": [
+      {
+        "label": "Pituitary Society international consensus statement",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/37670148/"
+      }
+    ]
+  },
+  {
+    "id": "exp-a-ecg-stretch",
+    "specialty": "Pharmacology",
+    "title": "An unwelcome stretch goal",
+    "memeTop": "THE DOSE HAS A STRETCH GOAL",
+    "memeBottom": "THE ECG INTERVAL WAS NOT SUPPOSED TO PARTICIPATE",
+    "question": "A 36-year-old taking citalopram has a baseline ECG before a planned dose increase from 20 to 40 mg daily. Potassium and magnesium are normal, and there are no other QT-prolonging medicines. During counseling, she asks which well-established electrical effect becomes more likely at higher citalopram doses. Which adverse effect should the clinician explain?",
+    "answer": "Dose-dependent QT interval prolongation",
+    "answerType": "clinical",
+    "options": [
+      "Dose-dependent QT interval prolongation",
+      "Dose-dependent QT interval shortening",
+      "PR interval prolongation",
+      "QRS complex widening"
+    ],
+    "aliases": [
+      "QT prolongation",
+      "QTc prolongation",
+      "prolonged QT interval",
+      "dose dependent QTc prolongation"
+    ],
+    "partials": [],
+    "explanation": "Citalopram can prolong the corrected QT interval, with a dose-dependent effect. This is why dose limits, interacting drugs, electrolytes, and relevant cardiac risk factors matter when prescribing it. QT prolongation can increase susceptibility to torsades de pointes, but it does not mean every treated patient develops an arrhythmia. The question concerns the recognized dose-related repolarization effect; PR lengthening and QRS widening describe different electrical conduction effects.",
+    "source": {
+      "label": "Citalopram dose and QTc prolongation",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29955465/"
+    },
+    "additionalSources": [
+      {
+        "label": "MHRA: dose-dependent QT effects and prescribing precautions",
+        "url": "https://www.gov.uk/drug-safety-update/citalopram-and-escitalopram-qt-interval-prolongation"
+      }
+    ]
+  },
+  {
+    "id": "exp-a-early-water-break",
+    "specialty": "Obstetrics",
+    "title": "An unscheduled water break",
+    "memeTop": "THE WATERS BROKE BEFORE THE CALENDAR WAS READY",
+    "memeBottom": "THE NEXT STEP DEPENDS ON THE WHOLE CLINICAL PICTURE",
+    "question": "At 30 weeks and two days, a pregnant patient has confirmed preterm prelabor rupture of membranes. She is afebrile, has no uterine tenderness, bleeding, contractions, or cord prolapse, and fetal assessment is reassuring. No antenatal corticosteroid course has been given. Her hospital bag is still a shopping list. Which management plan is most appropriate now?",
+    "answer": "Expectant management with corticosteroids and latency antibiotics",
+    "answerType": "clinical",
+    "options": [
+      "Expectant management with corticosteroids and latency antibiotics",
+      "Immediate delivery solely because membranes ruptured",
+      "Expectant management without antibiotics or corticosteroids",
+      "Routine prolonged tocolysis until term"
+    ],
+    "aliases": [
+      "expectant management with antenatal steroids and latency antibiotics",
+      "inpatient expectant management with steroids and antibiotics",
+      "expectant management steroids and antibiotics"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "expectant management",
+          "latency antibiotics",
+          "antenatal corticosteroids"
+        ],
+        "points": 30,
+        "relation": "This identifies a component of the appropriate plan, but the complete answer combines surveillance, antenatal corticosteroids, and latency antibiotics."
+      }
+    ],
+    "explanation": "At 30 weeks, stable PPROM without infection, labor, placental abruption, or fetal compromise is usually managed expectantly with maternal and fetal surveillance, antenatal corticosteroids, and latency antibiotics. Immediate delivery is indicated if a contraindication to continuing pregnancy develops; rupture alone at this gestation is not a routine indication. Corticosteroids improve fetal maturation, and latency antibiotics help prolong pregnancy and reduce infectious morbidity. Magnesium sulfate is considered if early delivery becomes imminent, according to gestation and local guidance.",
+    "source": {
+      "label": "PPROM practice guideline: expectant care, corticosteroids, and antibiotics",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32257148/"
+    },
+    "additionalSources": [
+      {
+        "label": "RCOG Green-top Guideline 73: PPROM management",
+        "url": "https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/care-of-women-presenting-with-suspected-preterm-prelabour-rupture-of-membranes-from-24plus0-weeks-of-gestation-green-top-guideline-no-73/"
+      }
+    ]
+  },
+  {
+    "id": "exp-a-sodium-silence",
+    "specialty": "Nephrology",
+    "title": "The sodium went quiet",
+    "memeTop": "THE MEDICATION LIST GOT ONE NEW LINE",
+    "memeBottom": "THE SODIUM RESULT REQUESTED A REVIEW",
+    "question": "Two weeks after starting sertraline, a 71-year-old develops nausea and fatigue. Sodium is 124 mmol/L, serum osmolality 260 mOsm/kg, urine osmolality 460 mOsm/kg, and urine sodium 58 mmol/L. Examination shows euvolemia; renal function, thyroid testing, and morning cortisol are normal, with no diuretic use. The laboratory portal has become unexpectedly interesting. Which mechanism best explains the hyponatremia?",
+    "answer": "SSRI-associated SIADH",
+    "answerType": "clinical",
+    "options": [
+      "SSRI-associated SIADH",
+      "Primary polydipsia with fully suppressed antidiuresis",
+      "Hypovolemic hyponatremia from gastrointestinal losses",
+      "Hypervolemic hyponatremia from heart failure"
+    ],
+    "aliases": [
+      "SIADH",
+      "syndrome of inappropriate antidiuretic hormone secretion",
+      "syndrome of inappropriate antidiuresis",
+      "sertraline induced SIADH",
+      "SSRI induced SIADH"
+    ],
+    "partials": [],
+    "explanation": "This is hypotonic hyponatremia with clinical euvolemia, inappropriately concentrated urine, and relatively high urinary sodium after exclusion of major endocrine and renal mimics. That pattern supports SIADH, and the recent SSRI start provides a plausible medication trigger. Primary polydipsia with intact suppression of antidiuresis would usually produce much more dilute urine. SSRIs have an established association with SIADH; diagnosis and management also require assessing symptoms, timing, and alternative causes.",
+    "source": {
+      "label": "Expert consensus: psychotropic-associated SIADH",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34739943/"
+    },
+    "additionalSources": [
+      {
+        "label": "Full text: diagnostic clues and SSRI association",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10911096/"
+      }
+    ]
+  },
+  {
+    "id": "exp-a-baby-guest-list",
+    "specialty": "Pediatrics",
+    "title": "The guest list is under review",
+    "memeTop": "NINE-MONTH-OLD MEETS A NEW VISITOR",
+    "memeBottom": "ACCESS REQUEST PENDING PARENTAL APPROVAL",
+    "question": "At a routine visit, a healthy 9-month-old smiles and plays peek-a-boo with her father but becomes wary and clings to him when an unfamiliar clinician approaches. She settles on his lap and otherwise shows appropriate development without loss of skills. Her expression suggests the clinic needs a stricter guest list. Which normal developmental phenomenon best explains this response?",
+    "answer": "Stranger anxiety",
+    "answerType": "clinical",
+    "options": [
+      "Stranger anxiety",
+      "Separation anxiety disorder",
+      "Social anxiety disorder",
+      "Reactive attachment disorder"
+    ],
+    "aliases": [
+      "normal stranger anxiety",
+      "developmentally appropriate stranger anxiety",
+      "stranger wariness"
+    ],
+    "partials": [],
+    "explanation": "Being shy, clingy, or fearful around unfamiliar people is a typical social-emotional milestone by nine months. The infant is comfortable with a familiar caregiver and otherwise developing appropriately, making normal stranger anxiety the best explanation. One brief response to an unfamiliar clinician does not establish an anxiety or attachment disorder. A parent can remain close while the clinician approaches gradually; the baby is allowed to take time reviewing new arrivals.",
+    "source": {
+      "label": "CDC: social and emotional milestones by nine months",
+      "url": "https://www.cdc.gov/act-early/milestones/9-months.html"
+    }
+  },
+  {
+    "id": "exp-a-location-field",
+    "specialty": "Psychiatry",
+    "title": "The form needs more location boxes",
+    "memeTop": "THE INTAKE FORM ALLOWS ONE LOCATION",
+    "memeBottom": "THE HISTORY REQUIRES THREE",
+    "question": "For eight months, a 29-year-old has avoided buses, crowded checkout lines, and enclosed cinemas because escape might be difficult or help unavailable if incapacitating symptoms occur. These situations almost always trigger marked anxiety, and avoidance now disrupts work and errands. The fear is disproportionate and is not explained by substances or another disorder. Her calendar now needs an escape-route column. Which diagnosis best fits?",
+    "answer": "Agoraphobia",
+    "answerType": "clinical",
+    "options": [
+      "Agoraphobia",
+      "Social anxiety disorder",
+      "Specific phobia limited to cinemas",
+      "Generalized anxiety disorder"
+    ],
+    "aliases": [
+      "agoraphobic disorder"
+    ],
+    "partials": [],
+    "explanation": "Agoraphobia involves persistent fear or avoidance of at least two specified situation categories because escape may be difficult or help unavailable during panic-like or other incapacitating symptoms. The fear must be disproportionate, impairing, and present for at least six months. This history includes public transport, crowds or lines, and enclosed spaces for eight months. Fear of negative social evaluation would instead point toward social anxiety. Panic disorder is not required for agoraphobia.",
+    "source": {
+      "label": "Agoraphobia: DSM-5-TR criteria and differential diagnosis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32119274/"
+    }
+  },
+  {
+    "id": "exp-a-lens-sleepover",
+    "specialty": "Ophthalmology",
+    "title": "The lenses stayed overnight",
+    "memeTop": "THE CONTACT LENSES WERE INVITED TO A SLEEPOVER",
+    "memeBottom": "THE CORNEA HAS FILED A FORMAL COMPLAINT",
+    "question": "A 22-year-old who slept in soft contact lenses develops severe eye pain, photophobia, and reduced vision. Examination shows a corneal epithelial defect over a stromal infiltrate, prompting urgent ophthalmology assessment. Corneal scraping grows oxidase-positive Gram-negative rods. The lenses have clearly overstayed their welcome. Which organism is the most likely cause of this bacterial keratitis?",
+    "answer": "Pseudomonas aeruginosa",
+    "answerType": "clinical",
+    "options": [
+      "Pseudomonas aeruginosa",
+      "Staphylococcus aureus",
+      "Streptococcus pneumoniae",
+      "Acanthamoeba species"
+    ],
+    "aliases": [
+      "P aeruginosa",
+      "Pseudomonas"
+    ],
+    "partials": [],
+    "explanation": "Pseudomonas aeruginosa is strongly associated with contact lens-related bacterial keratitis. It is a Gram-negative rod with the culture characteristics described, whereas staphylococci and pneumococci are Gram-positive cocci and Acanthamoeba is a protozoan. The organism must be identified from the whole clinical and laboratory picture; oxidase positivity alone is not species-specific. Pain, photophobia, reduced vision, and a corneal infiltrate warrant urgent specialist care because infectious keratitis can threaten sight.",
+    "source": {
+      "label": "Contact lens-related Pseudomonas keratitis: mechanisms and clinical context",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35192568/"
+    },
+    "additionalSources": [
+      {
+        "label": "UK Department of Health: Pseudomonas laboratory characteristics",
+        "url": "https://assets.publishing.service.gov.uk/media/5a75a40ced915d6faf2b48e2/Health_Technical_Memorandum_04-01_Addendum.pdf"
+      }
+    ]
+  },
+  {
+    "id": "exp-a-thiamine-handover",
+    "specialty": "Neurology",
+    "title": "One vitamin, urgent handover",
+    "memeTop": "THE HANDOVER HAS MORE QUESTION MARKS THAN THE WI-FI PASSWORD",
+    "memeBottom": "THIAMINE SHOULD NOT WAIT FOR A PERFECT SLIDE DECK",
+    "question": "A malnourished adult with longstanding heavy alcohol use presents with confusion, gait ataxia, horizontal nystagmus, and impaired eye movements. Bedside glucose is normal at 96 mg/dL. The team suspects Wernicke encephalopathy while arranging further assessment. The handover has more question marks than the hospital Wi-Fi password. Which vitamin should be administered promptly by a parenteral route?",
+    "answer": "Thiamine",
+    "answerType": "drug",
+    "options": [
+      "Thiamine",
+      "Pyridoxine",
+      "Folic acid",
+      "Cobalamin"
+    ],
+    "aliases": [
+      "vitamin B1",
+      "vitamin B-1",
+      "thiamin",
+      "thiamine hydrochloride"
+    ],
+    "partials": [],
+    "explanation": "Confusion, ataxia, and ocular abnormalities in a person at risk of nutritional deficiency strongly suggest Wernicke encephalopathy. Give parenteral thiamine promptly when it is suspected; treatment should not wait for confirmatory testing. This stem deliberately provides normal glucose. If a patient is hypoglycemic, urgent glucose must not be delayed while waiting for thiamine; give thiamine promptly alongside or after glucose. The intended answer is vitamin B1, not another B vitamin.",
+    "source": {
+      "label": "EFNS guideline: diagnosis and treatment of Wernicke encephalopathy",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20642790/"
+    },
+    "additionalSources": [
+      {
+        "label": "Glucose and thiamine: do not delay treatment of hypoglycemia",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/22104258/"
+      }
+    ]
+  },
+  {
+    "id": "exp-a-hepatocyte-storage",
+    "specialty": "Pathology",
+    "title": "The hepatocyte needs more storage",
+    "memeTop": "THE HEPATOCYTE HAS ONE LARGE NEW STORAGE UNIT",
+    "memeBottom": "THE NUCLEUS HAS BEEN MOVED TO THE EDGE",
+    "question": "A 46-year-old with type 2 diabetes and metabolic dysfunction-associated steatotic liver disease undergoes a liver biopsy for a separate staging question. The pathology image shows hepatocytes containing large, clear lipid vacuoles that displace their nuclei toward the cell margins. The slide resembles an aggressively reorganized studio apartment. What is the name of this characteristic pattern of fat accumulation?",
+    "answer": "Macrovesicular steatosis",
+    "answerType": "clinical",
+    "options": [
+      "Macrovesicular steatosis",
+      "Microvesicular steatosis",
+      "Hepatocellular ballooning",
+      "Glycogenated nuclei"
+    ],
+    "aliases": [
+      "macrovesicular fatty change",
+      "macrovesicular hepatic steatosis",
+      "large droplet steatosis"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "steatosis",
+          "fatty change",
+          "hepatic fat accumulation"
+        ],
+        "points": 30,
+        "relation": "Correct fat-accumulation concept, but the question asks for the large-droplet morphologic pattern."
+      }
+    ],
+    "explanation": "Macrovesicular steatosis describes large lipid droplets in hepatocytes that push the nucleus toward the periphery. It is the usual steatosis pattern in the condition formerly called NAFLD, now largely encompassed by MASLD. Microvesicular steatosis consists of tiny droplets with the nucleus remaining central. Steatosis alone does not establish steatohepatitis: ballooning injury and inflammation must also be assessed. This question identifies an existing biopsy finding and does not imply that every patient needs a biopsy.",
+    "source": {
+      "label": "Histopathology of fatty liver disease: steatosis patterns",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25400438/"
+    },
+    "additionalSources": [
+      {
+        "label": "Full text: macrovesicular versus microvesicular steatosis",
+        "url": "https://www.wjgnet.com/1007-9327/full/v20/i42/15539.htm"
+      },
+      {
+        "label": "MASLD: current terminology and clinical context",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/37700494/"
+      }
+    ]
+  },
+  {
+    "id": "exp-a-hpv-acronyms",
+    "specialty": "Infectious Disease",
+    "title": "A very specific pair",
+    "memeTop": "THE PATIENT ASKS FOR FEWER ACRONYMS",
+    "memeBottom": "THE ANSWER STILL STARTS WITH HPV",
+    "question": "An adult has several soft, painless, exophytic papules on the external genital skin. Clinical examination is consistent with condylomata acuminata, with no atypical pigmentation, ulceration, or induration. During explanation, the patient asks whether the clinician can finish using fewer acronyms. Which pair of human papillomavirus types causes the large majority of these anogenital warts?",
+    "answer": "HPV types 6 and 11",
+    "answerType": "clinical",
+    "options": [
+      "HPV types 6 and 11",
+      "HPV types 16 and 18",
+      "HPV types 31 and 33",
+      "HPV types 45 and 52"
+    ],
+    "aliases": [
+      "HPV 6 and 11",
+      "HPV 6 11",
+      "human papillomavirus 6 and 11",
+      "types 6 and 11",
+      "6 and 11"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "human papillomavirus",
+          "HPV"
+        ],
+        "points": 30,
+        "relation": "Correct viral family concept, but full credit requires the two predominant wart-associated types."
+      }
+    ],
+    "explanation": "Approximately 90% of anogenital warts are caused by the low-risk, nononcogenic HPV types 6 or 11. These differ from the high-risk types most strongly associated with cervical and other anogenital cancers. Visual inspection usually establishes the clinical wart diagnosis, while atypical lesions can require biopsy. Coinfection with other HPV types can occur, so the answer identifies the predominant wart-causing pair rather than claiming that every lesion contains only those two types.",
+    "source": {
+      "label": "CDC Sexually Transmitted Infections Treatment Guidelines, 2021",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34292926/"
+    },
+    "additionalSources": [
+      {
+        "label": "CDC full guidance: anogenital warts and HPV types 6/11",
+        "url": "https://www.cdc.gov/std/treatment-guidelines/anogenital-warts.htm"
+      }
+    ]
+  },
+  {
+    "id": "exp-b-bathroom-buffer",
+    "specialty": "Anatomy",
+    "title": "The bathroom queue buffer",
+    "memeTop": "THE STALL IS OCCUPIED",
+    "memeBottom": "VOLUNTARY CONTROL HAS ENTERED THE CHAT",
+    "question": "A 29-year-old commuter reaches the station bathroom just as someone begins a suspiciously long video call inside. During pelvic-floor teaching later that week, she asks which ring of striated muscle she deliberately contracts to postpone defecation. The tutor specifies the muscle surrounding the anal canal, supplied by inferior rectal branches of the pudendal nerve. Which muscle is doing the voluntary squeeze?",
+    "answer": "External anal sphincter",
+    "options": [
+      "External anal sphincter",
+      "Internal anal sphincter",
+      "Puborectalis",
+      "Rectus abdominis"
+    ],
+    "aliases": [
+      "external sphincter of anus",
+      "external anal sphincter muscle",
+      "EAS"
+    ],
+    "partials": [],
+    "explanation": "The external anal sphincter is striated muscle under somatic, voluntary control through pudendal innervation. Its contraction helps maintain continence while a person waits to defecate. The internal sphincter is smooth muscle and contributes involuntary resting tone. Puborectalis also helps continence by maintaining the anorectal angle, but the question identifies the ring surrounding the anal canal. Continence involves several coordinated structures; this muscle does not work alone.",
+    "source": {
+      "label": "Human pudendal nerve blockade study, Obstetrics & Gynecology",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16199635/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-b-liver-autocorrect",
+    "specialty": "Gastroenterology",
+    "title": "The liver's autocorrect incident",
+    "memeTop": "THE FAMILY CHAT SAYS HE IS TYPING",
+    "memeBottom": "THE MESSAGE IS JUST SEVEN SPOON EMOJIS",
+    "question": "A 58-year-old man with cirrhosis sends the family chat a photograph of his television remote labeled 'breakfast.' He is disoriented and has asterixis after 4 days of constipation. In hospital, the team evaluates glucose, medications, infection, bleeding, and electrolytes and treats identified triggers. Alongside this assessment and supportive care, which nonabsorbable disaccharide is the usual first-choice medication for an episode of overt hepatic encephalopathy?",
+    "answer": "Lactulose",
+    "options": [
+      "Lactulose",
+      "Loperamide",
+      "Omeprazole",
+      "Spironolactone"
+    ],
+    "aliases": [
+      "lactulose solution"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "lactitol"
+        ],
+        "points": 65,
+        "relation": "Same broad drug class: a nonabsorbable disaccharide used in hepatic encephalopathy. Lactulose is the named first-choice agent in the cited guideline; this is class credit rather than a prescribing substitution."
+      },
+      {
+        "terms": [
+          "nonabsorbable disaccharide",
+          "non absorbable disaccharide"
+        ],
+        "points": 30,
+        "relation": "Correct drug-family concept, but the question asks for a specific medication."
+      }
+    ],
+    "explanation": "Disorientation and asterixis in this setting fit overt hepatic encephalopathy, but clinicians must investigate alternative causes of altered mental status and correct precipitating factors. Constipation is one possible trigger. AASLD/EASL guidance identifies lactulose as first choice for an episode of overt encephalopathy. Loperamide slows intestinal transit, while omeprazole and spironolactone do not treat the encephalopathy. The question does not imply that giving lactulose replaces trigger identification or supportive care.",
+    "source": {
+      "label": "AASLD/EASL hepatic encephalopathy practice guideline",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25042402/"
+    },
+    "answerType": "drug"
+  },
+  {
+    "id": "exp-b-iron-inventory",
+    "specialty": "Hematology",
+    "title": "The iron inventory is empty",
+    "memeTop": "THE COFFEE BUDGET IS FULLY FUNDED",
+    "memeBottom": "THE IRON WAREHOUSE HAS ONE PAPER CLIP",
+    "question": "A 34-year-old teacher says the stairs now require an intermission and a snack sponsor. She reports several months of heavy menstrual bleeding. Hemoglobin is 9.2 g/dL, MCV 70 fL, ferritin 6 ng/mL, serum iron 22 micrograms/dL, and total iron-binding capacity 480 micrograms/dL; CRP is normal. Which anemia best explains the combination of low iron, depleted stores, and increased iron-binding capacity?",
+    "answer": "Iron deficiency anemia",
+    "options": [
+      "Iron deficiency anemia",
+      "Anemia of inflammation",
+      "Vitamin B12 deficiency anemia",
+      "Beta-thalassemia trait"
+    ],
+    "aliases": [
+      "iron deficiency anaemia",
+      "iron-deficiency anemia",
+      "iron-deficiency anaemia",
+      "IDA",
+      "iron deficiency"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "iron depletion"
+        ],
+        "points": 30,
+        "relation": "Identifies the depleted-iron mechanism; the requested diagnosis includes the resulting anemia."
+      }
+    ],
+    "explanation": "The markedly low ferritin indicates depleted iron stores, and the microcytosis, low serum iron, and raised TIBC support iron deficiency anemia. Heavy menstrual bleeding is a plausible source of loss that still needs appropriate clinical assessment. Low serum iron alone is insufficient because it also occurs with inflammation; ferritin can rise during inflammation and TIBC may fall. Neither B12 deficiency nor thalassemia trait explains this complete pattern of depleted iron stores.",
+    "source": {
+      "label": "British Society of Gastroenterology iron deficiency anemia guideline",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34497146/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-b-lab-group-chat",
+    "specialty": "Infectious Diseases",
+    "title": "The lab ends the group debate",
+    "memeTop": "THE GROUP CHAT HAS SIX DIAGNOSES",
+    "memeBottom": "THE NAAT WOULD LIKE THE MICROPHONE",
+    "question": "A 23-year-old man develops dysuria and a small amount of urethral discharge 12 days after sex with a new partner. His friends have produced a diagnostic spreadsheet with absolutely no laboratory column. A urethral smear shows inflammation without intracellular gram-negative diplococci. First-catch urine NAAT is positive for a common obligately intracellular bacterial STI and negative for gonorrhea. Which organism is the confirmed cause of his nongonococcal urethritis?",
+    "answer": "Chlamydia trachomatis",
+    "options": [
+      "Chlamydia trachomatis",
+      "Neisseria gonorrhoeae",
+      "Mycoplasma genitalium",
+      "Trichomonas vaginalis"
+    ],
+    "aliases": [
+      "C. trachomatis",
+      "C trachomatis",
+      "chlamydia",
+      "chlamydial urethritis"
+    ],
+    "partials": [],
+    "explanation": "The positive organism-specific NAAT establishes chlamydial urethritis. The smear supports nongonococcal urethritis, but absence of intracellular diplococci does not by itself identify Chlamydia. Mycoplasma genitalium and Trichomonas vaginalis can also cause nongonococcal urethritis. CDC guidance recommends testing suspected or confirmed cases for both chlamydia and gonorrhea with NAATs; the first-catch urine result supplies the specificity missing from the friends' spreadsheet and the Gram stain.",
+    "source": {
+      "label": "CDC STI treatment guidelines: urethritis and cervicitis",
+      "url": "https://www.cdc.gov/std/treatment-guidelines/urethritis-and-cervicitis.htm"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-b-sensory-departments",
+    "specialty": "Neurology",
+    "title": "Two sensory departments stay open",
+    "memeTop": "PAIN AND TEMPERATURE ARE OFFLINE",
+    "memeBottom": "POSITION SENSE IS STILL ANSWERING EMAIL",
+    "question": "A 67-year-old retired accountant calls his rehabilitation chart 'the least enjoyable spreadsheet.' After an episode of severe perioperative hypotension, he develops weakness in both legs and loss of pain and temperature sensation below T10. Vibration and joint-position sense remain preserved. Imaging localizes the injury predominantly to the front portion of the spinal cord. Which incomplete spinal cord syndrome best fits this selective pattern?",
+    "answer": "Anterior cord syndrome",
+    "options": [
+      "Anterior cord syndrome",
+      "Posterior cord syndrome",
+      "Central cord syndrome",
+      "Brown-Séquard syndrome"
+    ],
+    "aliases": [
+      "anterior spinal cord syndrome",
+      "ventral cord syndrome",
+      "anterior spinal artery syndrome"
+    ],
+    "partials": [],
+    "explanation": "Anterior cord syndrome compromises motor pathways and the spinothalamic pathways carrying pain and temperature while sparing the dorsal columns carrying vibration and position sense. Reduced anterior spinal cord perfusion is a recognized setting. Posterior cord injury would preferentially affect dorsal-column sensation; central cord syndrome commonly causes greater arm than leg weakness. Brown-Séquard syndrome produces an asymmetric pattern associated with a hemicord injury rather than the bilateral deficits described here.",
+    "source": {
+      "label": "International Standards for Neurological Classification of Spinal Cord Injury",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34108832/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-b-calendar-window",
+    "specialty": "Infectious Diseases",
+    "title": "The calendar matters",
+    "memeTop": "THE RAPID TEST HAS AN EARLY DRAFT",
+    "memeBottom": "RNA HAS THE UPDATED DOCUMENT",
+    "question": "A 26-year-old graduate student jokes that his calendar finally became clinically useful. Three weeks after a possible sexual exposure, he develops fever, sore throat, a diffuse rash, and generalized lymphadenopathy. A rapid antibody-only HIV test is negative, but plasma HIV-1 RNA is 1.8 million copies/mL and is confirmed on a new specimen. Which diagnosis best explains the illness and apparently discordant tests?",
+    "answer": "Acute HIV infection",
+    "options": [
+      "Acute HIV infection",
+      "Epstein-Barr virus mononucleosis",
+      "Influenza",
+      "Secondary syphilis"
+    ],
+    "aliases": [
+      "acute HIV",
+      "acute retroviral syndrome",
+      "primary HIV infection",
+      "acute HIV syndrome",
+      "acute HIV-1 infection"
+    ],
+    "partials": [],
+    "explanation": "Acute HIV can cause a nonspecific febrile illness with rash, pharyngitis, and lymphadenopathy within weeks of acquisition. Viral RNA can be detectable while an antibody-only test remains negative. The confirmed high RNA level makes acute HIV the best answer; symptoms alone would not distinguish it from several other infections. CDC guidance recommends RNA testing when acute infection is suspected despite negative or indeterminate initial testing, followed by prompt linkage to HIV care.",
+    "source": {
+      "label": "CDC STI treatment guidelines: acute HIV infection and testing",
+      "url": "https://www.cdc.gov/std/treatment-guidelines/hiv.htm"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-b-brain-final-report",
+    "specialty": "Infectious Diseases",
+    "title": "The final report beats the screenshot",
+    "memeTop": "ONE BRAIN LESION IS A CLUE",
+    "memeBottom": "THE BIOPSY IS THE ACTUAL RECEIPT",
+    "question": "A 42-year-old man with HIV and a CD4 count of 28 cells/mm³ says his new headaches have made every phone notification feel like a drum solo. MRI shows one enhancing periventricular brain lesion. CSF contains EBV DNA; stereotactic biopsy shows EBV-associated large CD20-positive malignant B cells. Systemic staging finds no lymphoma outside the CNS. Which diagnosis explains these findings?",
+    "answer": "Primary CNS lymphoma",
+    "options": [
+      "Primary CNS lymphoma",
+      "Cerebral toxoplasmosis",
+      "Progressive multifocal leukoencephalopathy",
+      "Glioblastoma"
+    ],
+    "aliases": [
+      "primary central nervous system lymphoma",
+      "PCNSL",
+      "HIV-associated primary CNS lymphoma",
+      "AIDS-associated primary CNS lymphoma",
+      "primary cerebral lymphoma"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "lymphoma",
+          "B-cell lymphoma",
+          "diffuse large B-cell lymphoma"
+        ],
+        "points": 30,
+        "relation": "Recognizes the malignant lymphoid process; full credit identifies lymphoma arising primarily within the CNS."
+      }
+    ],
+    "explanation": "The malignant B-cell biopsy and CNS-restricted staging establish primary CNS lymphoma. Advanced HIV and the EBV findings support this diagnosis. A solitary enhancing lesion alone would not prove lymphoma: infection and other tumors remain important possibilities, and lymphoma can also be multifocal. Toxoplasmosis does not produce a malignant B-cell biopsy; PML is a different white-matter disease. CSF EBV DNA is supportive evidence in context, rather than a substitute for interpreting imaging, pathology, and the broader assessment.",
+    "source": {
+      "label": "EANO primary CNS lymphoma guideline",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35953526/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-b-pool-souvenir",
+    "specialty": "Infectious Diseases",
+    "title": "The pool's unwanted souvenir",
+    "memeTop": "THE WATER PARK HAD A LAZY RIVER",
+    "memeBottom": "THE INTESTINE DID NOT GET THE MEMO",
+    "question": "A 38-year-old woman with advanced HIV reports 3 weeks of profuse, nonbloody watery diarrhea after a water-park visit. She says the souvenir shop would have been cheaper. Her CD4 count is 44 cells/mm³. Stool microscopy identifies round oocysts about 5 micrometers across that stain with a modified acid-fast method; a molecular stool assay confirms the corresponding protozoan. Which infection is the best diagnosis?",
+    "answer": "Cryptosporidiosis",
+    "options": [
+      "Cryptosporidiosis",
+      "Giardiasis",
+      "Cystoisosporiasis",
+      "Amebiasis"
+    ],
+    "aliases": [
+      "cryptosporidium infection",
+      "Cryptosporidium",
+      "cryptosporidial diarrhea",
+      "cryptosporidial enteritis"
+    ],
+    "partials": [],
+    "explanation": "Cryptosporidium causes watery diarrhea and can produce prolonged, severe disease with advanced immunosuppression. Its small, rounded oocysts are approximately 4–6 micrometers and can be detected with modified acid-fast staining. The molecular result strengthens the identification. Cystoisospora oocysts are much larger and elongated; the alternatives do not fit this oocyst pattern. A water exposure is a useful clue rather than proof, and molecular or antigen methods can detect cases that microscopy misses.",
+    "source": {
+      "label": "NIH opportunistic infection guideline: cryptosporidiosis",
+      "url": "https://clinicalinfo.hiv.gov/en/guidelines/hiv-clinical-guidelines-adult-and-adolescent-opportunistic-infections/cryptosporidiosis"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-b-family-shoe-review",
+    "specialty": "Neurology",
+    "title": "The family shoe review",
+    "memeTop": "THREE GENERATIONS DISLIKE THE SAME SHOES",
+    "memeBottom": "THE PEDIGREE HAS ENTERED THE CONSULTATION",
+    "question": "A 21-year-old student keeps catching his toes on the carpet and has written a very unfair review of gravity. Examination shows bilateral pes cavus, distal calf wasting, weak ankle dorsiflexion, reduced distal sensation, and depressed ankle reflexes. His father and paternal grandmother have similar feet and longstanding gait problems. Nerve-conduction studies show a symmetric motor and sensory neuropathy with uniform slowing. Which inherited disorder is most likely?",
+    "answer": "Charcot-Marie-Tooth disease",
+    "options": [
+      "Charcot-Marie-Tooth disease",
+      "Guillain-Barré syndrome",
+      "Myasthenia gravis",
+      "Duchenne muscular dystrophy"
+    ],
+    "aliases": [
+      "Charcot Marie Tooth disease",
+      "Charcot-Marie-Tooth",
+      "CMT",
+      "hereditary motor and sensory neuropathy",
+      "HMSN"
+    ],
+    "partials": [],
+    "explanation": "The longstanding, symmetric distal motor and sensory neuropathy, high arches, reduced reflexes, and multigenerational history favor Charcot-Marie-Tooth disease. Uniformly slowed conduction supports a demyelinating form, but the syndrome includes genetically and electrophysiologically diverse subtypes. Family assessment, electrodiagnostic testing, and genetic testing help characterize it. Guillain-Barré typically has a more acute course; myasthenia affects neuromuscular transmission rather than distal sensation, and Duchenne primarily produces a muscle-disease pattern.",
+    "source": {
+      "label": "Clinical practice guideline for Charcot-Marie-Tooth disease",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38431252/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-b-bedside-pause",
+    "specialty": "Psychiatry",
+    "title": "A clinical pause button",
+    "memeTop": "THE TELEVISION IS PAUSED",
+    "memeBottom": "THE BEDSIDE FINDINGS NEED AN ASSESSMENT",
+    "question": "A 31-year-old librarian with a severe mood episode becomes mute, stares, resists instructions, and maintains an examiner-positioned arm for several minutes. Her partner says even the television's pause screen has moved more today. She is afebrile, and the team evaluates medical causes and complications of suspected catatonia. Which benzodiazepine is commonly used for a monitored challenge that can rapidly support the diagnosis?",
+    "answer": "Lorazepam",
+    "options": [
+      "Lorazepam",
+      "Haloperidol",
+      "Fluoxetine",
+      "Donepezil"
+    ],
+    "aliases": [
+      "lorazepam challenge",
+      "Ativan"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "diazepam",
+          "clonazepam"
+        ],
+        "points": 65,
+        "relation": "Same broad drug class: benzodiazepines. Lorazepam is the standard named challenge agent; class credit does not establish an interchangeable challenge protocol."
+      },
+      {
+        "terms": [
+          "benzodiazepine",
+          "benzodiazepines",
+          "benzo"
+        ],
+        "points": 30,
+        "relation": "Correct drug-family concept, but the question asks for the specific challenge medication."
+      }
+    ],
+    "explanation": "Mutism, staring, negativism, and sustained posturing suggest catatonia. A monitored lorazepam challenge can reduce signs quickly and support the diagnosis, while the team investigates causes and protects hydration, nutrition, and physical health. A response is not completely specific, and a lack of response does not automatically exclude catatonia. Haloperidol is not the challenge drug and needs particular caution in this setting. Fluoxetine and donepezil do not provide the standard diagnostic challenge.",
+    "source": {
+      "label": "British Association for Psychopharmacology catatonia guideline",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37039129/"
+    },
+    "answerType": "drug"
+  },
+  {
+    "id": "exp-b-wardrobe-assembly",
+    "specialty": "Neurology",
+    "title": "Flat-pack furniture fights back",
+    "memeTop": "THE INSTRUCTIONS SAID TWO PEOPLE",
+    "memeBottom": "THE WRIST HAS SUBMITTED A COMPLAINT",
+    "question": "A 36-year-old man falls while assembling a wardrobe alone, having promoted himself to the entire construction crew. Radiographs show a midshaft humeral fracture. He cannot extend his wrist or finger knuckles, and sensation is reduced in the dorsal first web space. Elbow extension remains strong. Which peripheral nerve is most likely injured near the humeral shaft?",
+    "answer": "Radial nerve",
+    "options": [
+      "Radial nerve",
+      "Median nerve",
+      "Ulnar nerve",
+      "Axillary nerve"
+    ],
+    "aliases": [
+      "radial nerve injury",
+      "radial neuropathy",
+      "radial nerve palsy"
+    ],
+    "partials": [],
+    "explanation": "A humeral shaft injury with wrist and finger-extension weakness is characteristic of radial nerve palsy. The dorsal first web-space sensory finding supports a radial distribution, while preserved elbow extension is compatible with injury distal to many triceps branches. Median, ulnar, and axillary lesions produce different patterns. The examination localizes the likely nerve; it does not determine whether the nerve is bruised, trapped, or disrupted, or establish the treatment needed for this fracture.",
+    "source": {
+      "label": "Prospective humeral-fracture radial nerve palsy study",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37266182/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-b-missing-toe-notifications",
+    "specialty": "Neurology",
+    "title": "The missing toe sends notifications",
+    "memeTop": "THE FOOT IS NO LONGER PRESENT",
+    "memeBottom": "THE PAIN MESSAGE STILL ARRIVES",
+    "question": "Six months after a below-knee amputation, a 47-year-old cyclist describes intermittent burning and twisting pain in the toes of the absent foot. She jokes that those toes have kept their phone plan. The residual limb is healed, and she clearly locates the painful experience beyond it, rather than at the scar. What term describes pain perceived in the amputated part?",
+    "answer": "Phantom limb pain",
+    "options": [
+      "Phantom limb pain",
+      "Residual limb pain",
+      "Nonpainful phantom sensation",
+      "Incisional pain"
+    ],
+    "aliases": [
+      "phantom pain",
+      "painful phantom limb",
+      "phantom-limb pain",
+      "PLP"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "neuropathic pain"
+        ],
+        "points": 30,
+        "relation": "Related pain-mechanism category; the question asks for the specific syndrome defined by pain in the absent limb."
+      }
+    ],
+    "explanation": "Phantom limb pain is a painful experience located in an absent limb or its missing part. Residual limb pain is located in the remaining limb, and a nonpainful phantom sensation lacks the painful component. The patient's localization makes the distinction here. Pain in a missing part is a real clinical phenomenon; a healed scar does not invalidate it. The name describes the experience without establishing one universal neural mechanism or selecting a treatment.",
+    "source": {
+      "label": "IASP consensus statement: revised definition of pain",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32694387/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-b-antiviral-name-tag",
+    "specialty": "Infectious Diseases",
+    "title": "The antiviral needs a name tag",
+    "memeTop": "THE PRESCRIPTION HAS A BRAND NAME",
+    "memeBottom": "THE EXAM WANTS THE GENERIC",
+    "question": "A 24-year-old woman presents with 2 days of painful genital vesicles and ulcers during her first clinical episode of genital herpes. A lesion NAAT detects HSV-2. She says her pharmacy app has made medication names sound like fantasy characters. Her clinician selects the oral acyclovir prodrug sold as Valtrex. What is the generic medication?",
+    "answer": "Valacyclovir",
+    "options": [
+      "Valacyclovir",
+      "Doxycycline",
+      "Ceftriaxone",
+      "Metronidazole"
+    ],
+    "aliases": [
+      "valaciclovir",
+      "valacyclovir hydrochloride",
+      "valaciclovir hydrochloride",
+      "Valtrex"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "acyclovir",
+          "aciclovir",
+          "famciclovir"
+        ],
+        "points": 65,
+        "relation": "Related antiherpes nucleoside-analogue antivirals used for genital herpes. They are different medications; the acyclovir prodrug and Valtrex clues identify valacyclovir."
+      },
+      {
+        "terms": [
+          "antiviral",
+          "antiherpetic antiviral",
+          "herpes antiviral"
+        ],
+        "points": 30,
+        "relation": "Recognizes the treatment category without identifying the named medication."
+      }
+    ],
+    "explanation": "Valacyclovir, also spelled valaciclovir, is the oral prodrug of acyclovir and the generic ingredient in Valtrex. It is one recommended oral option for a first clinical episode of genital herpes; acyclovir and famciclovir are other options, so valacyclovir is not the only effective antiviral. The listed antibiotic and antiprotozoal distractors do not identify this medicine. The lesion NAAT establishes HSV, while the brand and prodrug clues make the generic answer specific.",
+    "source": {
+      "label": "Randomized trial of valaciclovir for first-episode genital herpes",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9293612/"
+    },
+    "answerType": "drug"
+  },
+  {
+    "id": "exp-b-shopping-cart-history",
+    "specialty": "Psychiatry",
+    "title": "The shopping cart has a history",
+    "memeTop": "THE CURRENT VISIT IS ABOUT LOW MOOD",
+    "memeBottom": "THE EIGHT-DAY MANIC EPISODE STILL COUNTS",
+    "question": "A 30-year-old designer has 7 weeks of depressed mood and loss of interest. Her records document a previous 8-day manic episode with grandiosity, 2 hours of sleep nightly, reckless purchases, and hospitalization; bipolar I disorder was diagnosed. She jokes that her shopping app remembers the episode too. Which proposed medication should the team avoid using alone as monotherapy for her bipolar I depression?",
+    "answer": "Sertraline",
+    "options": [
+      "Sertraline",
+      "Quetiapine",
+      "Lithium",
+      "Lamotrigine"
+    ],
+    "aliases": [
+      "sertraline hydrochloride",
+      "sertraline hcl",
+      "Zoloft"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "fluoxetine",
+          "escitalopram"
+        ],
+        "points": 65,
+        "relation": "Same drug class: SSRIs. These also illustrate antidepressants that should not be used alone for bipolar I depression, but sertraline is the listed medication."
+      },
+      {
+        "terms": [
+          "SSRI",
+          "selective serotonin reuptake inhibitor",
+          "antidepressant monotherapy",
+          "antidepressant"
+        ],
+        "points": 30,
+        "relation": "Identifies the relevant antidepressant-treatment concern rather than the specific listed drug."
+      }
+    ],
+    "explanation": "Sertraline is an SSRI antidepressant. CANMAT/ISBD guidance advises against antidepressant monotherapy for bipolar I depression because of efficacy and mood-switch concerns. The documented manic episode is essential; a casual description of changing moods would not establish bipolar I disorder. Quetiapine, lithium, and lamotrigine are listed bipolar-depression options, with choice depending on the individual assessment. Some antidepressants may be considered as adjuncts in selected circumstances, so this question concerns their use alone.",
+    "source": {
+      "label": "CANMAT/ISBD bipolar disorder treatment guideline",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29536616/"
+    },
+    "answerType": "drug"
+  },
+  {
+    "id": "exp-b-paperwork-escape-room",
+    "specialty": "Psychiatry",
+    "title": "The paperwork escape room",
+    "memeTop": "THE EXAMINATION IS NOT A LIE DETECTOR",
+    "memeBottom": "THE EXPLICIT ADMISSION CHANGES THE CASE",
+    "question": "A 34-year-old courier calls an appointment 'a paperwork escape room.' After a careful assessment, she privately states that she deliberately invented ankle pain solely to obtain 3 paid days off work, and explains how she falsified the history. Collateral information corroborates that account. The clinician still considers coexisting illness and practical needs. Which term describes the intentional symptom fabrication for this external benefit?",
+    "answer": "Malingering",
+    "options": [
+      "Malingering",
+      "Factitious disorder",
+      "Somatic symptom disorder",
+      "Functional neurological symptom disorder"
+    ],
+    "aliases": [
+      "malingered symptoms",
+      "malingering for external gain"
+    ],
+    "partials": [],
+    "explanation": "Malingering involves deliberate fabrication or exaggeration of symptoms for an external incentive, here explicitly admitted and corroborated. Factitious disorder involves identified deception without the obvious external rewards central to this stem. Somatic symptom and functional neurological disorders should not be equated with deliberate fabrication. An unexplained symptom, normal examination, difficult social circumstances, or inconsistent account alone would not establish malingering. Assessment must also consider genuine illness and the person's broader circumstances.",
+    "source": {
+      "label": "Multidimensional malingering assessment criteria",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32377667/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-b-kidney-heart-book-club",
+    "specialty": "Nephrology",
+    "title": "The kidney–heart journal club",
+    "memeTop": "THE KIDNEY AND HEART SHARE A CALENDAR",
+    "memeBottom": "BOTH ACCEPTED THE JOURNAL-CLUB INVITE",
+    "question": "A 64-year-old man with CKD has an eGFR of 32 mL/min/1.73 m² and stable symptomatic heart failure with an ejection fraction of 35%. He calls his multidisciplinary appointment 'a very expensive book club.' The team discusses an SGLT2 inhibitor studied in both EMPA-KIDNEY and EMPEROR-Reduced, including participants without diabetes. Which specific drug is named by these trials?",
+    "answer": "Empagliflozin",
+    "options": [
+      "Empagliflozin",
+      "Dapagliflozin",
+      "Sitagliptin",
+      "Glipizide"
+    ],
+    "aliases": [
+      "Jardiance"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "dapagliflozin"
+        ],
+        "points": 65,
+        "relation": "Same drug class: an SGLT2 inhibitor with its own cardiorenal evidence. These particular named trials studied empagliflozin; class credit is not a claim that the trials tested both drugs."
+      },
+      {
+        "terms": [
+          "SGLT2 inhibitor",
+          "SGLT-2 inhibitor",
+          "sodium glucose cotransporter 2 inhibitor",
+          "gliflozin"
+        ],
+        "points": 30,
+        "relation": "Correct drug-family concept, but the question asks for the medication tested in the named trials."
+      }
+    ],
+    "explanation": "Both named trials studied empagliflozin. EMPA-KIDNEY enrolled CKD participants with eGFR 20 to below 45 regardless of albuminuria, or eGFR 45 to below 90 with albuminuria meeting the trial threshold, and reduced kidney-disease progression or cardiovascular death. EMPEROR-Reduced studied symptomatic heart failure with ejection fraction 40% or less and improved its cardiovascular-death or heart-failure-hospitalization composite. Benefits were seen with and without diabetes. Trial eligibility supports the discussion; it does not establish a universal prescription or dosing plan.",
+    "source": {
+      "label": "EMPA-KIDNEY randomized trial",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36331190/"
+    },
+    "answerType": "drug"
+  },
+  {
+    "id": "exp-b-toe-walk-meeting",
+    "specialty": "Neurology",
+    "title": "The toe-walk meeting",
+    "memeTop": "THE BOX WAS LABELED LIGHT",
+    "memeBottom": "THE NERVE ROOT REQUESTS A CORRECTION",
+    "question": "A 41-year-old office manager develops back pain radiating down the posterior left leg after lifting a box labeled 'mostly cables.' He now struggles to stand on his left toes. Examination shows weak plantarflexion, a reduced left Achilles reflex, and decreased sensation along the lateral foot. MRI shows a left paracentral L5–S1 disc herniation affecting the traversing root. Which radiculopathy best fits?",
+    "answer": "S1 radiculopathy",
+    "options": [
+      "S1 radiculopathy",
+      "L4 radiculopathy",
+      "L5 radiculopathy",
+      "Common fibular neuropathy"
+    ],
+    "aliases": [
+      "S1",
+      "S1 nerve root",
+      "first sacral radiculopathy",
+      "S1 root compression",
+      "left S1 radiculopathy"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "sciatica",
+          "lumbosacral radiculopathy"
+        ],
+        "points": 30,
+        "relation": "Recognizes a related radicular syndrome; the question asks for the specific nerve-root level."
+      }
+    ],
+    "explanation": "Weak plantarflexion, reduced Achilles reflex, and lateral-foot sensory loss form a classic S1 pattern. A paracentral L5–S1 disc lesion can affect the traversing S1 root. L5 lesions more often weaken dorsiflexion or great-toe extension, while L4 findings favor quadriceps or patellar-reflex abnormalities. Common fibular neuropathy does not explain this entire pattern. Individual findings are imperfect, so the examination and concordant imaging are interpreted together rather than treating one reflex as definitive.",
+    "source": {
+      "label": "Prospective study of examination accuracy in lumbar root impingement",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20543768/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-b-crescent-receipt",
+    "specialty": "Neurology",
+    "title": "A crescent on the scan",
+    "memeTop": "THE RUG WON THE ARGUMENT",
+    "memeBottom": "THE CT SCAN HAS THE INCIDENT REPORT",
+    "question": "A 72-year-old man trips over a rug while insisting the living room needs no rearranging. Over the next 6 hours he develops a worsening headache and drowsiness. CT shows a crescent-shaped extra-axial blood collection along the cerebral convexity, crossing a cranial suture. The team identifies a traumatic subdural hematoma. Tearing of which vessels classically produces this type of hemorrhage?",
+    "answer": "Bridging veins",
+    "options": [
+      "Bridging veins",
+      "Middle meningeal artery",
+      "Lenticulostriate arteries",
+      "Anterior communicating artery"
+    ],
+    "aliases": [
+      "cerebral bridging veins",
+      "bridging vein rupture",
+      "torn bridging veins",
+      "bridging vein"
+    ],
+    "partials": [],
+    "explanation": "Traumatic subdural blood classically follows injury to bridging veins as they travel toward the dural venous sinuses. The collection lies between the dura and arachnoid and often has a crescentic appearance. Middle meningeal arterial injury is the classic association for an epidural hematoma, a different compartment. The other arterial distractors do not explain this typical traumatic subdural pattern. Bridging veins are the classic answer, although subdural hemorrhage does not have a single exclusive vascular source.",
+    "source": {
+      "label": "Human head-impact study of bridging-vein rupture",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16776340/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-b-two-sided-status-report",
+    "specialty": "Neurology",
+    "title": "The cord sends two status reports",
+    "memeTop": "LEFT SIDE LOST STRENGTH AND POSITION",
+    "memeBottom": "RIGHT SIDE LOST PAIN AND TEMPERATURE",
+    "question": "A 33-year-old theatre technician falls onto damaged shelving and later jokes that the set has finally become too immersive. After stabilization, examination finds left-leg weakness and loss of vibration and joint-position sense below a thoracic injury. Pain and temperature sensation are reduced on the right below the injury. MRI demonstrates predominant damage to the left half of the cord at T10. Which spinal cord syndrome fits?",
+    "answer": "Brown-Séquard syndrome",
+    "options": [
+      "Brown-Séquard syndrome",
+      "Anterior cord syndrome",
+      "Central cord syndrome",
+      "Posterior cord syndrome"
+    ],
+    "aliases": [
+      "Brown Sequard syndrome",
+      "Brown-Sequard syndrome",
+      "Brown Sequard",
+      "spinal cord hemisection syndrome",
+      "hemicord syndrome"
+    ],
+    "partials": [],
+    "explanation": "A hemicord injury can cause ipsilateral weakness and impaired vibration and position sense, with contralateral loss of pain and temperature below the lesion. This is the classic Brown-Séquard pattern. Anterior cord syndrome is usually bilateral with dorsal-column sparing; central and posterior cord syndromes produce different distributions. Actual injuries commonly show a partial or mixed pattern rather than a perfect anatomical half-section, so the clinical pattern and imaging matter more than a rigid textbook diagram.",
+    "source": {
+      "label": "Clinical study of Brown-Sequard and Brown-Sequard-plus syndromes",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/1787982/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-c-bupropion-bulimia",
+    "specialty": "Psychiatry",
+    "title": "Autocomplete needs supervision",
+    "memeTop": "THE PRESCRIPTION TEMPLATE PICKED A FAVORITE",
+    "memeBottom": "THE MEDICAL HISTORY PRESSED UNDO",
+    "question": "A 27-year-old receiving treatment for bulimia nervosa with recurrent self-induced vomiting also seeks help for depression. The prescribing template offers a cheerful green check mark beside several antidepressants. Which listed medicine is specifically contraindicated in someone with a current or prior diagnosis of bulimia because of increased seizure risk?",
+    "answer": "Bupropion",
+    "options": [
+      "Fluoxetine",
+      "Bupropion",
+      "Sertraline",
+      "Escitalopram"
+    ],
+    "aliases": [
+      "bupropion hydrochloride",
+      "bupropion hcl",
+      "Wellbutrin",
+      "Wellbutrin XL",
+      "Wellbutrin SR",
+      "Zyban"
+    ],
+    "partials": [],
+    "explanation": "Bupropion is contraindicated in patients with a current or prior diagnosis of bulimia nervosa or anorexia nervosa because of seizure risk. In the original placebo-controlled bulimia trial, four of the 55 participants assigned to bupropion experienced generalized seizures. The other options are SSRIs; the specific contraindication tested here belongs to bupropion. A reassuring prescribing-template icon cannot replace review of the medical history.",
+    "source": {
+      "label": "Horne et al.: placebo-controlled bupropion trial in bulimia (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/3134343/"
+    },
+    "additionalSources": [
+      {
+        "label": "DailyMed: bupropion contraindications",
+        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e4100232-a25d-4468-9057-af7e66205154"
+      }
+    ],
+    "answerType": "drug"
+  },
+  {
+    "id": "exp-c-pcsk9-recycling",
+    "specialty": "Cardiology",
+    "title": "The receptor recycling department",
+    "memeTop": "THE LIVER OPENED A RECYCLING PROGRAM",
+    "memeBottom": "LDL RECEPTORS GOT THEIR JOBS BACK",
+    "question": "A 62-year-old with established atherosclerotic cardiovascular disease still has elevated LDL cholesterol despite maximally tolerated statin therapy. Evolocumab is added, and the trainee describes it as extra security for the liver's LDL-receptor recycling bin. Which circulating protein does this monoclonal antibody bind to help preserve LDL receptors?",
+    "answer": "PCSK9",
+    "options": [
+      "HMG-CoA reductase",
+      "NPC1L1",
+      "PCSK9",
+      "ANGPTL3"
+    ],
+    "aliases": [
+      "proprotein convertase subtilisin/kexin type 9",
+      "proprotein convertase subtilisin kexin type 9",
+      "proprotein convertase subtilisin/kexin 9",
+      "PCSK-9"
+    ],
+    "partials": [],
+    "explanation": "Evolocumab is a monoclonal antibody against PCSK9. PCSK9 promotes degradation of hepatic LDL receptors; inhibiting it helps keep receptors available to clear LDL from blood. The FOURIER trial demonstrated LDL lowering and fewer cardiovascular events when evolocumab was added to statin therapy in patients with established cardiovascular disease. HMG-CoA reductase, NPC1L1, and ANGPTL3 are different lipid-related targets.",
+    "source": {
+      "label": "Sabatine et al.: evolocumab and cardiovascular outcomes, FOURIER (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28304224/"
+    },
+    "additionalSources": [
+      {
+        "label": "DailyMed: evolocumab mechanism of action",
+        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=cd61e902-166d-4aa6-9f3c-a18c1008d07e"
+      }
+    ],
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-c-c7-flatpack",
+    "specialty": "Neurology",
+    "title": "Flat-pack furniture, fully assembled symptoms",
+    "memeTop": "THE BOOKCASE HAS ONE SCREW LEFT OVER",
+    "memeBottom": "THE NEURO EXAM HAS A LOCALIZING PATTERN",
+    "question": "After a weekend assembling flat-pack furniture, a 45-year-old develops neck pain radiating down the posterior arm toward the middle finger. Elbow extension is weak and the triceps reflex is reduced on that side, while the biceps and brachioradialis reflexes are preserved. Which cervical nerve root best matches this pattern?",
+    "answer": "C7 nerve root",
+    "options": [
+      "C5 nerve root",
+      "C6 nerve root",
+      "C7 nerve root",
+      "C8 nerve root"
+    ],
+    "aliases": [
+      "C7",
+      "C7 root",
+      "seventh cervical nerve root",
+      "C7 radiculopathy",
+      "seventh cervical root"
+    ],
+    "partials": [],
+    "explanation": "Triceps weakness, a diminished triceps reflex, and symptoms extending toward the middle finger form a classic C7 radiculopathy pattern. A clinical, MRI, and EMG study identified C7 as the dominant myotome for triceps and flexor carpi radialis. Individual muscles and dermatomes overlap between roots, so localization should use the combined motor, sensory, and reflex findings rather than one symptom alone.",
+    "source": {
+      "label": "Furukawa et al.: clinical, MRI, and EMG determination of C5-C7 myotomes (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33748550/"
+    },
+    "additionalSources": [
+      {
+        "label": "Kang et al.: cervical radiculopathy characteristics and differential diagnosis (PubMed)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/33373515/"
+      }
+    ],
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-c-cgd-batteries",
+    "specialty": "Immunology",
+    "title": "The neutrophils forgot their batteries",
+    "memeTop": "THE SECURITY TEAM ARRIVED ON TIME",
+    "memeBottom": "EVERY FLASHLIGHT HAS FLAT BATTERIES",
+    "question": "A 5-year-old has recurrent Staphylococcus aureus abscesses and an episode of invasive Aspergillus pneumonia despite a normal neutrophil count. Stimulated neutrophils fail to produce the expected fluorescence shift on a dihydrorhodamine assay, and sequencing finds a pathogenic CYBB variant. The cells arrive at work, but their oxidative equipment does not. Which enzyme complex is defective?",
+    "answer": "NADPH oxidase",
+    "options": [
+      "Myeloperoxidase",
+      "Adenosine deaminase",
+      "Bruton tyrosine kinase",
+      "NADPH oxidase"
+    ],
+    "aliases": [
+      "phagocyte NADPH oxidase",
+      "NADPH oxidase complex",
+      "neutrophil NADPH oxidase",
+      "NOX2",
+      "phagocyte oxidase"
+    ],
+    "partials": [],
+    "explanation": "Chronic granulomatous disease results from defective phagocyte NADPH oxidase, impairing the respiratory burst needed for effective killing of characteristic bacterial and fungal pathogens. Staphylococcus aureus and Aspergillus are important examples. Dihydrorhodamine testing assesses oxidative-burst function; the CYBB finding supports the diagnosis here. An abnormal DHR result alone is insufficiently specific because myeloperoxidase deficiency can also affect the assay.",
+    "source": {
+      "label": "Joyce et al.: considerations in diagnosing chronic granulomatous disease (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29746674/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-c-pramipexole-app",
+    "specialty": "Neurology",
+    "title": "An unexpected app subscription",
+    "memeTop": "THE MOTOR SYMPTOMS IMPROVED",
+    "memeBottom": "THE MEDICATION REVIEW NOW INCLUDES APP HISTORY",
+    "question": "A 66-year-old with Parkinson disease improves after a new dopamine agonist is titrated. Over the next two months he develops intense urges to gamble, despite never previously enjoying betting. His phone's screen-time report has become an unexpectedly important clinical document. Which listed medicine is the most likely contributor to this impulse-control disorder?",
+    "answer": "Pramipexole",
+    "options": [
+      "Carbidopa",
+      "Entacapone",
+      "Pramipexole",
+      "Rasagiline"
+    ],
+    "aliases": [
+      "pramipexole dihydrochloride",
+      "pramipexole dihydrochloride monohydrate",
+      "Mirapex",
+      "Mirapexin",
+      "Sifrol"
+    ],
+    "partials": [],
+    "explanation": "Dopamine agonists can trigger impulse-control disorders, including gambling, compulsive shopping, and other difficult-to-control behaviors. In Dodd and colleagues' series of patients with Parkinson disease and new pathological gambling, all were receiving dopamine agonists, and pramipexole was the predominant agent. The temporal relationship warrants a medication review and supportive clinical assessment. This adverse effect is not evidence of a personal character flaw.",
+    "source": {
+      "label": "Dodd et al.: pathological gambling associated with Parkinson medicines (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16009751/"
+    },
+    "answerType": "drug"
+  },
+  {
+    "id": "exp-c-adrenal-emergency-card",
+    "specialty": "Endocrinology",
+    "title": "The emergency card earns its keep",
+    "memeTop": "THE TRIAGE PRINTER IS STILL WARMING UP",
+    "memeBottom": "THE STEROID EMERGENCY CARD IS ALREADY USEFUL",
+    "question": "A 38-year-old with known primary adrenal insufficiency has vomiting, cannot retain replacement steroids, and arrives confused with blood pressure 78/44 mmHg, hyponatremia, and hyperkalemia. The emergency card proves faster than the triage printer. Isotonic saline resuscitation begins. Assuming all listed medicines are available, which first-line glucocorticoid should be given immediately intravenously for suspected adrenal crisis, without waiting for cortisol results?",
+    "answer": "Hydrocortisone",
+    "options": [
+      "Fludrocortisone",
+      "Hydrocortisone",
+      "Desmopressin",
+      "Levothyroxine"
+    ],
+    "aliases": [
+      "hydrocortisone sodium succinate",
+      "hydrocortisone sodium phosphate",
+      "Solu-Cortef",
+      "Solu Cortef",
+      "cortisol"
+    ],
+    "partials": [],
+    "explanation": "Suspected adrenal crisis requires immediate parenteral hydrocortisone together with fluid resuscitation. The Endocrine Society guideline recommends 100 mg hydrocortisone immediately in adults, followed by 200 mg over 24 hours, alongside isotonic saline adjusted to clinical needs. Diagnostic sampling should not delay treatment. Fludrocortisone alone does not provide the required glucocorticoid replacement, and the other options do not treat cortisol deficiency.",
+    "source": {
+      "label": "Endocrine Society guideline: primary adrenal insufficiency and adrenal crisis (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26760044/"
+    },
+    "answerType": "drug"
+  },
+  {
+    "id": "exp-c-mirabegron-calendar",
+    "specialty": "Urology",
+    "title": "The bladder sends too many reminders",
+    "memeTop": "THE CALENDAR HAS ONE MEETING",
+    "memeBottom": "THE BLADDER SENT TWELVE REMINDERS",
+    "question": "A 58-year-old has urgency, frequent small voids, and leakage before reaching the toilet. Urinalysis is normal, postvoid residual is 20 mL, and there is no weak stream or hesitancy. Blood pressure is controlled. Bladder training has helped only partly, and antimuscarinic dry mouth was intolerable. Her bathroom now has more calendar invites than her office. Which listed beta-3-adrenoceptor agonist treats these overactive-bladder storage symptoms?",
+    "answer": "Mirabegron",
+    "options": [
+      "Tamsulosin",
+      "Oxybutynin",
+      "Bethanechol",
+      "Mirabegron"
+    ],
+    "aliases": [
+      "Myrbetriq",
+      "Betmiga",
+      "mirabegron extended release",
+      "mirabegron ER"
+    ],
+    "partials": [],
+    "explanation": "Mirabegron is a beta-3-adrenoceptor agonist used for overactive bladder. It acts on bladder storage function rather than treating an obstructed outlet. The urgency, frequency, urge leakage, normal urinalysis, and small residual fit this use. A randomized phase III trial found reductions in incontinence episodes and daily voids compared with placebo. Tamsulosin, oxybutynin, and bethanechol have different pharmacologic mechanisms.",
+    "source": {
+      "label": "Nitti et al.: randomized phase III mirabegron trial in overactive bladder (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23079373/"
+    },
+    "answerType": "drug"
+  },
+  {
+    "id": "exp-c-hp-pigeon-loft",
+    "specialty": "Respiratory Medicine",
+    "title": "The hobby needs a respiratory review",
+    "memeTop": "THE PIGEONS HAVE A DEDICATED ROOM",
+    "memeBottom": "THE EXPOSURE HISTORY NEEDS ITS OWN PAGE",
+    "question": "A pigeon keeper repeatedly develops cough, breathlessness, and fever several hours after cleaning a poorly ventilated loft containing feathers and dried droppings. Symptoms ease during a week away. HRCT shows diffuse ill-defined centrilobular ground-glass nodules and expiratory air trapping; bronchoalveolar lavage shows lymphocytosis. The hobby now requires a pulmonologist as well as birdseed. What is the most likely diagnosis?",
+    "answer": "Hypersensitivity pneumonitis",
+    "options": [
+      "Histoplasmosis",
+      "Hypersensitivity pneumonitis",
+      "Sarcoidosis",
+      "Idiopathic pulmonary fibrosis"
+    ],
+    "aliases": [
+      "extrinsic allergic alveolitis",
+      "bird fancier's lung",
+      "bird fanciers lung",
+      "bird breeder's lung",
+      "bird-related hypersensitivity pneumonitis"
+    ],
+    "partials": [],
+    "explanation": "This combination suggests bird-related hypersensitivity pneumonitis, an immune-mediated lung disease following inhalation of relevant antigens. Avian proteins from feathers, serum, and droppings are recognized exposures. Recurrent exposure-linked symptoms, improvement away, typical small-airway and parenchymal CT findings, and BAL lymphocytosis strengthen the diagnosis together. Bird exposure or a positive antigen-specific IgG result alone would not establish it; the full clinical pattern matters.",
+    "source": {
+      "label": "ATS/JRS/ALAT guideline: diagnosing hypersensitivity pneumonitis in adults (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32706311/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-c-celiac-before-kitchen",
+    "specialty": "Gastroenterology",
+    "title": "Test before the kitchen renovation",
+    "memeTop": "THE PANTRY REORGANIZATION HAS A PROJECT PLAN",
+    "memeBottom": "THE BLOOD TEST STILL NEEDS GLUTEN ON BOARD",
+    "question": "A 34-year-old has months of bloating, loose stools, and iron-deficiency anemia; her sister has celiac disease. She still eats a regular gluten-containing diet and has never been tested for IgA deficiency. Before she reorganizes the entire kitchen, which blood-testing combination is the appropriate initial serologic screen?",
+    "answer": "Tissue transglutaminase IgA with total IgA",
+    "options": [
+      "Native antigliadin IgA alone",
+      "HLA-DQ2/DQ8 typing alone",
+      "Tissue transglutaminase IgA with total IgA",
+      "Endomysial IgG with total IgM"
+    ],
+    "aliases": [
+      "tTG-IgA with total IgA",
+      "tTG IgA and total IgA",
+      "TTG IgA plus total IgA",
+      "anti tissue transglutaminase IgA and total IgA",
+      "IgA tissue transglutaminase antibodies and total serum IgA"
+    ],
+    "partials": [],
+    "explanation": "The ACG guideline recommends tissue transglutaminase IgA testing while the patient consumes gluten, with concurrent total IgA if IgA deficiency has not already been assessed. IgA deficiency can make an IgA-based screen falsely reassuring and calls for appropriate IgG-based testing. Serology is an initial evaluation, not automatic diagnostic confirmation; adults with positive tests generally proceed to duodenal biopsy, and high suspicion can justify biopsy despite negative serology.",
+    "source": {
+      "label": "ACG 2023 guideline update: diagnosis and management of celiac disease (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36602836/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-c-ureter-cables",
+    "specialty": "Obstetrics & Gynecology",
+    "title": "Identify every cable first",
+    "memeTop": "THE PELVIS DID NOT COME WITH COLOR-CODED CABLES",
+    "memeBottom": "THE ANATOMY CHECK IS DOING THE LABELING",
+    "question": "During hysterectomy, the surgeon pauses before clamping the uterine artery close to the cervix. The trainee has learned that pelvic surgery requires identifying every cable before tidying anything. Which structure normally runs inferior to the uterine artery at this crossing and must be protected from accidental ligation or thermal injury?",
+    "answer": "Ureter",
+    "options": [
+      "Obturator nerve",
+      "Round ligament of the uterus",
+      "Ovarian vein",
+      "Ureter"
+    ],
+    "aliases": [
+      "ureter",
+      "distal ureter",
+      "pelvic ureter",
+      "ipsilateral ureter"
+    ],
+    "partials": [],
+    "explanation": "The distal ureter passes beneath the uterine artery near the cervix. This close relationship makes it vulnerable when the uterine artery and surrounding tissues are dissected, clamped, or sealed during hysterectomy. Surgical identification of the ureter is therefore important at this crossing. The question asks about the ureter, which carries urine from kidney to bladder, rather than the urethra, which exits the bladder.",
+    "source": {
+      "label": "Selcuk et al.: clinical retroperitoneal anatomy for pelvic surgeons (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30693143/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-c-orbital-double-feature",
+    "specialty": "Ophthalmology",
+    "title": "The ceiling lights are a double feature",
+    "memeTop": "ONE CEILING LIGHT WAS ENOUGH",
+    "memeBottom": "UPGAZE NOW HAS A DUPLICATION BUG",
+    "question": "A 15-year-old is struck around the eye by a ball. He develops vertical binocular diplopia and painful restriction when attempting to look upward; the ceiling lights have become an unwanted double feature. CT shows an orbital-floor trapdoor fracture with adjacent extraocular muscle pinched in the defect. Which muscle is most likely entrapped?",
+    "answer": "Inferior rectus",
+    "options": [
+      "Superior rectus",
+      "Inferior rectus",
+      "Lateral rectus",
+      "Superior oblique"
+    ],
+    "aliases": [
+      "inferior rectus muscle",
+      "inferior rectus entrapment",
+      "entrapped inferior rectus"
+    ],
+    "partials": [],
+    "explanation": "The inferior rectus lies adjacent to the orbital floor and can become entrapped in a floor fracture, mechanically restricting vertical eye movement and producing diplopia. A pediatric orbital-fracture study documented inferior rectus entrapment in 16 of 24 children with isolated floor fractures. Entrapment requires urgent specialist assessment. A floor fracture by itself does not prove muscle entrapment; this stem also supplies restricted movement and supportive CT findings.",
+    "source": {
+      "label": "Bhate et al.: strabismus and muscle entrapment in pediatric orbital fractures (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36872720/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-c-apixaban-lead-in",
+    "specialty": "Hematology",
+    "title": "The injection tutorial has been cancelled",
+    "memeTop": "THE DVT NEEDS ANTICOAGULATION",
+    "memeBottom": "THIS REGIMEN SKIPS THE HEPARIN ORIENTATION",
+    "question": "A stable 49-year-old has a newly confirmed proximal leg DVT, normal renal function, and no pregnancy, cancer, antiphospholipid syndrome, major drug interactions, or active bleeding. The team selects an oral direct factor Xa inhibitor taken twice daily, with a higher dose for the first seven days and no required heparin lead-in. Which listed drug fits this regimen?",
+    "answer": "Apixaban",
+    "options": [
+      "Dabigatran",
+      "Warfarin",
+      "Apixaban",
+      "Edoxaban"
+    ],
+    "aliases": [
+      "Eliquis",
+      "apixaban tablets"
+    ],
+    "partials": [],
+    "explanation": "Apixaban can treat acute DVT using 10 mg twice daily for seven days followed by 5 mg twice daily, without a required initial course of heparin. AMPLIFY tested this regimen against enoxaparin followed by warfarin. Dabigatran and edoxaban require initial parenteral anticoagulation for acute VTE; warfarin also requires initial overlap. The dosing pattern identifies apixaban here; it does not establish one universal anticoagulant choice for every DVT.",
+    "source": {
+      "label": "Agnelli et al.: oral apixaban for acute venous thromboembolism, AMPLIFY (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23808982/"
+    },
+    "additionalSources": [
+      {
+        "label": "Smythe et al.: guidance on heparin and oral-anticoagulant transitions (PubMed)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/26780745/"
+      }
+    ],
+    "answerType": "drug"
+  },
+  {
+    "id": "exp-c-diltiazem-night-shift",
+    "specialty": "Cardiology",
+    "title": "The coronary arteries chose the night shift",
+    "memeTop": "THE REST OF THE BODY CLOCKED OUT",
+    "memeBottom": "THE CORONARY SPASM STARTED A NIGHT SHIFT",
+    "question": "A 46-year-old has recurrent chest pain at rest around 4 a.m., with transient ST elevation that resolves after nitroglycerin. Angiography shows no obstructive coronary lesion, and acetylcholine provocation reproduces coronary spasm. Her arteries apparently scheduled their own night shift. Which listed non-dihydropyridine calcium-channel blocker is appropriate to help prevent further vasospastic-angina attacks?",
+    "answer": "Diltiazem",
+    "options": [
+      "Metoprolol",
+      "Diltiazem",
+      "Ivabradine",
+      "Ranolazine"
+    ],
+    "aliases": [
+      "diltiazem hydrochloride",
+      "diltiazem hcl",
+      "Cardizem",
+      "Tiazac",
+      "Dilacor"
+    ],
+    "partials": [],
+    "explanation": "Diltiazem is a non-dihydropyridine calcium-channel blocker used to suppress coronary vasospasm and prevent variant-angina episodes. A randomized double-blind trial in patients with rest pain and ST elevation found reduced angina frequency and nitroglycerin use during diltiazem treatment. The confirmed spasm and rest pattern distinguish this case from a generic exertional-angina question. None of the other listed drugs is a calcium-channel blocker.",
+    "source": {
+      "label": "Pepine et al.: randomized diltiazem trial in variant angina (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/6786067/"
+    },
+    "answerType": "drug"
+  },
+  {
+    "id": "exp-c-axillary-snack-shelf",
+    "specialty": "Orthopedics",
+    "title": "The snack shelf becomes a rehab goal",
+    "memeTop": "THE TELEVISION REMOTE IS WITHIN REACH",
+    "memeBottom": "THE TOP SHELF NOW NEEDS A REHAB PLAN",
+    "question": "A 24-year-old has an anterior shoulder dislocation reduced after a fall. At follow-up one week later, he still has deltoid weakness when abducting the arm from 15 to 90 degrees and reduced sensation over the lateral shoulder. Reaching the snack shelf has become a rehabilitation objective. Which nerve was most likely injured?",
+    "answer": "Axillary nerve",
+    "options": [
+      "Radial nerve",
+      "Long thoracic nerve",
+      "Musculocutaneous nerve",
+      "Axillary nerve"
+    ],
+    "aliases": [
+      "axillary",
+      "circumflex nerve",
+      "axillary neuropathy",
+      "axillary nerve injury"
+    ],
+    "partials": [],
+    "explanation": "The axillary nerve is vulnerable during anterior glenohumeral dislocation. It supplies the deltoid and teres minor, and its cutaneous branch serves the lateral shoulder patch. Persistent deltoid weakness together with numbness in this region supports an axillary injury. Examination should document nerve function and follow recovery; many injuries are low grade, while persistent or severe deficits may require further investigation and specialist review.",
+    "source": {
+      "label": "Avis and Power: axillary nerve injury with glenohumeral dislocation (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29657847/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-c-glossopharyngeal-diagram",
+    "specialty": "Neurology",
+    "title": "Please demonstrate on the diagram",
+    "memeTop": "THE CLINICIAN BROUGHT A COTTON APPLICATOR",
+    "memeBottom": "THE PATIENT REQUESTED A POWERPOINT INSTEAD",
+    "question": "During a cranial-nerve examination, a clinician lightly touches the posterior pharyngeal wall and elicits a gag. The patient politely requests that future anatomy demonstrations use a diagram. For this classic pharyngeal gag reflex, which cranial nerve carries the afferent, sensory signal from the posterior pharynx to the brainstem?",
+    "answer": "Glossopharyngeal nerve (CN IX)",
+    "options": [
+      "Vagus nerve (CN X)",
+      "Hypoglossal nerve (CN XII)",
+      "Glossopharyngeal nerve (CN IX)",
+      "Trigeminal nerve (CN V)"
+    ],
+    "aliases": [
+      "glossopharyngeal nerve",
+      "glossopharyngeal",
+      "CN IX",
+      "CN 9",
+      "cranial nerve IX",
+      "cranial nerve 9",
+      "ninth cranial nerve"
+    ],
+    "partials": [],
+    "explanation": "For the classic gag elicited from the posterior pharynx, the glossopharyngeal nerve carries the afferent sensory limb, while the vagus carries the main efferent motor limb. The stimulus location matters: stimulation elsewhere in the mouth can recruit other sensory pathways. This is an anatomy question, not a diagnostic claim that an absent gag always means nerve injury; the reflex can be absent in healthy people.",
+    "source": {
+      "label": "Sivakumar and Prabhu: physiology of the gag reflex (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32119389/"
+    },
+    "additionalSources": [
+      {
+        "label": "Davies et al.: pharyngeal sensation and gag reflex in healthy subjects (PubMed)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/7861875/"
+      }
+    ],
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-c-trazodone-sleep-mode",
+    "specialty": "Psychiatry",
+    "title": "Sleep mode needs an urgent override",
+    "memeTop": "THE NEW MEDICINE WAS MEANT TO HELP SLEEP",
+    "memeBottom": "THE EMERGENCY DEPARTMENT DID NOT GET THE MEMO",
+    "question": "A 41-year-old recently started a sedating antidepressant for depression with troublesome insomnia. Two weeks later, he reaches the emergency department with a painful rigid erection lasting five hours, unrelated to sexual stimulation. His phone's sleep-mode setting suddenly seems poorly named. Which listed antidepressant is particularly associated with this adverse effect?",
+    "answer": "Trazodone",
+    "options": [
+      "Escitalopram",
+      "Venlafaxine",
+      "Trazodone",
+      "Fluoxetine"
+    ],
+    "aliases": [
+      "trazodone hydrochloride",
+      "trazodone hcl",
+      "Desyrel",
+      "Oleptro",
+      "Molipaxin"
+    ],
+    "partials": [],
+    "explanation": "Trazodone has a recognized association with priapism, including early in treatment and at relatively low doses. A report based on FDA adverse-event data found many cases within the first 28 days. Its alpha-adrenergic blocking activity may contribute. A persistent erection lasting more than four hours requires emergency medical assessment because delayed treatment can cause irreversible damage; it should not be managed by simply waiting for the medication to wear off.",
+    "source": {
+      "label": "Warner et al.: trazodone and priapism, FDA adverse-event data (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/3584080/"
+    },
+    "additionalSources": [
+      {
+        "label": "DailyMed: trazodone priapism warning",
+        "url": "https://www.dailymed.nlm.nih.gov/dailymed/fda/fdaDrugXsl.cfm?setid=1510cf89-a2ec-4ed5-80cb-bae84f9ec0a7&type=display"
+      },
+      {
+        "label": "Abber et al.: experimental investigation of trazodone-associated priapism (PubMed)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/3573170/"
+      }
+    ],
+    "answerType": "drug"
+  },
+  {
+    "id": "exp-c-il4-subscription",
+    "specialty": "Immunology",
+    "title": "The antibody subscription upgrade",
+    "memeTop": "THE IMMUNE SYSTEM FOUND THE UPGRADE BUTTON",
+    "memeBottom": "THE POLLEN DID NOT NEED PREMIUM SERVICE",
+    "question": "A patient with allergic rhinitis asks why harmless pollen receives such enthusiastic immune attention. In a teaching experiment, activated human B cells receive a T-helper-2 cytokine and switch toward IgE production. The trainee calls this an antibody subscription upgrade nobody requested. Which listed cytokine is the classic signal promoting this class switch?",
+    "answer": "Interleukin-4",
+    "options": [
+      "Interleukin-5",
+      "Interferon-gamma",
+      "Interleukin-8",
+      "Interleukin-4"
+    ],
+    "aliases": [
+      "IL-4",
+      "IL4",
+      "IL 4",
+      "interleukin 4",
+      "interleukin four"
+    ],
+    "partials": [],
+    "explanation": "Interleukin-4 promotes human B-cell class switching toward IgE when the cells receive appropriate activation signals. Experimental work demonstrated DNA rearrangement joining the immunoglobulin mu and epsilon switch regions during IL-4-induced switching to IgE. This changes antibody class rather than antigen specificity. IL-5 is particularly associated with eosinophil biology, while IL-8 and interferon-gamma have different principal roles from the signal tested here.",
+    "source": {
+      "label": "Shapira et al.: IL-4-induced DNA class switching to human IgE (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/1881893/"
+    },
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-c-levonorgestrel-calendar-app",
+    "specialty": "Obstetrics & Gynecology",
+    "title": "The calendar app lacks lab qualifications",
+    "memeTop": "THE APP PREDICTED OVULATION WITH TOTAL CONFIDENCE",
+    "memeBottom": "THE OVARY HAS NOT ACCEPTED THE CALENDAR INVITE",
+    "question": "A patient's calendar app is extremely confident about ovulation despite having no laboratory qualifications. She takes levonorgestrel emergency contraception 18 hours after a condom breaks, before ovulation. During counseling, she asks how it works. What is the principal mechanism by which this medicine reduces pregnancy risk at this point in the cycle?",
+    "answer": "Delaying or inhibiting ovulation",
+    "options": [
+      "Preventing embryo implantation",
+      "Terminating an implanted pregnancy",
+      "Delaying or inhibiting ovulation",
+      "Directly killing sperm"
+    ],
+    "aliases": [
+      "delay ovulation",
+      "delays ovulation",
+      "inhibit ovulation",
+      "inhibiting ovulation",
+      "prevent ovulation",
+      "preventing ovulation",
+      "suppression of ovulation",
+      "delaying egg release",
+      "delays release of an egg"
+    ],
+    "partials": [],
+    "explanation": "Levonorgestrel emergency contraception works primarily by inhibiting or delaying ovulation when taken early enough in the cycle. The FDA's current explanation states that evidence does not support a direct effect on fertilization or implantation. A study using hormonal and ovarian measures found protection before ovulation but no demonstrated protection when taken on or after ovulation. It does not terminate an established pregnancy, and an app cannot confirm ovulation timing.",
+    "source": {
+      "label": "Noe et al.: levonorgestrel emergency contraception before versus after ovulation (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22018122/"
+    },
+    "additionalSources": [
+      {
+        "label": "FDA: Plan B One-Step mechanism and updated labeling",
+        "url": "https://www.fda.gov/drugs/postmarket-drug-safety-information-patients-and-providers/plan-b-one-step-15-mg-levonorgestrel-information"
+      }
+    ],
+    "answerType": "clinical"
+  },
+  {
+    "id": "exp-c-legionella-conference-spa",
+    "specialty": "Infectious Diseases",
+    "title": "The conference spa gets a lab review",
+    "memeTop": "THE HOTEL BROCHURE PROMISED A MEMORABLE STAY",
+    "memeBottom": "THE MICROBIOLOGY LAB AGREED",
+    "question": "A 61-year-old returns from a conference hotel where he used an indoor hot tub. Five days later he has high fever, cough, watery diarrhea, confusion, sodium 124 mmol/L, and new pulmonary infiltrates. The hotel's spa receives an unexpected laboratory review when sputum grows a gram-negative organism on buffered charcoal yeast extract agar containing L-cysteine. Which pathogen best fits?",
+    "answer": "Legionella pneumophila",
+    "options": [
+      "Streptococcus pneumoniae",
+      "Legionella pneumophila",
+      "Mycoplasma pneumoniae",
+      "Klebsiella pneumoniae"
+    ],
+    "aliases": [
+      "L. pneumophila",
+      "L pneumophila",
+      "Legionella pneumophila infection"
+    ],
+    "partials": [],
+    "explanation": "Legionella pneumophila fits the aerosolized-water exposure, pneumonia with prominent gastrointestinal symptoms, hyponatremia, and specialized culture findings. A prospective pneumonia study associated positive Legionella urinary antigen tests with fever, diarrhea, hyponatremia, and recent travel. These clinical clues alone are not diagnostic. The organism's growth on L-cysteine-containing buffered charcoal yeast extract provides the stronger microbiologic clue here; laboratory work has confirmed this cysteine requirement.",
+    "source": {
+      "label": "Bellew et al.: prospective evaluation of Legionella urinary antigen testing in pneumonia (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30265290/"
+    },
+    "additionalSources": [
+      {
+        "label": "Ewann and Hoffman: cysteine requirement of Legionella pneumophila on BCYE (PubMed)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/16751507/"
+      }
+    ],
+    "answerType": "clinical"
+  }
+]

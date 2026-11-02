@@ -1,0 +1,11 @@
+Model Information:
+* title:	IV Stand
+* source:	https://sketchfab.com/3d-models/iv-stand-dd3115aafb0e4a628f261d0de7a787b9
+* author:	teeart (https://sketchfab.com/teeart)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "IV Stand" (https://sketchfab.com/3d-models/iv-stand-dd3115aafb0e4a628f261d0de7a787b9) by teeart (https://sketchfab.com/teeart) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

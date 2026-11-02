@@ -1,0 +1,72 @@
+[
+  {
+    "name": "hospital-bed",
+    "input": "hospital_bed/scene.gltf",
+    "triangles_before": 12086,
+    "triangles_after": 3021,
+    "bytes": 363960
+  },
+  {
+    "name": "ecg-monitor",
+    "input": "ecg_monitor/scene.gltf",
+    "triangles_before": 14520,
+    "triangles_after": 2196,
+    "bytes": 267700
+  },
+  {
+    "name": "iv-stand",
+    "input": "iv_stand/scene.gltf",
+    "triangles_before": 5084,
+    "triangles_after": 2086,
+    "bytes": 252912
+  },
+  {
+    "name": "ventilator",
+    "input": "medical__ventilator/scene.gltf",
+    "triangles_before": 66944,
+    "triangles_after": 5083,
+    "bytes": 612300
+  },
+  {
+    "name": "patient",
+    "input": "kenney_mini-characters/Models/GLB format/character-male-a.glb",
+    "triangles_before": 723,
+    "triangles_after": 723,
+    "bytes": 198768
+  },
+  {
+    "name": "chair",
+    "input": "kenney_furniture-kit/Models/GLTF format/chairCushion.glb",
+    "triangles_before": 198,
+    "triangles_after": 198,
+    "bytes": 25372
+  },
+  {
+    "name": "cabinet",
+    "input": "kenney_furniture-kit/Models/GLTF format/cabinetBed.glb",
+    "triangles_before": 72,
+    "triangles_after": 72,
+    "bytes": 10420
+  },
+  {
+    "name": "lamp",
+    "input": "kenney_furniture-kit/Models/GLTF format/lampRoundTable.glb",
+    "triangles_before": 76,
+    "triangles_after": 76,
+    "bytes": 10772
+  },
+  {
+    "name": "door",
+    "input": "kenney_building-kit/Models/GLB format/door-rotate-square-a.glb",
+    "triangles_before": 188,
+    "triangles_after": 188,
+    "bytes": 28628
+  },
+  {
+    "name": "hospital-overview",
+    "input": "hospital-overview/scene.gltf",
+    "triangles_before": 9348,
+    "triangles_after": 8956,
+    "bytes": 1115228
+  }
+]

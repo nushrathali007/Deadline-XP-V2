@@ -1,0 +1,11 @@
+Model Information:
+* title:	ECG Monitor
+* source:	https://sketchfab.com/3d-models/ecg-monitor-47e72cd57f45414aa82e41342b299b5b
+* author:	demagdev (https://sketchfab.com/demagdev)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "ECG Monitor" (https://sketchfab.com/3d-models/ecg-monitor-47e72cd57f45414aa82e41342b299b5b) by demagdev (https://sketchfab.com/demagdev) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

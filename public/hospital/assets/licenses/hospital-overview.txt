@@ -1,0 +1,11 @@
+Model Information:
+* title:	minecraft hospital
+* source:	https://sketchfab.com/3d-models/minecraft-hospital-ded3dfd3d7f945ce96253cf3cb4133c3
+* author:	bezdeploma (https://sketchfab.com/bezdeploma)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "minecraft hospital" (https://sketchfab.com/3d-models/minecraft-hospital-ded3dfd3d7f945ce96253cf3cb4133c3) by bezdeploma (https://sketchfab.com/bezdeploma) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

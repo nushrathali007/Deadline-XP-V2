@@ -1,0 +1,380 @@
+[
+  {
+    "id": "treadmill-ward",
+    "specialty": "Psychiatry",
+    "title": "The ward is not a treadmill",
+    "memeTop": "THE STEP COUNTER SAYS PERSONAL BEST",
+    "memeBottom": "THE MEDICATION CHART SAYS AKATHISIA",
+    "question": "Three days after starting haloperidol, a patient says, 'My legs have subscribed to premium cardio.' He feels intense inner restlessness and keeps pacing, without fever or muscle rigidity. Name the nonselective beta blocker commonly used to relieve antipsychotic-induced akathisia.",
+    "answer": "Propranolol",
+    "options": [
+      "Propranolol",
+      "Metoprolol",
+      "Benztropine",
+      "Dantrolene"
+    ],
+    "aliases": [
+      "propranolol hydrochloride",
+      "propranolol hcl",
+      "Inderal"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "metoprolol",
+          "atenolol",
+          "bisoprolol",
+          "nadolol",
+          "carvedilol",
+          "labetalol"
+        ],
+        "points": 65,
+        "relation": "Same broad drug class: beta blocker. Propranolol is the intended nonselective agent; class credit does not mean the other drug is an equivalent akathisia treatment."
+      },
+      {
+        "terms": [
+          "beta blocker",
+          "beta blockers",
+          "beta adrenergic blocker",
+          "nonselective beta blocker",
+          "non selective beta blocker",
+          "beta antagonist"
+        ],
+        "points": 30,
+        "relation": "Correct drug-family concept, but the question asks for a specific medication."
+      }
+    ],
+    "explanation": "The restlessness and pacing after an antipsychotic suggest akathisia. Propranolol blocks beta-1 and beta-2 receptors, and placebo-controlled trials support its use for antipsychotic-induced akathisia. Metoprolol is relatively beta-1 selective; benztropine and dantrolene are not beta blockers. The game awards class points for related knowledge, not treatment equivalence.",
+    "source": {
+      "label": "Placebo-controlled propranolol trial, British Journal of Psychiatry",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/2877708/"
+    },
+    "additionalSources": [
+      {
+        "label": "DailyMed: propranolol prescribing information",
+        "url": "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=fce3539f-82f3-4bb5-a6ba-c38171c67c06"
+      }
+    ]
+  },
+  {
+    "id": "spicy-night-shift",
+    "specialty": "Gastroenterology",
+    "title": "Spicy food: 1. Esophagus: 0.",
+    "memeTop": "I CAN HANDLE THE EXTRA HOT SAUCE",
+    "memeBottom": "THE ESOPHAGUS WOULD LIKE A WORD",
+    "question": "A student with recurrent reflux calls his latest late-night chili challenge 'a randomized controlled mistake.' His clinician prescribes Prilosec, a proton-pump inhibitor. What is its generic active ingredient?",
+    "answer": "Omeprazole",
+    "options": [
+      "Omeprazole",
+      "Pantoprazole",
+      "Famotidine",
+      "Sucralfate"
+    ],
+    "aliases": [
+      "omeprazole magnesium",
+      "omeprazole sodium"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "pantoprazole",
+          "esomeprazole",
+          "lansoprazole",
+          "dexlansoprazole",
+          "rabeprazole"
+        ],
+        "points": 65,
+        "relation": "Same drug class: proton-pump inhibitor, but a different active ingredient."
+      },
+      {
+        "terms": [
+          "proton pump inhibitor",
+          "proton pump inhibitors",
+          "ppi",
+          "ppis",
+          "famotidine",
+          "h2 blocker",
+          "h2 receptor antagonist"
+        ],
+        "points": 30,
+        "relation": "Related acid-suppression concept; name the specific ingredient in Prilosec for full credit."
+      }
+    ],
+    "explanation": "Prilosec contains omeprazole, a proton-pump inhibitor used for acid-related disorders including GERD. Pantoprazole is another PPI, while famotidine is an H2-receptor antagonist. Sharing an indication or drug class earns game partial credit rather than identifying the named product.",
+    "source": {
+      "label": "FDA: Prilosec prescribing information",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2023/022056s026lbl.pdf"
+    }
+  },
+  {
+    "id": "bladder-notifications",
+    "specialty": "Nephrology",
+    "title": "Bladder notifications: enabled",
+    "memeTop": "THE PATIENT ASKED FOR MORE STEPS",
+    "memeBottom": "THE BATHROOM PROVIDED THE ROUTE",
+    "question": "A patient being treated for edema says his bladder has turned on push notifications. The chart lists Lasix, a loop diuretic. Which generic medication is this?",
+    "answer": "Furosemide",
+    "options": [
+      "Furosemide",
+      "Bumetanide",
+      "Hydrochlorothiazide",
+      "Spironolactone"
+    ],
+    "aliases": [
+      "frusemide",
+      "furosemide sodium"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "bumetanide",
+          "torsemide",
+          "torasemide",
+          "ethacrynic acid"
+        ],
+        "points": 65,
+        "relation": "Same drug class: loop diuretic, but a different medication."
+      },
+      {
+        "terms": [
+          "loop diuretic",
+          "loop diuretics",
+          "diuretic",
+          "water pill",
+          "hydrochlorothiazide",
+          "chlorthalidone",
+          "spironolactone"
+        ],
+        "points": 30,
+        "relation": "Related diuretic knowledge; full credit requires the generic ingredient in Lasix."
+      }
+    ],
+    "explanation": "Lasix is the brand name for furosemide, a loop diuretic used for edema. Bumetanide and torsemide are also loop diuretics. Hydrochlorothiazide and spironolactone belong to other diuretic classes; this question identifies a product rather than choosing a treatment regimen.",
+    "source": {
+      "label": "DailyMed: Lasix prescribing information",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=2c9b4d8f-0770-482d-a9e6-9c616a440b1a"
+    }
+  },
+  {
+    "id": "stairs-final-boss",
+    "specialty": "Pulmonology",
+    "title": "The stairs are the final boss",
+    "memeTop": "ONE FLIGHT OF STAIRS",
+    "memeBottom": "WHY IS THE BOSS MUSIC PLAYING?",
+    "question": "A runner with exercise-induced bronchospasm jokes that the stairs have better stamina than he does. His prescribed rescue inhaler is Ventolin HFA. Name its short-acting beta-2 agonist ingredient; either the US or international generic name is accepted.",
+    "answer": "Albuterol",
+    "options": [
+      "Albuterol",
+      "Levalbuterol",
+      "Salmeterol",
+      "Ipratropium"
+    ],
+    "aliases": [
+      "salbutamol",
+      "albuterol sulfate",
+      "salbutamol sulfate"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "levalbuterol",
+          "levosalbutamol",
+          "terbutaline"
+        ],
+        "points": 65,
+        "relation": "Same broad short-acting beta-2 agonist family, but not the ingredient in Ventolin HFA."
+      },
+      {
+        "terms": [
+          "saba",
+          "short acting beta agonist",
+          "short acting beta2 agonist",
+          "short acting beta 2 agonist",
+          "beta2 agonist",
+          "beta 2 agonist",
+          "bronchodilator",
+          "salmeterol",
+          "formoterol"
+        ],
+        "points": 30,
+        "relation": "Related bronchodilator or beta-agonist knowledge; the question asks for the specific Ventolin ingredient."
+      }
+    ],
+    "explanation": "Ventolin HFA contains albuterol sulfate. Albuterol is called salbutamol internationally; both names identify the same drug. Levalbuterol is a different active ingredient. Salmeterol is long acting, and ipratropium is an antimuscarinic bronchodilator.",
+    "source": {
+      "label": "DailyMed: Ventolin HFA prescribing information",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d92c5d6b-ff10-4087-36a2-1cfc464cb967"
+    },
+    "additionalSources": [
+      {
+        "label": "DailyMed: albuterol and salbutamol naming",
+        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f454947c-6055-474b-bf35-29a379e01aa3"
+      }
+    ]
+  },
+  {
+    "id": "bedroom-carousel",
+    "specialty": "Neurology",
+    "title": "Free bedroom carousel",
+    "memeTop": "ROLLED OVER TO CHECK MY PHONE",
+    "memeBottom": "UNLOCKED THE ROOM-SPINNING FEATURE",
+    "question": "A patient says rolling over in bed unlocks a free 20-second carousel ride. The Dix-Hallpike maneuver provokes brief vertigo with torsional, upbeating nystagmus; there is no hearing loss or focal neurologic deficit. What is the most likely diagnosis?",
+    "answer": "Benign paroxysmal positional vertigo",
+    "options": [
+      "Benign paroxysmal positional vertigo",
+      "Vestibular neuritis",
+      "Meniere disease",
+      "Orthostatic hypotension"
+    ],
+    "aliases": [
+      "BPPV",
+      "posterior canal BPPV",
+      "posterior semicircular canal BPPV",
+      "benign positional vertigo",
+      "benign paroxysmal position vertigo"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "vertigo",
+          "positional vertigo",
+          "peripheral vertigo",
+          "vestibular disorder"
+        ],
+        "points": 30,
+        "relation": "Identifies the symptom or a broader vestibular category, but not the full diagnosis."
+      }
+    ],
+    "explanation": "Brief position-triggered vertigo with torsional, upbeating nystagmus on Dix-Hallpike testing supports posterior-canal BPPV. A broad answer such as 'vertigo' recognizes the symptom but does not identify its cause.",
+    "source": {
+      "label": "AAO-HNS: BPPV clinical practice guideline fact sheet",
+      "url": "https://www.entnet.org/resource/aao-hnsf-updated-cpg-bppv-press-release-fact-sheet/"
+    }
+  },
+  {
+    "id": "cholesterol-hdmi",
+    "specialty": "Cardiology",
+    "title": "LDL is not a Wi-Fi password",
+    "memeTop": "THE PATIENT THOUGHT HDL WAS HDMI",
+    "memeBottom": "WE HAVE A LITTLE COUNSELLING TO DO",
+    "question": "A patient with high LDL asks whether his cholesterol report needs a software update. His prescription lists Lipitor, an HMG-CoA reductase inhibitor. What is the generic drug?",
+    "answer": "Atorvastatin",
+    "options": [
+      "Atorvastatin",
+      "Rosuvastatin",
+      "Ezetimibe",
+      "Fenofibrate"
+    ],
+    "aliases": [
+      "atorvastatin calcium"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "rosuvastatin",
+          "simvastatin",
+          "pravastatin",
+          "fluvastatin",
+          "lovastatin",
+          "pitavastatin"
+        ],
+        "points": 65,
+        "relation": "Same drug class: statin, but a different active ingredient."
+      },
+      {
+        "terms": [
+          "statin",
+          "statins",
+          "hmg coa reductase inhibitor",
+          "hmg-coa reductase inhibitor",
+          "ezetimibe",
+          "fenofibrate",
+          "lipid lowering drug"
+        ],
+        "points": 30,
+        "relation": "Related lipid-lowering knowledge; full credit requires the ingredient in Lipitor."
+      }
+    ],
+    "explanation": "Lipitor contains atorvastatin, a statin that inhibits HMG-CoA reductase. Rosuvastatin is another statin. Ezetimibe and fenofibrate lower lipids through different mechanisms.",
+    "source": {
+      "label": "DailyMed: Lipitor prescribing information",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=a3c08a6d-f986-4efc-9f96-3f0e652704dc"
+    }
+  },
+  {
+    "id": "detector-battery",
+    "specialty": "Emergency medicine",
+    "title": "The detector battery was not a spare",
+    "memeTop": "BORROWED THE ALARM BATTERY FOR THE CONTROLLER",
+    "memeBottom": "THAT WAS NOT THE SIDE QUEST TO ACCEPT",
+    "question": "Two nonsmoking roommates develop headache and nausea while a faulty fuel-burning heater runs indoors. One has a conventional pulse-oximeter reading of 99%, but blood co-oximetry shows carboxyhemoglobin of 18%. What is the diagnosis?",
+    "answer": "Carbon monoxide poisoning",
+    "options": [
+      "Carbon monoxide poisoning",
+      "Methemoglobinemia",
+      "Panic attack",
+      "Acute gastroenteritis"
+    ],
+    "aliases": [
+      "CO poisoning",
+      "carbon monoxide toxicity",
+      "carbon monoxide intoxication",
+      "CO intoxication",
+      "carboxyhemoglobinemia"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "toxic inhalation",
+          "inhalational poisoning",
+          "inhalation poisoning",
+          "dyshemoglobinemia"
+        ],
+        "points": 30,
+        "relation": "Recognizes a broad exposure or hemoglobin problem, but does not identify carbon monoxide."
+      }
+    ],
+    "explanation": "Shared symptoms after indoor combustion exposure and elevated carboxyhemoglobin strongly support carbon monoxide poisoning. A conventional two-wavelength pulse oximeter can appear reassuring because it cannot reliably distinguish carboxyhemoglobin from oxyhemoglobin.",
+    "source": {
+      "label": "CDC: Clinical guidance for carbon monoxide poisoning",
+      "url": "https://www.cdc.gov/carbon-monoxide/hcp/clinical-guidance/index.html"
+    }
+  },
+  {
+    "id": "pizza-alert",
+    "specialty": "Internal medicine",
+    "title": "Free pizza, expensive gravity",
+    "memeTop": "HEARD THERE WAS FREE PIZZA",
+    "memeBottom": "BLOOD PRESSURE DID NOT GET THE MEMO",
+    "question": "A patient stands quickly when someone announces free pizza and becomes lightheaded. After five minutes supine, BP is 128/78 mmHg; after one minute standing it is 102/64 mmHg, and at three minutes it remains 104/64 mmHg. What finding explains the dizziness?",
+    "answer": "Orthostatic hypotension",
+    "options": [
+      "Orthostatic hypotension",
+      "Benign paroxysmal positional vertigo",
+      "Hypertensive emergency",
+      "Hypoglycemia"
+    ],
+    "aliases": [
+      "postural hypotension",
+      "orthostatic low blood pressure",
+      "orthostatic BP drop",
+      "orthostatic blood pressure drop"
+    ],
+    "partials": [
+      {
+        "terms": [
+          "hypotension",
+          "blood pressure drop",
+          "low blood pressure"
+        ],
+        "points": 30,
+        "relation": "Recognizes the pressure change, but omits its specific relationship to standing."
+      }
+    ],
+    "explanation": "The systolic pressure falls by 26 mmHg and the diastolic pressure by 14 mmHg after standing. This meets the usual orthostatic threshold of at least a 20-mmHg systolic or 10-mmHg diastolic fall within three minutes. The numbers identify the finding; the underlying cause still needs assessment.",
+    "source": {
+      "label": "CDC STEADI: Measuring orthostatic blood pressure",
+      "url": "https://www.cdc.gov/steadi/media/pdfs/steadi-assessment-measuringbp-508.pdf"
+    }
+  }
+]

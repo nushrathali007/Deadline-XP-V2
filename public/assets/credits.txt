@@ -1,0 +1,8 @@
+DEADLINE XP visual reference assets
+
+Windows XP wallpaper, shell icons and sounds:
+https://github.com/bartekl1/windows-ui-assets
+Windows XP taskbar and user account images:
+https://github.com/ShizukuIchi/winXP
+
+Windows XP names, imagery and sounds belong to their respective rights holders, including Microsoft. Availability in an archive does not make these assets open source. This is an unofficial interactive game simulation, not a Microsoft product.

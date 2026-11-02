@@ -1,0 +1,6 @@
+{
+  "name": "DEADLINE XP — One question. Seven chances.",
+  "description": "A browser-based Windows XP desktop simulation with three game accounts: The Missing Cash investigation, Virus Outbreak desktop challenges, and Hospital Ward Rounds.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
