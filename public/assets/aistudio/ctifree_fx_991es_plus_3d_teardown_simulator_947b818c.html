@@ -1,0 +1,2644 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CTIFREE fx-991ES PLUS — Interactive 3D Hardware Teardown & Simulator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --panel-bg: rgba(13, 19, 32, 0.86);
+      --border-col: rgba(148, 163, 184, 0.18);
+      --accent-cyan: #38bdf8;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+    }
+    * { box-sizing: border-box; user-select: none; }
+    body, html {
+      margin: 0; padding: 0; width: 100%; height: 100%;
+      overflow: hidden; background-color: var(--bg-dark);
+      font-family: 'Inter', sans-serif; color: #f1f5f9;
+    }
+    .font-mono-tech { font-family: 'JetBrains Mono', monospace; }
+    #canvas-container {
+      position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1;
+      background: radial-gradient(circle at 50% 45%, #1e293b 0%, #090d16 78%);
+    }
+    .glass-panel {
+      background: var(--panel-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border-col);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+    }
+    /* Custom Sliders */
+    input[type=range] {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; background: transparent;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%; height: 6px; cursor: pointer;
+      background: rgba(51, 65, 85, 0.9); border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+    input[type=range]::-webkit-slider-thumb {
+      height: 16px; width: 16px; border-radius: 50%;
+      background: #38bdf8; cursor: pointer;
+      -webkit-appearance: none; margin-top: -6px;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.8);
+      border: 2px solid #fff;
+      transition: transform 0.15s ease;
+    }
+    input[type=range]::-webkit-slider-thumb:hover {
+      transform: scale(1.18);
+    }
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.4); }
+    ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.5); border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.7); }
+
+    /* 3D Callout Pins */
+    .callout-label {
+      position: absolute; pointer-events: auto; cursor: pointer;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 10;
+    }
+    .callout-label:hover {
+      transform: translate(-50%, -50%) scale(1.06);
+      z-index: 20;
+    }
+    .scan-grid-cell {
+      width: 100%; aspect-ratio: 1; border-radius: 2px;
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      transition: all 0.12s ease;
+    }
+    .scan-grid-cell.active {
+      background: #38bdf8;
+      box-shadow: 0 0 10px #38bdf8, 0 0 20px #38bdf8;
+      border-color: #fff;
+    }
+  </style>
+</head>
+<body class="relative w-screen h-screen overflow-hidden select-none">
+
+  <!-- 3D Viewport Canvas -->
+  <div id="canvas-container"></div>
+
+  <!-- 3D Floating Leader-Line Overlay SVG & HTML Callouts -->
+  <svg id="leader-svg" class="fixed inset-0 w-full h-full pointer-events-none z-10"></svg>
+  <div id="callouts-container" class="fixed inset-0 pointer-events-none z-10"></div>
+
+  <!-- Top Navigation & Status Header -->
+  <header class="fixed top-3 left-3 right-3 z-30 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+    <div class="glass-panel px-4 py-2.5 rounded-xl flex items-center gap-3.5 pointer-events-auto">
+      <div class="w-3 h-3 rounded-full bg-sky-400 animate-pulse shadow-[0_0_12px_#38bdf8]"></div>
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="font-mono-tech text-xs uppercase tracking-widest text-sky-400 font-semibold">TEARDOWN // CAD-SIM</span>
+          <span class="text-[11px] bg-sky-500/20 text-sky-300 border border-sky-400/30 px-1.5 py-0.5 rounded font-mono-tech">REV 4.2</span>
+        </div>
+        <h1 class="text-sm sm:text-base font-bold tracking-tight text-white">CTIFREE fx-991ES PLUS <span class="font-normal text-slate-400 text-xs sm:text-sm">— Two-Way Power Hardware Architecture</span></h1>
+      </div>
+    </div>
+
+    <!-- Top Quick Camera & View Controls -->
+    <div class="glass-panel px-3 py-2 rounded-xl flex items-center gap-2 pointer-events-auto flex-wrap">
+      <button id="btn-xray" class="px-2.5 py-1.5 rounded-lg text-xs font-mono-tech font-medium bg-amber-500/15 text-amber-300 border border-amber-500/30 hover:bg-amber-500/25 transition flex items-center gap-1.5" title="Make Black Epoxy COB Semi-Transparent to inspect Silicon Die & Gold Bond Wires">
+        <span class="w-2 h-2 rounded-full bg-amber-400" id="xray-dot"></span>
+        COB X-Ray
+      </button>
+      <button id="btn-busflow" class="px-2.5 py-1.5 rounded-lg text-xs font-mono-tech font-medium bg-orange-500/15 text-orange-300 border border-orange-500/30 hover:bg-orange-500/25 transition flex items-center gap-1.5" title="Highlight Active Dual-Power Bus & Matrix Current Traces">
+        <span class="w-2 h-2 rounded-full bg-orange-400" id="busflow-dot"></span>
+        Power Trace
+      </button>
+      <button id="btn-callouts" class="px-2.5 py-1.5 rounded-lg text-xs font-mono-tech font-medium bg-sky-500/20 text-sky-300 border border-sky-400/40 hover:bg-sky-500/30 transition flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-sky-400" id="callouts-dot"></span>
+        3D Callouts
+      </button>
+      <button id="btn-autorotate" class="px-2.5 py-1.5 rounded-lg text-xs font-mono-tech font-medium bg-slate-800/80 text-slate-300 border border-slate-700 hover:bg-slate-700/80 transition">
+        Auto-Orbit
+      </button>
+      <button id="btn-audio" class="px-2.5 py-1.5 rounded-lg text-xs font-mono-tech font-medium bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/25 transition flex items-center gap-1">
+        <span id="audio-icon">🔊</span> SFX
+      </button>
+      <button id="btn-reset-cam" class="px-2.5 py-1.5 rounded-lg text-xs font-mono-tech font-medium bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white hover:border-slate-500 transition">
+        Reset View
+      </button>
+    </div>
+  </header>
+
+  <!-- LEFT HUD PANEL: Exploded View & 12-Layer Stack Inspector -->
+  <aside class="fixed top-20 left-3 bottom-3 w-80 max-w-[calc(100vw-24px)] z-20 flex flex-col gap-2.5 pointer-events-none">
+    <div class="glass-panel rounded-xl p-3.5 pointer-events-auto flex flex-col gap-3 max-h-full overflow-hidden">
+      
+      <!-- Explode Master Control -->
+      <div class="bg-slate-900/70 p-3 rounded-lg border border-slate-800">
+        <div class="flex items-center justify-between mb-1.5">
+          <span class="text-xs font-mono-tech uppercase tracking-wider text-sky-400 font-semibold">Z-Axis Explode Factor</span>
+          <span id="explode-val-label" class="font-mono-tech text-xs font-bold text-white bg-sky-500/20 px-2 py-0.5 rounded border border-sky-500/30">0%</span>
+        </div>
+        <input id="explode-slider" type="range" min="0" max="100" value="0" step="0.5" />
+        
+        <!-- Teardown Presets -->
+        <div class="grid grid-cols-2 gap-1.5 mt-2.5">
+          <button data-preset="assembled" class="preset-btn px-2 py-1.5 rounded text-[11px] font-mono-tech bg-sky-500/20 text-sky-300 border border-sky-500/40 hover:bg-sky-500/30 transition text-left truncate">
+            01. Assembled (0%)
+          </button>
+          <button data-preset="exploded" class="preset-btn px-2 py-1.5 rounded text-[11px] font-mono-tech bg-slate-800/80 text-slate-300 border border-slate-700 hover:border-sky-500/40 hover:text-white transition text-left truncate">
+            02. Full Stack (85%)
+          </button>
+          <button data-preset="cob" class="preset-btn px-2 py-1.5 rounded text-[11px] font-mono-tech bg-slate-800/80 text-slate-300 border border-slate-700 hover:border-amber-500/40 hover:text-amber-300 transition text-left truncate">
+            03. COB ASIC X-Ray
+          </button>
+          <button data-preset="lcd" class="preset-btn px-2 py-1.5 rounded text-[11px] font-mono-tech bg-slate-800/80 text-slate-300 border border-slate-700 hover:border-emerald-500/40 hover:text-emerald-300 transition text-left truncate">
+            04. LCD + Zebra Strip
+          </button>
+        </div>
+      </div>
+
+      <!-- 12-Layer Interactive Stack List -->
+      <div class="flex items-center justify-between px-1">
+        <span class="text-[11px] font-mono-tech uppercase tracking-wider text-slate-400">12 Hardware Subsystems</span>
+        <button id="btn-show-all-layers" class="text-[11px] font-mono-tech text-sky-400 hover:underline hidden">Show All</button>
+      </div>
+
+      <div id="layer-list" class="flex-1 overflow-y-auto space-y-1.5 pr-1">
+        <!-- Dynamically populated by JS -->
+      </div>
+
+      <!-- Active Layer Engineering Card -->
+      <div id="layer-detail-card" class="bg-slate-900/90 border border-slate-700/80 rounded-lg p-3 text-xs space-y-1">
+        <div class="flex items-center justify-between">
+          <span id="detail-code" class="font-mono-tech text-[10px] text-sky-400 uppercase font-semibold">SYS-ALL // OVERVIEW</span>
+          <span id="detail-mat" class="font-mono-tech text-[10px] text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded">ABS / FR-4 / STN</span>
+        </div>
+        <div id="detail-title" class="font-semibold text-white text-xs">Complete Calculator Assembly</div>
+        <p id="detail-desc" class="text-[11px] text-slate-300 leading-relaxed">
+          Click any 3D keycap directly to actuate physical travel (-1.8mm), compress the silicone dome, short the PCB gold carbon matrix, and compute on the Natural-V.P.A.M. display.
+        </p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- RIGHT HUD PANEL: Live Telemetry, Dual-Power Lux Sim, Matrix Oscilloscope & LCD Controls -->
+  <aside class="fixed top-20 right-3 bottom-3 w-80 max-w-[calc(100vw-24px)] z-20 flex flex-col gap-2.5 pointer-events-none hidden lg:flex">
+    <div class="glass-panel rounded-xl p-3.5 pointer-events-auto flex flex-col gap-3 max-h-full overflow-y-auto">
+      
+      <!-- 1. Live Interactive Natural-V.P.A.M. Display Mirror & Presets -->
+      <div class="bg-slate-900/75 p-3 rounded-lg border border-slate-800">
+        <div class="flex items-center justify-between mb-1.5">
+          <span class="text-xs font-mono-tech uppercase tracking-wider text-emerald-400 font-semibold">Natural-V.P.A.M. Engine</span>
+          <span id="lcd-mode-badge" class="font-mono-tech text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-500/30">MATH // DEG</span>
+        </div>
+        <p class="text-[11px] text-slate-400 mb-2">Click 3D keys or trigger textbook expressions below:</p>
+        <div class="grid grid-cols-2 gap-1.5">
+          <button data-expr="ref" class="expr-btn px-2 py-1.5 rounded text-[11px] font-mono-tech bg-emerald-500/20 text-emerald-200 border border-emerald-500/40 hover:bg-emerald-500/30 transition text-left truncate">
+            ★ 5²×6⁻¹÷√20
+          </button>
+          <button data-expr="sd" class="expr-btn px-2 py-1.5 rounded text-[11px] font-mono-tech bg-slate-800 text-amber-300 border border-amber-500/30 hover:bg-amber-500/20 transition text-left truncate">
+            S⇔D (5√5/12 ↔ Dec)
+          </button>
+          <button data-expr="integral" class="expr-btn px-2 py-1.5 rounded text-[11px] font-mono-tech bg-slate-800 text-slate-300 border border-slate-700 hover:border-sky-400/40 hover:text-white transition text-left truncate">
+            ∫(x²+2x)dx = 48
+          </button>
+          <button data-expr="trig" class="expr-btn px-2 py-1.5 rounded text-[11px] font-mono-tech bg-slate-800 text-slate-300 border border-slate-700 hover:border-sky-400/40 hover:text-white transition text-left truncate">
+            sin(60°)+cos(30°)
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Two-Way Power (a-Si Solar + LR44 Battery) Simulator -->
+      <div class="bg-slate-900/75 p-3 rounded-lg border border-slate-800">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-xs font-mono-tech uppercase tracking-wider text-amber-400 font-semibold">Two-Way Power Bus</span>
+          <span id="power-source-badge" class="font-mono-tech text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">SOLAR PRIMARY</span>
+        </div>
+        <div class="flex items-center justify-between text-[11px] text-slate-300 mb-1">
+          <span>Ambient Illuminance</span>
+          <span id="lux-label" class="font-mono-tech text-amber-300 font-semibold">650 lx (Office Light)</span>
+        </div>
+        <input id="lux-slider" type="range" min="0" max="1000" value="650" step="10" />
+
+        <div class="grid grid-cols-3 gap-1.5 mt-2.5 text-center font-mono-tech">
+          <div class="bg-slate-950/80 p-1.5 rounded border border-slate-800">
+            <div class="text-[9px] text-slate-400">a-Si SOLAR V_pv</div>
+            <div id="telemetry-vpv" class="text-xs font-bold text-amber-400">1.68 V</div>
+          </div>
+          <div class="bg-slate-950/80 p-1.5 rounded border border-slate-800">
+            <div class="text-[9px] text-slate-400">LR44 I_backup</div>
+            <div id="telemetry-ibat" class="text-xs font-bold text-emerald-400">0.0 µA</div>
+          </div>
+          <div class="bg-slate-950/80 p-1.5 rounded border border-slate-800">
+            <div class="text-[9px] text-slate-400">ASIC V_dd RAIL</div>
+            <div id="telemetry-vdd" class="text-xs font-bold text-sky-400">1.55 V</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Key Matrix Scan Visualizer (Row x Col Oscilloscope) -->
+      <div class="bg-slate-900/75 p-3 rounded-lg border border-slate-800">
+        <div class="flex items-center justify-between mb-1.5">
+          <span class="text-xs font-mono-tech uppercase tracking-wider text-sky-400 font-semibold">PCB Matrix Scan (9×6)</span>
+          <span id="matrix-coord-badge" class="font-mono-tech text-[10px] text-slate-300 bg-slate-800 px-1.5 py-0.5 rounded">IDLE // HI-Z</span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <!-- 9x6 LED Matrix Grid -->
+          <div id="matrix-grid" class="grid grid-cols-6 gap-1 w-28 shrink-0">
+            <!-- Populated by JS -->
+          </div>
+          <!-- Live Keystroke Telemetry & Bounce Oscilloscope -->
+          <div class="flex-1 flex flex-col justify-between text-[11px] font-mono-tech space-y-1.5">
+            <div class="bg-slate-950/90 p-1.5 rounded border border-slate-800">
+              <div class="text-[9px] text-slate-400">LAST KEY ACTUATED</div>
+              <div id="last-key-label" class="text-xs font-bold text-white truncate">[ = ] EVAL (R8:C4)</div>
+            </div>
+            <div class="bg-slate-950/90 p-1.5 rounded border border-slate-800">
+              <div class="text-[9px] text-slate-400">32.768 kHz XTAL</div>
+              <div id="clock-state-label" class="text-[11px] font-bold text-emerald-400">ACTIVE BURST (4.2µA)</div>
+            </div>
+            <canvas id="scope-canvas" width="130" height="36" class="w-full h-9 bg-slate-950 rounded border border-slate-800"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Hint Footer -->
+      <div class="text-[11px] text-slate-400 font-mono-tech flex items-center justify-between px-1">
+        <span>🖱️ LMB: Orbit / Click Keys</span>
+        <span>RMB: Pan • Scroll: Zoom</span>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    /***************************************************************************
+     * 1. SOUND SYNTHESIS ENGINE (Procedural WebAudio Mechanical Clicks & Servos)
+     ***************************************************************************/
+    class SoundEngine {
+      constructor() {
+        this.ctx = null;
+        this.enabled = true;
+      }
+      init() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) this.ctx = new AudioCtx();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+      }
+      playKeyClick(isLargeKey = false) {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        // Tactile silicone dome snap + ABS keycap bottom-out thud
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(isLargeKey ? 520 : 680, now);
+        osc.frequency.exponentialRampToValueAtTime(110, now + 0.045);
+
+        gain.gain.setValueAtTime(0.24, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.05);
+      }
+      playLayerWhoosh(pitchFactor = 1.0) {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(180 * pitchFactor, now);
+        osc.frequency.exponentialRampToValueAtTime(340 * pitchFactor, now + 0.12);
+        gain.gain.setValueAtTime(0.06, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.13);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.14);
+      }
+    }
+    const sfx = new SoundEngine();
+
+    /***************************************************************************
+     * 2. ARCHITECTURE METADATA: 12 EXPLODABLE HARDWARE LAYERS
+     ***************************************************************************/
+    const HARDWARE_LAYERS = [
+      {
+        id: 'bezel',
+        index: 1,
+        code: 'L01 // HOUSING-TOP',
+        name: 'Top Silver Faceplate & Bezel',
+        material: 'Injection ABS + Brushed Metallic Coat',
+        baseY: 0,
+        explodeY: 8.6,
+        explodeRotX: -0.05,
+        color: '#38bdf8',
+        desc: 'Precision-molded top shell featuring recessed apertures for the a-Si solar panel and STN LCD window, silk-screened legends, and 50 keycap guide chimneys.'
+      },
+      {
+        id: 'keycaps',
+        index: 2,
+        code: 'L02 // UI-KEYMATRIX',
+        name: '50 Tactile Sculpted Keycaps',
+        material: 'Double-Shot / Pad-Printed ABS',
+        baseY: 0,
+        explodeY: 6.2,
+        explodeRotX: -0.025,
+        color: '#a855f7',
+        desc: '4 bluish-grey modifier ovals, central 4-way REPLAY D-Pad, 24 dark grey scientific keys, and 20 sculpted numeric/operator keys (orange DEL/AC).'
+      },
+      {
+        id: 'solar',
+        index: 3,
+        code: 'L03 // PV-CELL',
+        name: 'Amorphous Silicon (a-Si) Solar Cell',
+        material: '4-Cell Series Glass Photovoltaic',
+        baseY: 0,
+        explodeY: 4.3,
+        explodeRotX: 0.0,
+        color: '#f59e0b',
+        desc: '4-segment indoor amorphous silicon photovoltaic panel generating 1.5V–1.8V under >150 lux ambient light to power the CMOS ASIC without battery drain.'
+      },
+      {
+        id: 'lcd',
+        index: 4,
+        code: 'L04 // STN-DISPLAY',
+        name: '96×31 Dot-Matrix LCD + Zebra Strips',
+        material: 'Reflective STN Glass + Elastomeric',
+        baseY: 0,
+        explodeY: 2.9,
+        explodeRotX: 0.02,
+        color: '#10b981',
+        desc: 'Natural-V.P.A.M. textbook display showing 5²×6⁻¹÷√20 = 5√5/12. Connected to PCB gold pads via alternating conductive/insulating pink silicone Zebra strips.'
+      },
+      {
+        id: 'membrane',
+        index: 5,
+        code: 'L05 // ELASTOMER-PAD',
+        name: 'Silicone Rubber Keypad Membrane',
+        material: 'Compression-Molded VMQ Silicone',
+        baseY: 0,
+        explodeY: 1.2,
+        explodeRotX: 0.0,
+        color: '#ec4899',
+        desc: 'Single-piece translucent milky silicone sheet with 50 conical buckling domes and conductive black carbon-doped pills on the bottom surface.'
+      },
+      {
+        id: 'schottky',
+        index: 6,
+        code: 'L06 // OR-ING-DIODE',
+        name: 'Dual-Power Schottky Diode & Supercap',
+        material: 'SOT-23 Low-Vf Diode + 100µF Tantalum',
+        baseY: 0,
+        explodeY: 0.15,
+        explodeRotX: 0.01,
+        color: '#f97316',
+        desc: 'Low-forward-drop (0.18V) dual Schottky barrier OR-ing network (D1) and brownout reservoir capacitor managing glitch-free handover between a-Si Solar and LR44 power.'
+      },
+      {
+        id: 'pcb',
+        index: 7,
+        code: 'L07 // MAIN-PCB-COB',
+        name: 'FR-4 PCB & Epoxy COB ASIC',
+        material: 'Single-Sided FR-4 + Wire-Bonded Die',
+        baseY: 0,
+        explodeY: -1.1,
+        explodeRotX: 0.02,
+        color: '#22c55e',
+        desc: 'Emerald solder-mask PCB containing 50 gold-plated interdigitated key switch fingers, 32.768 kHz crystal oscillator, and the black epoxy Chip-on-Board (COB) ASIC.'
+      },
+      {
+        id: 'esdring',
+        index: 8,
+        code: 'L08 // ESD-BIAS-NET',
+        name: 'CuBe ESD Guard Ring & LCD Bias Ladder',
+        material: 'Copper-Beryllium + Precision R-2R',
+        baseY: 0,
+        explodeY: -2.0,
+        explodeRotX: 0.025,
+        color: '#06b6d4',
+        desc: 'Perimeter Copper-Beryllium electrostatic discharge (ESD) ground frame and 5-level R-2R resistor divider network stabilizing STN LCD multiplex bias voltages.'
+      },
+      {
+        id: 'battery',
+        index: 9,
+        code: 'L09 // BACKUP-CELL',
+        name: 'LR44 Alkaline Cell & Retention Clip',
+        material: '1.5V MnO2 Coin Cell + Nickel Clip',
+        baseY: 0,
+        explodeY: -3.1,
+        explodeRotX: 0.03,
+        color: '#eab308',
+        desc: '1.5V LR44 (A76) button cell providing non-volatile SRAM retention and low-light operational backup via the Schottky diode OR-ing power bus.'
+      },
+      {
+        id: 'fasteners',
+        index: 10,
+        code: 'L10 // M1.4-FASTENERS',
+        name: '6× M1.4 Phillips Screws & Washers',
+        material: 'Black-Oxide Hardened Carbon Steel',
+        baseY: 0,
+        explodeY: -4.2,
+        explodeRotX: 0.04,
+        color: '#e2e8f0',
+        desc: 'Six precision M1.4×4.5mm pan-head Phillips machine screws that clamp the PCB, Zebra elastomeric strip, and rear shell at calibrated compression.'
+      },
+      {
+        id: 'rearcase',
+        index: 11,
+        code: 'L11 // CHASSIS-REAR',
+        name: 'Dark Navy Sculpted Rear Enclosure',
+        material: 'High-Impact ABS with Structural Ribs',
+        baseY: 0,
+        explodeY: -5.5,
+        explodeRotX: 0.05,
+        color: '#64748b',
+        desc: 'Ergonomic dark navy/charcoal ABS lower shell featuring internal PCB support standoffs, battery pocket, and laser-etched regulatory nameplate.'
+      },
+      {
+        id: 'slidecover',
+        index: 12,
+        code: 'L12 // SLIDE-COVER',
+        name: 'Protective Hard-Shell Slide Cover',
+        material: 'Textured Graphite ABS + Constants Chart',
+        baseY: 0,
+        explodeY: -7.5,
+        explodeRotX: 0.065,
+        color: '#94a3b8',
+        desc: 'Snap-on protective hard case that slides onto the calculator rails for storage and features an embossed scientific constants & metric conversion table inside.'
+      }
+    ];
+
+    /***************************************************************************
+     * 3. AUTHENTIC 50-KEY MATRIX LAYOUT DEFINITION (CTIFREE fx-991ES PLUS)
+     ***************************************************************************/
+    const KEY_DEFINITIONS = [];
+
+    // Row 0: Top Modifiers + Central Replay D-Pad (y = 0.85)
+    const topMods = [
+      { id: 'SHIFT', label: '', topLabel: 'SHIFT', topColor: '#eab308', x: -2.85, y: 0.92, w: 0.92, h: 0.50, type: 'oval', color: 0x697696, row: 0, col: 0, rotZ: -0.15 },
+      { id: 'ALPHA', label: '', topLabel: 'ALPHA', topColor: '#ef4444', x: -1.72, y: 0.76, w: 0.92, h: 0.50, type: 'oval', color: 0x697696, row: 0, col: 1, rotZ: -0.08 },
+      { id: 'REPLAY', label: 'REPLAY', topLabel: '', topColor: '', x: 0.0, y: 0.62, w: 2.05, h: 1.65, type: 'dpad', color: 0x697696, row: 0, col: 2, rotZ: 0 },
+      { id: 'MODE', label: '', topLabel: 'MODE  SETUP', topColor: '#eab308', x: 1.72, y: 0.76, w: 0.92, h: 0.50, type: 'oval', color: 0x697696, row: 0, col: 3, rotZ: 0.08 },
+      { id: 'ON', label: '', topLabel: 'ON', topColor: '#f8fafc', x: 2.85, y: 0.92, w: 0.92, h: 0.50, type: 'oval', color: 0x697696, row: 0, col: 4, rotZ: 0.15 }
+    ];
+    KEY_DEFINITIONS.push(...topMods);
+
+    // Row 1: 4 Scientific Keys flanking bottom of D-Pad (y = 0.02)
+    const sciRow1 = [
+      { id: 'CALC', label: 'CALC', topLabel: 'SOLVE  =', topColor: '#eab308', x: -2.90, y: -0.02, row: 1, col: 0 },
+      { id: 'INT', label: '∫dx', topLabel: 'd/dx  :', topColor: '#eab308', x: -1.74, y: -0.02, row: 1, col: 1 },
+      { id: 'INV', label: 'x⁻¹', topLabel: 'x!', topColor: '#eab308', x: 1.74, y: -0.02, row: 1, col: 4 },
+      { id: 'LOGA', label: 'log■□', topLabel: '∏', topColor: '#eab308', x: 2.90, y: -0.02, row: 1, col: 5 }
+    ];
+    sciRow1.forEach(k => KEY_DEFINITIONS.push({ ...k, w: 0.92, h: 0.52, type: 'sci', color: 0x222630 }));
+
+    // Rows 2, 3, 4: 6 Scientific Keys per row
+    const sciGrid = [
+      // Row 2 (y = -0.86)
+      [
+        { id: 'FRAC', label: '■/□', topLabel: 'a b/c', topColor: '#eab308' },
+        { id: 'SQRT', label: '√■', topLabel: '³√■', topColor: '#eab308' },
+        { id: 'SQ', label: 'x²', topLabel: 'x³  DEC', topColor: '#eab308' },
+        { id: 'POW', label: 'x■', topLabel: 'ⁿ√■  HEX', topColor: '#eab308' },
+        { id: 'LOG', label: 'log', topLabel: '10ˣ  BIN', topColor: '#eab308' },
+        { id: 'LN', label: 'ln', topLabel: 'eˣ  OCT', topColor: '#eab308' }
+      ],
+      // Row 3 (y = -1.68)
+      [
+        { id: 'NEG', label: '(−)', topLabel: '∠   A', topColor: '#ef4444' },
+        { id: 'DEG', label: '° ’ ”', topLabel: '←   B', topColor: '#ef4444' },
+        { id: 'HYP', label: 'hyp', topLabel: 'Abs  C', topColor: '#ef4444' },
+        { id: 'SIN', label: 'sin', topLabel: 'sin⁻¹ D', topColor: '#eab308' },
+        { id: 'COS', label: 'cos', topLabel: 'cos⁻¹ E', topColor: '#eab308' },
+        { id: 'TAN', label: 'tan', topLabel: 'tan⁻¹ F', topColor: '#eab308' }
+      ],
+      // Row 4 (y = -2.50)
+      [
+        { id: 'RCL', label: 'RCL', topLabel: 'STO', topColor: '#eab308' },
+        { id: 'ENG', label: 'ENG', topLabel: '←   i', topColor: '#ef4444' },
+        { id: 'LPAR', label: '(', topLabel: '%', topColor: '#eab308' },
+        { id: 'RPAR', label: ')', topLabel: '  ,   X', topColor: '#ef4444' },
+        { id: 'SD', label: 'S⇔D', topLabel: 'a b/c⇔d/c Y', topColor: '#eab308' },
+        { id: 'MPLUS', label: 'M+', topLabel: 'M-   M', topColor: '#ef4444' }
+      ]
+    ];
+    const sciX = [-2.90, -1.74, -0.58, 0.58, 1.74, 2.90];
+    const sciY = [-0.86, -1.68, -2.50];
+    sciGrid.forEach((rowArr, rIdx) => {
+      rowArr.forEach((k, cIdx) => {
+        KEY_DEFINITIONS.push({
+          ...k,
+          x: sciX[cIdx],
+          y: sciY[rIdx],
+          w: 0.92,
+          h: 0.52,
+          type: 'sci',
+          color: 0x222630,
+          row: rIdx + 2,
+          col: cIdx
+        });
+      });
+    });
+
+    // Rows 5, 6, 7, 8: 5 Number/Operator Keys per row
+    const numGrid = [
+      // Row 5 (y = -3.48)
+      [
+        { id: '7', label: '7', topLabel: 'CONST', topColor: '#eab308', color: 0xf1f5f9, textCol: '#0f172a' },
+        { id: '8', label: '8', topLabel: 'CONV', topColor: '#eab308', color: 0xf1f5f9, textCol: '#0f172a' },
+        { id: '9', label: '9', topLabel: 'CLR', topColor: '#eab308', color: 0xf1f5f9, textCol: '#0f172a' },
+        { id: 'DEL', label: 'DEL', topLabel: 'INS', topColor: '#eab308', color: 0xea8a2a, textCol: '#0f172a' },
+        { id: 'AC', label: 'AC', topLabel: 'OFF', topColor: '#eab308', color: 0xea8a2a, textCol: '#0f172a' }
+      ],
+      // Row 6 (y = -4.46)
+      [
+        { id: '4', label: '4', topLabel: 'MATRIX', topColor: '#eab308', color: 0xf1f5f9, textCol: '#0f172a' },
+        { id: '5', label: '5', topLabel: 'VECTOR', topColor: '#eab308', color: 0xf1f5f9, textCol: '#0f172a' },
+        { id: '6', label: '6', topLabel: '', topColor: '', color: 0xf1f5f9, textCol: '#0f172a' },
+        { id: 'MUL', label: '×', topLabel: 'nPr', topColor: '#eab308', color: 0xf1f5f9, textCol: '#0f172a' },
+        { id: 'DIV', label: '÷', topLabel: 'nCr', topColor: '#eab308', color: 0xf1f5f9, textCol: '#0f172a' }
+      ],
+      // Row 7 (y = -5.44)
+      [
+        { id: '1', label: '1', topLabel: 'STAT', topColor: '#eab308', color: 0xf1f5f9, textCol: '#0f172a' },
+        { id: '2', label: '2', topLabel: 'CMPLX', topColor: '#eab308', color: 0xf1f5f9, textCol: '#0f172a' },
+        { id: '3', label: '3', topLabel: 'BASE', topColor: '#eab308', color: 0xf1f5f9, textCol: '#0f172a' },
+        { id: 'ADD', label: '+', topLabel: 'Pol', topColor: '#eab308', color: 0xf1f5f9, textCol: '#0f172a' },
+        { id: 'SUB', label: '−', topLabel: 'Rec', topColor: '#eab308', color: 0xf1f5f9, textCol: '#0f172a' }
+      ],
+      // Row 8 (y = -6.42)
+      [
+        { id: '0', label: '0', topLabel: 'Rnd', topColor: '#eab308', color: 0xf1f5f9, textCol: '#0f172a' },
+        { id: 'DOT', label: '·', topLabel: 'Ran# RanInt', topColor: '#eab308', color: 0xf1f5f9, textCol: '#0f172a' },
+        { id: 'EXP', label: '×10ˣ', topLabel: 'π   e', topColor: '#eab308', color: 0xf1f5f9, textCol: '#0f172a' },
+        { id: 'ANS', label: 'Ans', topLabel: 'DRG▶', topColor: '#eab308', color: 0xf1f5f9, textCol: '#0f172a' },
+        { id: 'EQ', label: '=', topLabel: '', topColor: '', color: 0xf1f5f9, textCol: '#0f172a' }
+      ]
+    ];
+    const numX = [-2.76, -1.38, 0.0, 1.38, 2.76];
+    const numY = [-3.50, -4.48, -5.46, -6.44];
+    numGrid.forEach((rowArr, rIdx) => {
+      rowArr.forEach((k, cIdx) => {
+        KEY_DEFINITIONS.push({
+          ...k,
+          x: numX[cIdx],
+          y: numY[rIdx],
+          w: 1.12,
+          h: 0.68,
+          type: 'num',
+          row: rIdx + 5,
+          col: cIdx
+        });
+      });
+    });
+
+    /***************************************************************************
+     * 4. NATURAL-V.P.A.M. LIVE LCD TEXTBOOK DISPLAY RENDERER
+     ***************************************************************************/
+    class NaturalVPAMDisplay {
+      constructor() {
+        this.canvas = document.createElement('canvas');
+        this.canvas.width = 1024;
+        this.canvas.height = 384;
+        this.ctx = this.canvas.getContext('2d');
+        this.texture = new THREE.CanvasTexture(this.canvas);
+        this.texture.anisotropy = 8;
+
+        this.state = {
+          mode: 'reference', // 'reference', 'decimal', 'integral', 'trig', 'custom'
+          exprText: '',
+          resultText: '',
+          shift: false,
+          alpha: false,
+          contrast: 1.0
+        };
+        this.render();
+      }
+
+      pressKey(keyId) {
+        if (keyId === 'SHIFT') {
+          this.state.shift = !this.state.shift;
+          this.render();
+          return;
+        }
+        if (keyId === 'ALPHA') {
+          this.state.alpha = !this.state.alpha;
+          this.render();
+          return;
+        }
+        if (keyId === 'SD') {
+          if (this.state.mode === 'reference') this.state.mode = 'decimal';
+          else if (this.state.mode === 'decimal') this.state.mode = 'reference';
+          else if (this.state.mode === 'trig') this.state.mode = 'trig_dec';
+          else if (this.state.mode === 'trig_dec') this.state.mode = 'trig';
+          else if (this.state.mode === 'custom' && this.state.resultText) {
+            const num = parseFloat(this.state.resultText);
+            if (!isNaN(num)) {
+              this.state.resultText = this.state.resultText.includes('.') ? `${Math.round(num * 12)}/12` : num.toFixed(8);
+            }
+          }
+          this.render();
+          return;
+        }
+        if (keyId === 'AC' || keyId === 'ON') {
+          this.state.mode = 'custom';
+          this.state.exprText = '0';
+          this.state.resultText = '0';
+          this.state.shift = false;
+          this.state.alpha = false;
+          this.render();
+          return;
+        }
+        if (keyId === 'DEL') {
+          if (this.state.mode !== 'custom') {
+            this.state.mode = 'custom';
+            this.state.exprText = '5²×6⁻¹÷√(20)';
+            this.state.resultText = '0.9316949906';
+          } else {
+            this.state.exprText = this.state.exprText.length > 1 ? this.state.exprText.slice(0, -1) : '0';
+          }
+          this.render();
+          return;
+        }
+
+        // Map key ID to interactive expression token
+        const tokenMap = {
+          '0': '0', '1': '1', '2': '2', '3': '3', '4': '4',
+          '5': '5', '6': '6', '7': '7', '8': '8', '9': '9',
+          'DOT': '.', 'ADD': '+', 'SUB': '-', 'MUL': '×', 'DIV': '÷',
+          'SQ': '²', 'INV': '⁻¹', 'SQRT': '√(', 'LPAR': '(', 'RPAR': ')',
+          'SIN': 'sin(', 'COS': 'cos(', 'TAN': 'tan(', 'LOG': 'log(', 'LN': 'ln(',
+          'EXP': '×10^', 'ANS': 'Ans', 'NEG': '-'
+        };
+
+        if (keyId === 'EQ') {
+          if (this.state.mode === 'custom') {
+            this.evaluateCustom();
+          }
+          this.render();
+          return;
+        }
+
+        if (tokenMap[keyId]) {
+          if (this.state.mode !== 'custom' || this.state.exprText === '0') {
+            this.state.mode = 'custom';
+            this.state.exprText = tokenMap[keyId];
+          } else {
+            this.state.exprText += tokenMap[keyId];
+          }
+          this.evaluateCustom();
+          this.render();
+        }
+      }
+
+      evaluateCustom() {
+        try {
+          let jsExpr = this.state.exprText
+            .replace(/×10\^/g, '*10**')
+            .replace(/×/g, '*')
+            .replace(/÷/g, '/')
+            .replace(/²/g, '**2')
+            .replace(/⁻¹/g, '**(-1)')
+            .replace(/√\(/g, 'Math.sqrt(')
+            .replace(/sin\(/g, 'Math.sin(Math.PI/180*')
+            .replace(/cos\(/g, 'Math.cos(Math.PI/180*')
+            .replace(/tan\(/g, 'Math.tan(Math.PI/180*')
+            .replace(/log\(/g, 'Math.log10(')
+            .replace(/ln\(/g, 'Math.log(')
+            .replace(/Ans/g, '0.93169499');
+          // Auto-close open parens
+          const openCount = (jsExpr.match(/\(/g) || []).length;
+          const closeCount = (jsExpr.match(/\)/g) || []).length;
+          for (let i = 0; i < openCount - closeCount; i++) jsExpr += ')';
+          const val = Function('"use strict";return (' + jsExpr + ')')();
+          if (typeof val === 'number' && isFinite(val)) {
+            this.state.resultText = Number(val.toPrecision(10)).toString();
+          }
+        } catch (e) {
+          // Keep previous result while typing incomplete expression
+        }
+      }
+
+      setPreset(presetName) {
+        this.state.mode = presetName;
+        this.render();
+      }
+
+      render() {
+        const ctx = this.ctx;
+        const w = this.canvas.width;
+        const h = this.canvas.height;
+
+        // 1. Reflective Greenish-Olive STN LCD Background
+        const grad = ctx.createLinearGradient(0, 0, w, h);
+        grad.addColorStop(0, '#7c8f73');
+        grad.addColorStop(0.5, '#728669');
+        grad.addColorStop(1, '#65785d');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+
+        // Subtle LCD Pixel Matrix Grid
+        ctx.strokeStyle = 'rgba(30, 45, 30, 0.08)';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < w; x += 8) {
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+        }
+        for (let y = 0; y < h; y += 8) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+        }
+
+        // Inner Bezel Shadow
+        ctx.strokeStyle = 'rgba(20, 30, 20, 0.35)';
+        ctx.lineWidth = 10;
+        ctx.strokeRect(5, 5, w - 10, h - 10);
+
+        const ink = `rgba(26, 31, 68, ${0.92 * this.state.contrast})`;
+        ctx.fillStyle = ink;
+        ctx.strokeStyle = ink;
+
+        // 2. Top Status Annunciators (S, A, D, Math ▲)
+        ctx.font = 'bold 26px "JetBrains Mono", monospace';
+        if (this.state.shift) {
+          ctx.fillRect(42, 18, 28, 30);
+          ctx.fillStyle = '#7c8f73';
+          ctx.fillText('S', 48, 42);
+          ctx.fillStyle = ink;
+        }
+        if (this.state.alpha) {
+          ctx.fillRect(80, 18, 28, 30);
+          ctx.fillStyle = '#7c8f73';
+          ctx.fillText('A', 86, 42);
+          ctx.fillStyle = ink;
+        }
+
+        // 'D' Indicator box in center-left
+        ctx.fillRect(455, 18, 28, 30);
+        ctx.fillStyle = '#7c8f73';
+        ctx.font = 'bold 24px "JetBrains Mono", monospace';
+        ctx.fillText('D', 461, 42);
+
+        // 'Math ▲' on top right
+        ctx.fillStyle = ink;
+        ctx.font = 'bold 27px "Inter", sans-serif';
+        ctx.fillText('Math', 765, 43);
+        ctx.beginPath();
+        ctx.moveTo(885, 22);
+        ctx.lineTo(898, 43);
+        ctx.lineTo(872, 43);
+        ctx.closePath();
+        ctx.fill();
+
+        // 3. Main Expression & Natural-V.P.A.M. Output
+        if (this.state.mode === 'reference' || this.state.mode === 'decimal') {
+          // Exact replica of the reference photo expression: 5² × 6⁻¹ ÷ √20
+          ctx.font = 'bold 78px "JetBrains Mono", monospace';
+          ctx.fillText('5', 42, 155);
+          ctx.font = 'bold 48px "JetBrains Mono", monospace';
+          ctx.fillText('2', 92, 112);
+
+          ctx.font = 'bold 68px "JetBrains Mono", monospace';
+          ctx.fillText('×', 132, 152);
+
+          ctx.font = 'bold 78px "JetBrains Mono", monospace';
+          ctx.fillText('6', 184, 155);
+          ctx.font = 'bold 46px "JetBrains Mono", monospace';
+          ctx.fillText('-1', 232, 112);
+
+          ctx.font = 'bold 68px "JetBrains Mono", monospace';
+          ctx.fillText('÷', 304, 152);
+
+          // Square root radical symbol over 20
+          ctx.lineWidth = 6;
+          ctx.beginPath();
+          ctx.moveTo(362, 128);
+          ctx.lineTo(374, 156);
+          ctx.lineTo(394, 78);
+          ctx.lineTo(502, 78);
+          ctx.stroke();
+
+          ctx.font = 'bold 78px "JetBrains Mono", monospace';
+          ctx.fillText('20', 402, 155);
+
+          if (this.state.mode === 'reference') {
+            // Bottom Right Exact Fraction: 5√5 / 12
+            ctx.font = 'bold 62px "JetBrains Mono", monospace';
+            ctx.fillText('5', 790, 262);
+
+            // Radical over 5
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.moveTo(838, 240);
+            ctx.lineTo(848, 264);
+            ctx.lineTo(864, 200);
+            ctx.lineTo(932, 200);
+            ctx.stroke();
+            ctx.fillText('5', 876, 262);
+
+            // Fraction Vinculum Bar
+            ctx.fillRect(782, 282, 165, 7);
+
+            // Denominator 12
+            ctx.fillText('12', 825, 348);
+          } else {
+            // S<=>D Decimal conversion
+            ctx.font = 'bold 72px "JetBrains Mono", monospace';
+            ctx.textAlign = 'right';
+            ctx.fillText('0.9316949906', 965, 335);
+            ctx.textAlign = 'left';
+          }
+        } else if (this.state.mode === 'integral') {
+          // Definite Integral textbook view
+          ctx.font = 'bold 84px serif';
+          ctx.fillText('∫', 48, 165);
+          ctx.font = 'bold 34px "JetBrains Mono", monospace';
+          ctx.fillText('4', 82, 95);
+          ctx.fillText('0', 76, 182);
+          ctx.font = 'bold 64px "JetBrains Mono", monospace';
+          ctx.fillText('(x²+2x)dx', 118, 150);
+
+          ctx.font = 'bold 62px "JetBrains Mono", monospace';
+          ctx.fillText('112', 815, 262);
+          ctx.fillRect(805, 282, 145, 7);
+          ctx.fillText('3', 860, 348);
+        } else if (this.state.mode === 'trig' || this.state.mode === 'trig_dec') {
+          ctx.font = 'bold 64px "JetBrains Mono", monospace';
+          ctx.fillText('sin(60)+cos(30)', 42, 148);
+          if (this.state.mode === 'trig') {
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.moveTo(820, 295);
+            ctx.lineTo(835, 328);
+            ctx.lineTo(855, 252);
+            ctx.lineTo(935, 252);
+            ctx.stroke();
+            ctx.font = 'bold 74px "JetBrains Mono", monospace';
+            ctx.fillText('3', 875, 325);
+          } else {
+            ctx.font = 'bold 72px "JetBrains Mono", monospace';
+            ctx.textAlign = 'right';
+            ctx.fillText('1.732050808', 965, 335);
+            ctx.textAlign = 'left';
+          }
+        } else {
+          // Custom Live User Input
+          ctx.font = 'bold 64px "JetBrains Mono", monospace';
+          ctx.fillText(this.state.exprText.slice(-18), 42, 148);
+          ctx.font = 'bold 72px "JetBrains Mono", monospace';
+          ctx.textAlign = 'right';
+          ctx.fillText(this.state.resultText, 965, 335);
+          ctx.textAlign = 'left';
+        }
+
+        this.texture.needsUpdate = true;
+      }
+    }
+
+    /***************************************************************************
+     * 5. PROCEDURAL TEXTURE GENERATORS (Faceplate Silk-Screen, Keycaps, PCB)
+     ***************************************************************************/
+    function createFaceplateTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1024;
+      canvas.height = 2048;
+      const ctx = canvas.getContext('2d');
+
+      // Brushed Metallic Silver Base
+      const grad = ctx.createLinearGradient(0, 0, 1024, 2048);
+      grad.addColorStop(0, '#d8dad5');
+      grad.addColorStop(0.35, '#cecfc9');
+      grad.addColorStop(0.7, '#c4c6c0');
+      grad.addColorStop(1, '#b8bab4');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1024, 2048);
+
+      // Vertical brushed metal hairlines
+      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 900; i++) {
+        const x = Math.random() * 1024;
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, 2048);
+        ctx.stroke();
+      }
+
+      // Helper coordinate mapper from calculator 3D world coords (-3.9..3.9, -7.4..7.4) to UV canvas
+      const toX = (wx) => ((wx + 3.9) / 7.8) * 1024;
+      const toY = (wy) => ((7.4 - wy) / 14.8) * 2048;
+
+      // Top Left Branding: "CTIFREE"
+      ctx.fillStyle = '#1e2430';
+      ctx.font = 'bold 46px "Inter", sans-serif';
+      ctx.letterSpacing = '4px';
+      ctx.fillText('CTIFREE', toX(-3.35), toY(6.35));
+
+      // "fx-991ES PLUS"
+      ctx.font = 'italic bold 36px "Times New Roman", serif';
+      ctx.fillText('fx-991ES PLUS', toX(-3.35), toY(5.78));
+
+      // "NATURAL-V.P.A.M." in green-teal
+      ctx.fillStyle = '#1f6f54';
+      ctx.font = 'italic bold 25px "Inter", sans-serif';
+      ctx.fillText('NATURAL-V.P.A.M.', toX(-3.35), toY(5.32));
+
+      // "TWO WAY POWER" under solar window
+      ctx.fillStyle = '#272c36';
+      ctx.font = 'bold 23px "Inter", sans-serif';
+      ctx.fillText('TWO WAY POWER', toX(0.65), toY(5.32));
+
+      // Render Shift/Alpha Sub-Legends above every key
+      ctx.textAlign = 'center';
+      KEY_DEFINITIONS.forEach(k => {
+        if (!k.topLabel) return;
+        const cx = toX(k.x);
+        const cy = toY(k.y + k.h * 0.5 + 0.22);
+        ctx.font = 'bold 21px "Inter", sans-serif';
+        ctx.fillStyle = k.topColor || '#eab308';
+        ctx.fillText(k.topLabel, cx, cy);
+      });
+
+      const tex = new THREE.CanvasTexture(canvas);
+      tex.anisotropy = 8;
+      return tex;
+    }
+
+    function createKeycapTexture(keyDef) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 256;
+      canvas.height = 160;
+      const ctx = canvas.getContext('2d');
+
+      // Base key color fill
+      const hex = '#' + keyDef.color.toString(16).padStart(6, '0');
+      ctx.fillStyle = hex;
+      ctx.fillRect(0, 0, 256, 160);
+
+      // Subtle top bevel highlight
+      ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+      ctx.lineWidth = 6;
+      ctx.strokeRect(4, 4, 248, 152);
+
+      if (keyDef.type === 'dpad') {
+        ctx.fillStyle = 'rgba(255,255,255,0.55)';
+        ctx.font = 'bold 28px "Inter", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('REPLAY', 128, 80);
+      } else if (keyDef.label) {
+        ctx.fillStyle = keyDef.textCol || '#f8fafc';
+        const isLong = keyDef.label.length > 3;
+        ctx.font = `bold ${isLong ? 46 : 62}px "Inter", sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(keyDef.label, 128, 84);
+      }
+
+      const tex = new THREE.CanvasTexture(canvas);
+      tex.anisotropy = 4;
+      return tex;
+    }
+
+    function createPCBTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1024;
+      canvas.height = 2048;
+      const ctx = canvas.getContext('2d');
+
+      // Deep Emerald FR-4 Solder Mask
+      ctx.fillStyle = '#074e2c';
+      ctx.fillRect(0, 0, 1024, 2048);
+
+      const toX = (wx) => ((wx + 3.6) / 7.2) * 1024;
+      const toY = (wy) => ((7.1 - wy) / 14.2) * 2048;
+
+      // Light green copper traces radiating from COB ASIC center (wx: 0, wy: 1.55)
+      const cobX = toX(0);
+      const cobY = toY(1.55);
+
+      ctx.strokeStyle = '#15803d';
+      ctx.lineWidth = 3.5;
+
+      // Bus traces up to LCD Zebra connector pads
+      for (let i = -18; i <= 18; i++) {
+        const px = toX(i * 0.16);
+        const py = toY(2.25);
+        ctx.beginPath();
+        ctx.moveTo(cobX + i * 5, cobY - 25);
+        ctx.lineTo(px, py);
+        ctx.stroke();
+
+        // Gold ENIG Zebra Pad Finger
+        ctx.fillStyle = '#eab308';
+        ctx.fillRect(px - 3, py - 18, 6, 36);
+      }
+
+      // Matrix routing traces & Interdigitated Gold Switch Contacts for all 50 keys
+      KEY_DEFINITIONS.forEach((k) => {
+        const kx = toX(k.x);
+        const ky = toY(k.y);
+
+        // Copper trace from COB to Key
+        ctx.strokeStyle = '#147a3c';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(cobX + (k.col - 2.5) * 18, cobY + 30);
+        ctx.lineTo(kx, cobY + 140 + k.row * 12);
+        ctx.lineTo(kx, ky);
+        ctx.stroke();
+
+        // Gold ENIG Interdigitated Contact Circle
+        ctx.fillStyle = '#111827';
+        ctx.beginPath();
+        ctx.arc(kx, ky, 32, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = '#facc15';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(kx, ky, 27, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Interlocking gold fingers inside switch footprint
+        for (let f = -16; f <= 16; f += 8) {
+          ctx.beginPath();
+          ctx.moveTo(kx - 18, ky + f);
+          ctx.lineTo(kx + 18, ky + f);
+          ctx.stroke();
+        }
+      });
+
+      // White PCB Silkscreen Annotations
+      ctx.fillStyle = 'rgba(255,255,255,0.75)';
+      ctx.font = 'bold 22px "JetBrains Mono", monospace';
+      ctx.fillText('CTIFREE-991ES-MAIN-REV4.2', 75, 110);
+      ctx.fillText('U1: CMOS-COB-ASIC', cobX + 95, cobY - 10);
+      ctx.fillText('Y1: 32.768kHz', cobX - 240, cobY - 40);
+      ctx.fillText('BT1: LR44 1.5V', toX(1.9), toY(5.8));
+      ctx.fillText('PV1: a-Si SOLAR', toX(-2.1), toY(5.8));
+
+      const tex = new THREE.CanvasTexture(canvas);
+      tex.anisotropy = 8;
+      return tex;
+    }
+
+    /***************************************************************************
+     * 6. THREE.JS SCENE, CAMERA, LIGHTING & 8-LAYER PROCEDURAL GEOMETRY
+     ***************************************************************************/
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(36, window.innerWidth / window.innerHeight, 0.1, 200);
+    camera.position.set(0, 18.5, 14.5);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
+    container.appendChild(renderer.domElement);
+
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.06;
+    controls.maxDistance = 48;
+    controls.minDistance = 5;
+    controls.target.set(0, 0, 0.4);
+
+    // Studio & Engineering Rim Lighting
+    const ambientLight = new THREE.AmbientLight(0xdbeafe, 0.75);
+    scene.add(ambientLight);
+
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.35);
+    keyLight.position.set(12, 24, 16);
+    keyLight.castShadow = true;
+    keyLight.shadow.mapSize.width = 2048;
+    keyLight.shadow.mapSize.height = 2048;
+    keyLight.shadow.camera.near = 5;
+    keyLight.shadow.camera.far = 50;
+    const d = 11;
+    keyLight.shadow.camera.left = -d;
+    keyLight.shadow.camera.right = d;
+    keyLight.shadow.camera.top = d;
+    keyLight.shadow.camera.bottom = -d;
+    keyLight.shadow.bias = -0.0005;
+    scene.add(keyLight);
+
+    const rimLight1 = new THREE.DirectionalLight(0x38bdf8, 0.65);
+    rimLight1.position.set(-16, -10, -8);
+    scene.add(rimLight1);
+
+    const rimLight2 = new THREE.DirectionalLight(0xf59e0b, 0.4);
+    rimLight2.position.set(14, -12, 10);
+    scene.add(rimLight2);
+
+    // Subtle Engineering Reference Grid below assembly
+    const gridHelper = new THREE.GridHelper(32, 32, 0x1e293b, 0x0f172a);
+    gridHelper.position.y = -7.5;
+    scene.add(gridHelper);
+
+    // Master Calculator Root Group (Tilted slightly toward viewer for natural inspection)
+    const calcRoot = new THREE.Group();
+    scene.add(calcRoot);
+
+    // Dictionary of Layer Groups & Interactive Meshes
+    const layerGroups = {};
+    const keycapMeshes = [];
+    const domeMeshes = [];
+    let cobEpoxyMesh = null;
+    let tracePulseLines = null;
+    let tracePulseGeo = null;
+
+    HARDWARE_LAYERS.forEach(layer => {
+      const grp = new THREE.Group();
+      grp.name = layer.id;
+      layerGroups[layer.id] = grp;
+      calcRoot.add(grp);
+    });
+
+    // Helper: Create Rounded Rectangle THREE.Shape with optional holes
+    function makeRoundedRectShape(w, h, r, cx = 0, cy = 0) {
+      const s = new THREE.Shape();
+      const x = cx - w / 2;
+      const y = cy - h / 2;
+      s.moveTo(x + r, y);
+      s.lineTo(x + w - r, y);
+      s.quadraticCurveTo(x + w, y, x + w, y + r);
+      s.lineTo(x + w, y + h - r);
+      s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      s.lineTo(x + r, y + h);
+      s.quadraticCurveTo(x, y + h, x, y + h - r);
+      s.lineTo(x, y + r);
+      s.quadraticCurveTo(x, y, x + r, y);
+      return s;
+    }
+
+    function makeRoundedRectPath(w, h, r, cx = 0, cy = 0) {
+      const p = new THREE.Path();
+      const x = cx - w / 2;
+      const y = cy - h / 2;
+      p.moveTo(x + r, y);
+      p.lineTo(x + w - r, y);
+      p.quadraticCurveTo(x + w, y, x + w, y + r);
+      p.lineTo(x + w, y + h - r);
+      p.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      p.lineTo(x + r, y + h);
+      p.quadraticCurveTo(x, y + h, x, y + h - r);
+      p.lineTo(x, y + r);
+      p.quadraticCurveTo(x, y, x + r, y);
+      return p;
+    }
+
+    // Initialize Live LCD Display Engine
+    const lcdDisplay = new NaturalVPAMDisplay();
+
+    /***************************************************************************
+     * BUILD LAYER 1: TOP SILVER FACEPLATE & BEZEL (with Solar + LCD Cutouts)
+     ***************************************************************************/
+    (function buildLayer1Bezel() {
+      const grp = layerGroups['bezel'];
+      const bezelShape = makeRoundedRectShape(7.8, 14.8, 0.85);
+
+      // Cutout Hole 1: Solar Panel Window (top right: x=1.45, y=6.15)
+      const solarHole = makeRoundedRectPath(3.55, 1.05, 0.14, 1.45, 6.15);
+      bezelShape.holes.push(solarHole);
+
+      // Cutout Hole 2: LCD Screen Window (x=0, y=3.55)
+      const lcdHole = makeRoundedRectPath(6.45, 2.55, 0.18, 0.0, 3.55);
+      bezelShape.holes.push(lcdHole);
+
+      const extrudeSettings = {
+        depth: 0.24,
+        bevelEnabled: true,
+        bevelSegments: 3,
+        steps: 1,
+        bevelSize: 0.08,
+        bevelThickness: 0.06
+      };
+      const geo = new THREE.ExtrudeGeometry(bezelShape, extrudeSettings);
+
+      // Compute clean planar UV coordinates matching createFaceplateTexture
+      const pos = geo.attributes.position;
+      const uvs = new Float32Array(pos.count * 2);
+      for (let i = 0; i < pos.count; i++) {
+        const vx = pos.getX(i);
+        const vy = pos.getY(i);
+        uvs[i * 2] = (vx + 3.9) / 7.8;
+        uvs[i * 2 + 1] = (vy + 7.4) / 14.8;
+      }
+      geo.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
+
+      const faceplateTex = createFaceplateTexture();
+      const silverMat = new THREE.MeshStandardMaterial({
+        map: faceplateTex,
+        metalness: 0.48,
+        roughness: 0.34
+      });
+
+      const bezelMesh = new THREE.Mesh(geo, silverMat);
+      bezelMesh.rotation.x = -Math.PI / 2;
+      bezelMesh.position.y = 0.28;
+      bezelMesh.castShadow = true;
+      bezelMesh.receiveShadow = true;
+      bezelMesh.userData.layerId = 'bezel';
+      grp.add(bezelMesh);
+
+      // Recessed Inner Metallic Bezel Frame around LCD
+      const frameShape = makeRoundedRectShape(6.72, 2.82, 0.22, 0, 3.55);
+      frameShape.holes.push(makeRoundedRectPath(6.42, 2.52, 0.16, 0, 3.55));
+      const frameGeo = new THREE.ExtrudeGeometry(frameShape, { depth: 0.12, bevelEnabled: true, bevelSize: 0.03, bevelThickness: 0.03 });
+      const darkChromeMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.7, roughness: 0.25 });
+      const frameMesh = new THREE.Mesh(frameGeo, darkChromeMat);
+      frameMesh.rotation.x = -Math.PI / 2;
+      frameMesh.position.y = 0.45;
+      frameMesh.userData.layerId = 'bezel';
+      grp.add(frameMesh);
+    })();
+
+    /***************************************************************************
+     * BUILD LAYER 2: 50 PROCEDURAL TACTILE KEYCAPS
+     ***************************************************************************/
+    (function buildLayer2Keycaps() {
+      const grp = layerGroups['keycaps'];
+
+      KEY_DEFINITIONS.forEach((k, idx) => {
+        const keyGroup = new THREE.Group();
+        keyGroup.position.set(k.x, 0.56, -k.y);
+
+        let mesh;
+        const tex = createKeycapTexture(k);
+
+        if (k.type === 'dpad') {
+          // Sculpted Central Replay D-Pad Dish
+          const dpadGeo = new THREE.CylinderGeometry(k.w * 0.48, k.w * 0.51, 0.32, 36);
+          dpadGeo.scale(1.0, 1.0, k.h / k.w);
+          const dpadMat = new THREE.MeshStandardMaterial({
+            color: k.color,
+            roughness: 0.38,
+            metalness: 0.15
+          });
+          mesh = new THREE.Mesh(dpadGeo, dpadMat);
+
+          // Add 4 Directional Triangles on D-Pad
+          const arrowMat = new THREE.MeshBasicMaterial({ color: 0xcbd5e1 });
+          const dirs = [
+            { x: 0, z: -0.58, rot: 0 },
+            { x: 0, z: 0.58, rot: Math.PI },
+            { x: -0.72, z: 0, rot: Math.PI / 2 },
+            { x: 0.72, z: 0, rot: -Math.PI / 2 }
+          ];
+          dirs.forEach(d => {
+            const triGeo = new THREE.ConeGeometry(0.08, 0.14, 3);
+            const tri = new THREE.Mesh(triGeo, arrowMat);
+            tri.rotation.x = -Math.PI / 2;
+            tri.rotation.z = d.rot;
+            tri.position.set(d.x, 0.17, d.z);
+            mesh.add(tri);
+          });
+        } else {
+          const r = k.type === 'oval' ? k.h * 0.46 : (k.type === 'sci' ? 0.13 : 0.16);
+          const shape = makeRoundedRectShape(k.w, k.h, r);
+          const extGeo = new THREE.ExtrudeGeometry(shape, {
+            depth: 0.24,
+            bevelEnabled: true,
+            bevelSegments: 2,
+            steps: 1,
+            bevelSize: 0.035,
+            bevelThickness: 0.04
+          });
+
+          // Map top surface UVs cleanly
+          const pos = extGeo.attributes.position;
+          const uvs = new Float32Array(pos.count * 2);
+          for (let i = 0; i < pos.count; i++) {
+            uvs[i * 2] = (pos.getX(i) + k.w / 2) / k.w;
+            uvs[i * 2 + 1] = (pos.getY(i) + k.h / 2) / k.h;
+          }
+          extGeo.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
+
+          const sideMat = new THREE.MeshStandardMaterial({
+            color: k.color,
+            roughness: 0.42,
+            metalness: 0.08
+          });
+          const topMat = new THREE.MeshStandardMaterial({
+            map: tex,
+            roughness: 0.35,
+            metalness: 0.05
+          });
+
+          mesh = new THREE.Mesh(extGeo, [topMat, sideMat]);
+          mesh.rotation.x = -Math.PI / 2;
+          if (k.rotZ) mesh.rotation.z = k.rotZ;
+        }
+
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        mesh.userData = {
+          isKeycap: true,
+          keyDef: k,
+          keyIndex: idx,
+          layerId: 'keycaps'
+        };
+
+        keyGroup.add(mesh);
+        keyGroup.userData = {
+          baseY: 0.56,
+          pressOffset: 0,
+          targetPress: 0,
+          keyDef: k
+        };
+        grp.add(keyGroup);
+        keycapMeshes.push(mesh);
+      });
+    })();
+
+    /***************************************************************************
+     * BUILD LAYER 3: AMORPHOUS SILICON (a-Si) SOLAR CELL MODULE
+     ***************************************************************************/
+    (function buildLayer3Solar() {
+      const grp = layerGroups['solar'];
+
+      // Glass substrate
+      const solarGeo = new THREE.BoxGeometry(3.48, 0.12, 0.98);
+      const solarCanvas = document.createElement('canvas');
+      solarCanvas.width = 512;
+      solarCanvas.height = 128;
+      const ctx = solarCanvas.getContext('2d');
+
+      // Deep burgundy/mahogany photovoltaic silicon tint
+      const grad = ctx.createLinearGradient(0, 0, 512, 128);
+      grad.addColorStop(0, '#3b1518');
+      grad.addColorStop(0.5, '#4c1b20');
+      grad.addColorStop(1, '#2b0e11');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 512, 128);
+
+      // 4 Vertical Series Cell Laser Scribes + Silver Busbars
+      ctx.strokeStyle = '#d4af37';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(6, 6, 500, 116);
+      for (let i = 1; i < 4; i++) {
+        ctx.fillStyle = 'rgba(212, 175, 55, 0.65)';
+        ctx.fillRect(i * 128 - 2, 8, 4, 112);
+      }
+
+      const solarTex = new THREE.CanvasTexture(solarCanvas);
+      const solarMat = new THREE.MeshPhysicalMaterial({
+        map: solarTex,
+        roughness: 0.12,
+        metalness: 0.25,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.08
+      });
+
+      const solarMesh = new THREE.Mesh(solarGeo, solarMat);
+      solarMesh.position.set(1.45, 0.20, -6.15);
+      solarMesh.castShadow = true;
+      solarMesh.userData.layerId = 'solar';
+      grp.add(solarMesh);
+
+      // Red & Black Solder Ribbon Wires down to PCB
+      const wireMatRed = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.5 });
+      const wireMatBlk = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.5 });
+      const wireGeo = new THREE.CylinderGeometry(0.03, 0.03, 0.35, 8);
+      const w1 = new THREE.Mesh(wireGeo, wireMatRed);
+      w1.position.set(0.1, 0.02, -6.15);
+      w1.userData.layerId = 'solar';
+      const w2 = new THREE.Mesh(wireGeo, wireMatBlk);
+      w2.position.set(2.8, 0.02, -6.15);
+      w2.userData.layerId = 'solar';
+      grp.add(w1, w2);
+    })();
+
+    /***************************************************************************
+     * BUILD LAYER 4: STN DOT-MATRIX LCD & PINK ELASTOMERIC ZEBRA CONNECTORS
+     ***************************************************************************/
+    (function buildLayer4LCD() {
+      const grp = layerGroups['lcd'];
+
+      // Metal Backlight/Reflector Shield Frame
+      const shieldGeo = new THREE.BoxGeometry(6.62, 0.16, 2.72);
+      const shieldMat = new THREE.MeshStandardMaterial({ color: 0xcbd5e1, metalness: 0.85, roughness: 0.22 });
+      const shieldMesh = new THREE.Mesh(shieldGeo, shieldMat);
+      shieldMesh.position.set(0, 0.14, -3.55);
+      shieldMesh.castShadow = true;
+      shieldMesh.userData.layerId = 'lcd';
+      grp.add(shieldMesh);
+
+      // Upper & Lower ITO Glass Plates + Polarizer Film with Live Canvas Texture
+      const glassGeo = new THREE.BoxGeometry(6.38, 0.08, 2.46);
+      const sideGlassMat = new THREE.MeshPhysicalMaterial({
+        color: 0x4d7c5f,
+        transmission: 0.4,
+        opacity: 0.9,
+        transparent: true,
+        roughness: 0.15
+      });
+      const topLCDMat = new THREE.MeshPhysicalMaterial({
+        map: lcdDisplay.texture,
+        roughness: 0.18,
+        metalness: 0.05,
+        clearcoat: 0.8,
+        clearcoatRoughness: 0.12
+      });
+
+      const lcdMesh = new THREE.Mesh(glassGeo, [
+        sideGlassMat, sideGlassMat, topLCDMat, sideGlassMat, sideGlassMat, sideGlassMat
+      ]);
+      lcdMesh.position.set(0, 0.24, -3.55);
+      lcdMesh.userData.layerId = 'lcd';
+      grp.add(lcdMesh);
+
+      // Authentic Pink & Carbon-Black Striped Elastomeric "Zebra" Connector Strip
+      const zebraCanvas = document.createElement('canvas');
+      zebraCanvas.width = 512;
+      zebraCanvas.height = 64;
+      const zctx = zebraCanvas.getContext('2d');
+      for (let x = 0; x < 512; x += 8) {
+        zctx.fillStyle = (x / 8) % 2 === 0 ? '#f472b6' : '#1e293b';
+        zctx.fillRect(x, 0, 8, 64);
+      }
+      const zebraTex = new THREE.CanvasTexture(zebraCanvas);
+      const zebraGeo = new THREE.BoxGeometry(5.85, 0.24, 0.22);
+      const zebraMat = new THREE.MeshStandardMaterial({ map: zebraTex, roughness: 0.65 });
+      const zebraMesh = new THREE.Mesh(zebraGeo, zebraMat);
+      zebraMesh.position.set(0, 0.06, -2.25);
+      zebraMesh.userData.layerId = 'lcd';
+      grp.add(zebraMesh);
+    })();
+
+    /***************************************************************************
+     * BUILD LAYER 5: CONDUCTIVE SILICONE RUBBER KEYPAD MEMBRANE
+     ***************************************************************************/
+    (function buildLayer5Membrane() {
+      const grp = layerGroups['membrane'];
+
+      // Milky Translucent Silicone Sheet covering keypad zone
+      const sheetShape = makeRoundedRectShape(7.1, 9.2, 0.45, 0, -2.85);
+      const sheetGeo = new THREE.ExtrudeGeometry(sheetShape, { depth: 0.07, bevelEnabled: false });
+      const siliconeMat = new THREE.MeshPhysicalMaterial({
+        color: 0xf1f5f9,
+        transparent: true,
+        opacity: 0.76,
+        roughness: 0.55,
+        transmission: 0.35
+      });
+
+      const sheetMesh = new THREE.Mesh(sheetGeo, siliconeMat);
+      sheetMesh.rotation.x = -Math.PI / 2;
+      sheetMesh.position.y = 0.06;
+      sheetMesh.userData.layerId = 'membrane';
+      grp.add(sheetMesh);
+
+      // 50 Raised Tactile Silicone Frustum Domes + Black Carbon Contact Pills underneath
+      const domeGeo = new THREE.CylinderGeometry(0.18, 0.34, 0.22, 18);
+      const pillGeo = new THREE.CylinderGeometry(0.14, 0.14, 0.04, 14);
+      const pillMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.8 });
+
+      KEY_DEFINITIONS.forEach((k) => {
+        const domeGroup = new THREE.Group();
+        domeGroup.position.set(k.x, 0.18, -k.y);
+
+        const dome = new THREE.Mesh(domeGeo, siliconeMat);
+        dome.userData.layerId = 'membrane';
+        const pill = new THREE.Mesh(pillGeo, pillMat);
+        pill.position.y = -0.10;
+        pill.userData.layerId = 'membrane';
+
+        domeGroup.add(dome, pill);
+        grp.add(domeGroup);
+        domeMeshes.push(domeGroup);
+      });
+    })();
+
+    /***************************************************************************
+     * BUILD LAYER 6: MAIN FR-4 PCB, COB EPOXY ASIC (with X-Ray Die) & SMD PARTS
+     ***************************************************************************/
+    (function buildLayer6PCB() {
+      const grp = layerGroups['pcb'];
+
+      const pcbShape = makeRoundedRectShape(7.2, 14.2, 0.65);
+      const pcbGeo = new THREE.ExtrudeGeometry(pcbShape, { depth: 0.12, bevelEnabled: false });
+
+      const pos = pcbGeo.attributes.position;
+      const uvs = new Float32Array(pos.count * 2);
+      for (let i = 0; i < pos.count; i++) {
+        uvs[i * 2] = (pos.getX(i) + 3.6) / 7.2;
+        uvs[i * 2 + 1] = (pos.getY(i) + 7.1) / 14.2;
+      }
+      pcbGeo.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
+
+      const pcbTex = createPCBTexture();
+      const pcbTopMat = new THREE.MeshStandardMaterial({
+        map: pcbTex,
+        roughness: 0.32,
+        metalness: 0.25
+      });
+      const fr4EdgeMat = new THREE.MeshStandardMaterial({ color: 0x9ca3af, roughness: 0.6 });
+
+      const pcbMesh = new THREE.Mesh(pcbGeo, [pcbTopMat, fr4EdgeMat]);
+      pcbMesh.rotation.x = -Math.PI / 2;
+      pcbMesh.position.y = -0.12;
+      pcbMesh.receiveShadow = true;
+      pcbMesh.castShadow = true;
+      pcbMesh.userData.layerId = 'pcb';
+      grp.add(pcbMesh);
+
+      // --- CHIP-ON-BOARD (COB) ASIC + INTERNAL SILICON DIE & GOLD BOND WIRES ---
+      const cobX = 0;
+      const cobZ = -1.55;
+
+      // 1. Microscopic Silicon Die inside the epoxy blob (visible in X-Ray mode)
+      const dieGeo = new THREE.BoxGeometry(0.62, 0.05, 0.62);
+      const dieMat = new THREE.MeshStandardMaterial({
+        color: 0x38bdf8,
+        metalness: 0.9,
+        roughness: 0.1,
+        emissive: 0x0284c7,
+        emissiveIntensity: 0.35
+      });
+      const dieMesh = new THREE.Mesh(dieGeo, dieMat);
+      dieMesh.position.set(cobX, 0.03, cobZ);
+      dieMesh.userData.layerId = 'pcb';
+      grp.add(dieMesh);
+
+      // 2. 32 Gold Wire-Bonds radiating from Silicon Die to PCB Copper Pads
+      const wireBondMat = new THREE.LineBasicMaterial({ color: 0xfacc15 });
+      const wirePts = [];
+      for (let i = 0; i < 32; i++) {
+        const angle = (i / 32) * Math.PI * 2;
+        const rInner = 0.26;
+        const rOuter = 0.82;
+        wirePts.push(new THREE.Vector3(cobX + Math.cos(angle) * rInner, 0.06, cobZ + Math.sin(angle) * rInner));
+        wirePts.push(new THREE.Vector3(cobX + Math.cos(angle) * 0.52, 0.16, cobZ + Math.sin(angle) * 0.52));
+        wirePts.push(new THREE.Vector3(cobX + Math.cos(angle) * 0.52, 0.16, cobZ + Math.sin(angle) * 0.52));
+        wirePts.push(new THREE.Vector3(cobX + Math.cos(angle) * rOuter, 0.01, cobZ + Math.sin(angle) * rOuter));
+      }
+      const wireBondGeo = new THREE.BufferGeometry().setFromPoints(wirePts);
+      const wireBonds = new THREE.LineSegments(wireBondGeo, wireBondMat);
+      grp.add(wireBonds);
+
+      // 3. Black Epoxy Encapsulant Dome ("Glob-Top")
+      const cobGeo = new THREE.SphereGeometry(0.95, 32, 16, 0, Math.PI * 2, 0, Math.PI * 0.5);
+      cobGeo.scale(1.15, 0.24, 0.95);
+      const cobMat = new THREE.MeshPhysicalMaterial({
+        color: 0x090a0f,
+        roughness: 0.15,
+        metalness: 0.05,
+        clearcoat: 1.0,
+        transparent: true,
+        opacity: 1.0
+      });
+      cobEpoxyMesh = new THREE.Mesh(cobGeo, cobMat);
+      cobEpoxyMesh.position.set(cobX, 0.0, cobZ);
+      cobEpoxyMesh.userData.layerId = 'pcb';
+      grp.add(cobEpoxyMesh);
+
+      // 4. 32.768 kHz Cylindrical Quartz Crystal Oscillator Can
+      const xtalGeo = new THREE.CylinderGeometry(0.11, 0.11, 0.65, 16);
+      const chromeMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.92, roughness: 0.15 });
+      const xtalMesh = new THREE.Mesh(xtalGeo, chromeMat);
+      xtalMesh.rotation.z = Math.PI / 2;
+      xtalMesh.position.set(-1.65, 0.11, -1.65);
+      xtalMesh.userData.layerId = 'pcb';
+      grp.add(xtalMesh);
+
+      // 5. SMD Ceramic Decoupling Capacitors & Resistors (C1..C5, R1..R4)
+      const smdCapMat = new THREE.MeshStandardMaterial({ color: 0xb45309, roughness: 0.4 });
+      const smdEndMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.8, roughness: 0.2 });
+      const smdPositions = [
+        [-1.3, -1.2], [-1.3, -1.4], [1.35, -1.2], [1.35, -1.45],
+        [1.35, -1.7], [-0.9, -2.0], [0.9, -2.0], [1.6, -5.2], [-1.6, -5.2]
+      ];
+      smdPositions.forEach(([sx, sz]) => {
+        const smd = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.09, 0.12), smdCapMat);
+        smd.position.set(sx, 0.045, sz);
+        smd.userData.layerId = 'pcb';
+        grp.add(smd);
+      });
+
+      // 6. Active Signal Pulse Overlay Line on PCB (lights up when a key is pressed)
+      tracePulseGeo = new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(0, 0.03, -1.55),
+        new THREE.Vector3(0, 0.03, -1.55),
+        new THREE.Vector3(0, 0.03, -1.55)
+      ]);
+      const pulseMat = new THREE.LineBasicMaterial({ color: 0x38bdf8, linewidth: 3 });
+      tracePulseLines = new THREE.Line(tracePulseGeo, pulseMat);
+      tracePulseLines.visible = false;
+      grp.add(tracePulseLines);
+    })();
+
+    /***************************************************************************
+     * BUILD LAYER 7: DUAL-POWER SUBSYSTEM (LR44 BUTTON CELL + RETENTION CLIP)
+     ***************************************************************************/
+    (function buildLayer7Battery() {
+      const grp = layerGroups['battery'];
+
+      // LR44 1.5V Alkaline Button Cell (11.6mm x 5.4mm scaled)
+      const batX = -2.15;
+      const batZ = -5.85;
+      const cellGeo = new THREE.CylinderGeometry(0.68, 0.68, 0.34, 32);
+
+      // Etched Top Stamp "+ LR44 1.5V"
+      const cellCanvas = document.createElement('canvas');
+      cellCanvas.width = 256;
+      cellCanvas.height = 256;
+      const ctx = cellCanvas.getContext('2d');
+      ctx.fillStyle = '#e2e8f0';
+      ctx.fillRect(0, 0, 256, 256);
+      ctx.fillStyle = '#475569';
+      ctx.font = 'bold 38px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('+', 128, 85);
+      ctx.font = 'bold 28px "JetBrains Mono", monospace';
+      ctx.fillText('LR44', 128, 135);
+      ctx.font = '22px "JetBrains Mono", monospace';
+      ctx.fillText('1.5V ALK', 128, 175);
+
+      const cellTex = new THREE.CanvasTexture(cellCanvas);
+      const cellMat = new THREE.MeshStandardMaterial({
+        map: cellTex,
+        metalness: 0.88,
+        roughness: 0.18
+      });
+
+      const cellMesh = new THREE.Mesh(cellGeo, cellMat);
+      cellMesh.position.set(batX, 0.17, batZ);
+      cellMesh.castShadow = true;
+      cellMesh.userData.layerId = 'battery';
+      grp.add(cellMesh);
+
+      // Stamped Nickel-Plated Spring Steel Retention Strap
+      const clipMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, metalness: 0.92, roughness: 0.2 });
+      const clipTop = new THREE.Mesh(new THREE.BoxGeometry(1.55, 0.04, 0.38), clipMat);
+      clipTop.position.set(batX, 0.36, batZ);
+      clipTop.userData.layerId = 'battery';
+      const clipLeg1 = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.38, 0.38), clipMat);
+      clipLeg1.position.set(batX - 0.75, 0.18, batZ);
+      clipLeg1.userData.layerId = 'battery';
+      const clipLeg2 = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.38, 0.38), clipMat);
+      clipLeg2.position.set(batX + 0.75, 0.18, batZ);
+      clipLeg2.userData.layerId = 'battery';
+      grp.add(clipTop, clipLeg1, clipLeg2);
+    })();
+
+    /***************************************************************************
+     * BUILD LAYER 8: REAR DARK NAVY/CHARCOAL ABS MOLDED ENCLOSURE
+     ***************************************************************************/
+    (function buildLayer8RearCase() {
+      const grp = layerGroups['rearcase'];
+
+      const rearShape = makeRoundedRectShape(7.92, 14.92, 0.90);
+      const rearGeo = new THREE.ExtrudeGeometry(rearShape, {
+        depth: 0.52,
+        bevelEnabled: true,
+        bevelSegments: 3,
+        steps: 1,
+        bevelSize: 0.10,
+        bevelThickness: 0.12
+      });
+
+      const navyAbsMat = new THREE.MeshStandardMaterial({
+        color: 0x23293a,
+        roughness: 0.58,
+        metalness: 0.08
+      });
+
+      const rearMesh = new THREE.Mesh(rearGeo, navyAbsMat);
+      rearMesh.rotation.x = -Math.PI / 2;
+      rearMesh.position.y = -0.68;
+      rearMesh.castShadow = true;
+      rearMesh.receiveShadow = true;
+      rearMesh.userData.layerId = 'rearcase';
+      grp.add(rearMesh);
+
+      // Internal Structural Reinforcement Ribs & Brass Screw Bosses
+      const ribMat = new THREE.MeshStandardMaterial({ color: 0x1a1f2e, roughness: 0.6 });
+      for (let z = -5.5; z <= 5.5; z += 2.75) {
+        const rib = new THREE.Mesh(new THREE.BoxGeometry(7.2, 0.22, 0.08), ribMat);
+        rib.position.set(0, -0.14, z);
+        rib.userData.layerId = 'rearcase';
+        grp.add(rib);
+      }
+      const bossGeo = new THREE.CylinderGeometry(0.16, 0.20, 0.32, 16);
+      const brassMat = new THREE.MeshStandardMaterial({ color: 0xd97706, metalness: 0.8, roughness: 0.25 });
+      [[-3.1, -6.2], [3.1, -6.2], [-3.1, 0], [3.1, 0], [-3.1, 6.2], [3.1, 6.2]].forEach(([bx, bz]) => {
+        const boss = new THREE.Mesh(bossGeo, brassMat);
+        boss.position.set(bx, -0.10, bz);
+        boss.userData.layerId = 'rearcase';
+        grp.add(boss);
+      });
+    })();
+
+    // --- LAYER 6: SOT-23 SCHOTTKY OR-ING DIODE & 10µF TANTALUM FILTER CAP ---
+    let powerBusLineMesh = null;
+    (function buildLayer6Schottky() {
+      const grp = layerGroups['schottky'];
+      const pkgMat = new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.35, metalness: 0.2 });
+      const leadMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.9, roughness: 0.18 });
+      const tantMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.32, metalness: 0.15 });
+      const pcbPadMat = new THREE.MeshStandardMaterial({ color: 0xfbbf24, metalness: 0.85, roughness: 0.2 });
+
+      // Mini regulator sub-carrier board & gold SMD pads
+      const carrier = new THREE.Mesh(new THREE.BoxGeometry(2.3, 0.06, 1.35), new THREE.MeshStandardMaterial({ color: 0x064e3b, roughness: 0.45 }));
+      carrier.position.set(-0.25, 0.10, -5.75);
+      carrier.userData.layerId = 'schottky';
+      grp.add(carrier);
+
+      // SOT-23 Dual Series Schottky Diode (BAT54C)
+      const sotBody = new THREE.Mesh(new THREE.BoxGeometry(0.58, 0.18, 0.34), pkgMat);
+      sotBody.position.set(-0.65, 0.21, -5.75);
+      sotBody.userData.layerId = 'schottky';
+      grp.add(sotBody);
+
+      [[-0.82, -5.98], [-0.48, -5.98], [-0.65, -5.52]].forEach(([lx, lz]) => {
+        const lead = new THREE.Mesh(new THREE.BoxGeometry(0.10, 0.08, 0.16), leadMat);
+        lead.position.set(lx, 0.15, lz);
+        lead.userData.layerId = 'schottky';
+        grp.add(lead);
+      });
+
+      // 10µF SMD Tantalum Reservoir Capacitor (Yellow EIA-3216 with polarity stripe)
+      const tantBody = new THREE.Mesh(new THREE.BoxGeometry(0.68, 0.24, 0.42), tantMat);
+      tantBody.position.set(0.32, 0.23, -5.75);
+      tantBody.userData.layerId = 'schottky';
+      grp.add(tantBody);
+
+      const stripe = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.25, 0.43), new THREE.MeshStandardMaterial({ color: 0x78350f, roughness: 0.4 }));
+      stripe.position.set(0.06, 0.23, -5.75);
+      stripe.userData.layerId = 'schottky';
+      grp.add(stripe);
+
+      // Animated Power Bus Trace (Solar + LR44 -> Schottky -> COB ASIC VDD)
+      const busPts = [
+        new THREE.Vector3(1.45, 0.26, -6.15),
+        new THREE.Vector3(-0.65, 0.26, -5.75),
+        new THREE.Vector3(-2.15, 0.26, -5.85),
+        new THREE.Vector3(-0.65, 0.26, -5.75),
+        new THREE.Vector3(0.32, 0.26, -5.75),
+        new THREE.Vector3(0.0, 0.26, -1.55)
+      ];
+      const busGeo = new THREE.BufferGeometry().setFromPoints(busPts);
+      const busMat = new THREE.LineBasicMaterial({ color: 0xf43f5e, transparent: true, opacity: 0.85 });
+      powerBusLineMesh = new THREE.Line(busGeo, busMat);
+      powerBusLineMesh.visible = false;
+      grp.add(powerBusLineMesh);
+
+      // Gold test points (TP_VPV, TP_VBAT, TP_VDD)
+      [-0.95, -0.15, 0.72].forEach((tx) => {
+        const tp = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 0.08, 16), pcbPadMat);
+        tp.position.set(tx, 0.14, -5.25);
+        tp.userData.layerId = 'schottky';
+        grp.add(tp);
+      });
+    })();
+
+    // --- LAYER 8: ESD PERIMETER GUARD RING & R-2R LCD BIAS LADDER ---
+    (function buildLayer8EsdRing() {
+      const grp = layerGroups['esdring'];
+      const cuBeMat = new THREE.MeshStandardMaterial({ color: 0xd97706, metalness: 0.88, roughness: 0.22 });
+      const resMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.35, metalness: 0.3 });
+      const termMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.9, roughness: 0.15 });
+
+      // Perimeter Copper-Beryllium ESD Grounding Frame around PCB edge
+      const railL = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.08, 13.4), cuBeMat);
+      railL.position.set(-3.45, 0.06, 0);
+      railL.userData.layerId = 'esdring';
+      const railR = railL.clone();
+      railR.position.x = 3.45;
+      const railT = new THREE.Mesh(new THREE.BoxGeometry(7.04, 0.08, 0.14), cuBeMat);
+      railT.position.set(0, 0.06, -6.65);
+      railT.userData.layerId = 'esdring';
+      const railB = railT.clone();
+      railB.position.z = 6.65;
+      grp.add(railL, railR, railT, railB);
+
+      // 6x Spring-Loaded Grounding Fingers on perimeter
+      for (let z = -4.5; z <= 4.5; z += 4.5) {
+        [-3.45, 3.45].forEach(x => {
+          const finger = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.22, 0.36), cuBeMat);
+          finger.position.set(x, 0.16, z);
+          finger.userData.layerId = 'esdring';
+          grp.add(finger);
+        });
+      }
+
+      // 0402 Precision 1/3-Bias LCD Voltage Divider Resistor Ladder (R1-R6) + Spark Gaps
+      for (let i = 0; i < 6; i++) {
+        const rx = -1.9 + i * 0.42;
+        const rz = -1.95;
+        const rBody = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.10, 0.14), resMat);
+        rBody.position.set(rx, 0.09, rz);
+        rBody.userData.layerId = 'esdring';
+        const t1 = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.11, 0.15), termMat);
+        t1.position.set(rx - 0.10, 0.09, rz);
+        t1.userData.layerId = 'esdring';
+        const t2 = t1.clone();
+        t2.position.x = rx + 0.10;
+        grp.add(rBody, t1, t2);
+      }
+    })();
+
+    // --- LAYER 10: 6x M1.4 BLACK-OXIDE PHILLIPS TORQUE SCREWS ---
+    const screwMeshesList = [];
+    (function buildLayer10Fasteners() {
+      const grp = layerGroups['fasteners'];
+      const oxSteelMat = new THREE.MeshStandardMaterial({ color: 0x3f3f46, metalness: 0.85, roughness: 0.25 });
+      const slotMat = new THREE.MeshStandardMaterial({ color: 0x09090b, roughness: 0.7 });
+
+      const coords = [
+        [-3.1, -6.2], [3.1, -6.2],
+        [-3.1, 0.0],  [3.1, 0.0],
+        [-3.1, 6.2],  [3.1, 6.2]
+      ];
+      coords.forEach(([sx, sz]) => {
+        const sGrp = new THREE.Group();
+        sGrp.position.set(sx, -0.72, sz);
+
+        const head = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.10, 18), oxSteelMat);
+        head.position.y = -0.22;
+        head.userData.layerId = 'fasteners';
+
+        const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.10, 0.09, 0.48, 14), oxSteelMat);
+        shaft.position.y = 0.06;
+        shaft.userData.layerId = 'fasteners';
+
+        // Phillips cross recess on bottom face
+        const ph1 = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.04, 0.05), slotMat);
+        ph1.position.y = -0.26;
+        ph1.userData.layerId = 'fasteners';
+        const ph2 = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.04, 0.26), slotMat);
+        ph2.position.y = -0.26;
+        ph2.userData.layerId = 'fasteners';
+
+        sGrp.add(head, shaft, ph1, ph2);
+        grp.add(sGrp);
+        screwMeshesList.push(sGrp);
+      });
+    })();
+
+    // --- LAYER 12: SNAP-ON HARD SLIDE COVER & SCIENTIFIC CONSTANTS CHART ---
+    (function buildLayer12SlideCover() {
+      const grp = layerGroups['slidecover'];
+      const coverShape = createRoundedRectShape(CASE_W + 0.28, CASE_H + 0.22, CASE_R + 0.08);
+      const coverGeo = new THREE.ExtrudeGeometry(coverShape, {
+        depth: 0.22,
+        bevelEnabled: true,
+        bevelSegments: 2,
+        steps: 1,
+        bevelSize: 0.06,
+        bevelThickness: 0.06
+      });
+      const coverMat = new THREE.MeshStandardMaterial({
+        color: 0x1e2433,
+        roughness: 0.52,
+        metalness: 0.14
+      });
+      const coverMesh = new THREE.Mesh(coverGeo, coverMat);
+      coverMesh.rotation.x = -Math.PI / 2;
+      coverMesh.position.y = -1.05;
+      coverMesh.castShadow = true;
+      coverMesh.receiveShadow = true;
+      coverMesh.userData.layerId = 'slidecover';
+      grp.add(coverMesh);
+
+      // Side retention slide rails
+      const railGeo = new THREE.BoxGeometry(0.14, 0.26, 13.6);
+      [-3.92, 3.92].forEach(rx => {
+        const rail = new THREE.Mesh(railGeo, coverMat);
+        rail.position.set(rx, -0.82, 0);
+        rail.userData.layerId = 'slidecover';
+        grp.add(rail);
+      });
+
+      // Procedural Scientific Constants & Metric Conversions Decal Sticker inside slide cover
+      const chartCanvas = document.createElement('canvas');
+      chartCanvas.width = 512;
+      chartCanvas.height = 768;
+      const cctx = chartCanvas.getContext('2d');
+      cctx.fillStyle = '#0f172a';
+      cctx.fillRect(0, 0, 512, 768);
+      cctx.strokeStyle = '#334155';
+      cctx.lineWidth = 6;
+      cctx.strokeRect(14, 14, 484, 740);
+
+      cctx.fillStyle = '#38bdf8';
+      cctx.font = 'bold 24px monospace';
+      cctx.fillText('SCIENTIFIC CONSTANTS (SHIFT + 7)', 34, 58);
+      cctx.fillStyle = '#e2e8f0';
+      cctx.font = '18px monospace';
+      const rows = [
+        '01: mp  1.672621e-27 kg   02: mn  1.674927e-27 kg',
+        '03: me  9.109382e-31 kg   06: h   6.626068e-34 Js',
+        '19: e   1.602176e-19 C    24: NA  6.022141e23 /mol',
+        '25: k   1.380650e-23 J/K  27: R   8.314472 J/molK',
+        '28: c0  299792458 m/s     35: g   9.80665 m/s²',
+        '------------------------------------------------',
+        'METRIC CONVERSIONS (SHIFT + 8)',
+        '01: in > cm      02: cm > in      03: ft > m',
+        '07: mile > km    13: acre > m²    19: gal > L',
+        '23: lb > kg      29: atm > Pa     37: °F > °C',
+        '38: °C > °F      39: J > cal      40: cal > J'
+      ];
+      rows.forEach((line, idx) => {
+        cctx.fillStyle = line.includes('CONVERSIONS') ? '#f59e0b' : '#cbd5e1';
+        cctx.fillText(line, 32, 108 + idx * 48);
+      });
+
+      const chartTex = new THREE.CanvasTexture(chartCanvas);
+      const chartPlane = new THREE.Mesh(
+        new THREE.PlaneGeometry(6.4, 11.4),
+        new THREE.MeshBasicMaterial({ map: chartTex })
+      );
+      chartPlane.rotation.x = -Math.PI / 2;
+      chartPlane.position.set(0, -0.82, 0.2);
+      chartPlane.userData.layerId = 'slidecover';
+      grp.add(chartPlane);
+    })();
+
+    // --- 3D DIAGNOSTIC FAULT BEACON (Used by Teardown Repair Lab Game) ---
+    const faultBeaconGrp = new THREE.Group();
+    const faultRingMesh = new THREE.Mesh(
+      new THREE.TorusGeometry(2.1, 0.09, 16, 48),
+      new THREE.MeshBasicMaterial({ color: 0xef4444, transparent: true, opacity: 0.9 })
+    );
+    faultRingMesh.rotation.x = Math.PI / 2;
+    const faultGlowSphere = new THREE.Mesh(
+      new THREE.SphereGeometry(0.45, 16, 16),
+      new THREE.MeshBasicMaterial({ color: 0xf43f5e, transparent: true, opacity: 0.65 })
+    );
+    faultBeaconGrp.add(faultRingMesh, faultGlowSphere);
+    faultBeaconGrp.visible = false;
+    calcRoot.add(faultBeaconGrp);
+    let activeFaultLayerId = null;
+
+    /***************************************************************************
+     * 7. FLOATING 3D CALLOUT PINS & LEADER LINES
+     ***************************************************************************/
+    const CALLOUT_PINS = [
+      { id: 'c-solar', layerId: 'solar', label: 'a-Si 4-Cell Solar Panel (1.68V)', localPos: new THREE.Vector3(1.45, 0.35, -6.15), offset2D: { x: 110, y: -55 } },
+      { id: 'c-lcd', layerId: 'lcd', label: '96×31 Natural-V.P.A.M. STN LCD', localPos: new THREE.Vector3(-1.8, 0.32, -3.55), offset2D: { x: -135, y: -45 } },
+      { id: 'c-zebra', layerId: 'lcd', label: 'Elastomeric Zebra Strip Connector', localPos: new THREE.Vector3(2.2, 0.15, -2.25), offset2D: { x: 130, y: -20 } },
+      { id: 'c-cob', layerId: 'pcb', label: 'COB Epoxy ASIC + Wire-Bonded Die', localPos: new THREE.Vector3(0.0, 0.22, -1.55), offset2D: { x: 145, y: 15 } },
+      { id: 'c-bat', layerId: 'battery', label: 'LR44 1.5V Backup Coin Cell', localPos: new THREE.Vector3(-2.15, 0.32, -5.85), offset2D: { x: -130, y: -50 } },
+      { id: 'c-schottky', layerId: 'schottky', label: 'SOT-23 Schottky OR-ing Diode + 10µF Cap', localPos: new THREE.Vector3(-0.25, 0.24, -5.75), offset2D: { x: 140, y: -35 } },
+      { id: 'c-esd', layerId: 'esdring', label: 'Cu-Be ESD Guard Ring & 1/3-Bias Ladder', localPos: new THREE.Vector3(-3.45, 0.15, -1.95), offset2D: { x: -145, y: 5 } },
+      { id: 'c-membrane', layerId: 'membrane', label: 'Silicone Tactile Domes + Carbon Pills', localPos: new THREE.Vector3(-2.76, 0.25, 3.50), offset2D: { x: -135, y: 30 } },
+      { id: 'c-fasteners', layerId: 'fasteners', label: '6× M1.4 Black-Oxide Phillips Screws', localPos: new THREE.Vector3(3.1, -0.8, 6.2), offset2D: { x: 125, y: 35 } },
+      { id: 'c-slidecover', layerId: 'slidecover', label: 'Hard Slide Cover & Constants Chart', localPos: new THREE.Vector3(0.0, -0.9, 2.5), offset2D: { x: 130, y: 55 } }
+    ];
+
+    let showCallouts = true;
+    const calloutsContainer = document.getElementById('callouts-container');
+    const leaderSvg = document.getElementById('leader-svg');
+    const calloutElements = {};
+
+    CALLOUT_PINS.forEach(pin => {
+      const el = document.createElement('div');
+      el.className = 'callout-label glass-panel px-2.5 py-1 rounded-md text-[11px] font-mono-tech text-sky-200 border border-sky-400/40 shadow-lg flex items-center gap-1.5';
+      el.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span><span>${pin.label}</span>`;
+      el.addEventListener('click', () => selectLayer(pin.layerId));
+      calloutsContainer.appendChild(el);
+      calloutElements[pin.id] = el;
+    });
+
+    function updateCalloutsOverlay() {
+      leaderSvg.innerHTML = '';
+      if (!showCallouts) {
+        Object.values(calloutElements).forEach(el => (el.style.display = 'none'));
+        return;
+      }
+
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+
+      CALLOUT_PINS.forEach(pin => {
+        const el = calloutElements[pin.id];
+        const grp = layerGroups[pin.layerId];
+        if (!grp || !grp.visible) {
+          el.style.display = 'none';
+          return;
+        }
+
+        const worldPos = pin.localPos.clone();
+        grp.localToWorld(worldPos);
+        const projected = worldPos.clone().project(camera);
+
+        if (projected.z > 1) {
+          el.style.display = 'none';
+          return;
+        }
+
+        const ax = (projected.x * 0.5 + 0.5) * w;
+        const ay = (-(projected.y * 0.5) + 0.5) * h;
+        const lx = Math.max(140, Math.min(w - 140, ax + pin.offset2D.x));
+        const ly = Math.max(70, Math.min(h - 40, ay + pin.offset2D.y));
+
+        el.style.display = 'flex';
+        el.style.left = `${lx}px`;
+        el.style.top = `${ly}px`;
+
+        // Draw SVG leader line + anchor dot
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', ax);
+        line.setAttribute('y1', ay);
+        line.setAttribute('x2', lx);
+        line.setAttribute('y2', ly);
+        line.setAttribute('stroke', 'rgba(56, 189, 248, 0.55)');
+        line.setAttribute('stroke-width', '1.2');
+        line.setAttribute('stroke-dasharray', '3,3');
+        leaderSvg.appendChild(line);
+
+        const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        dot.setAttribute('cx', ax);
+        dot.setAttribute('cy', ay);
+        dot.setAttribute('r', '3.5');
+        dot.setAttribute('fill', '#38bdf8');
+        leaderSvg.appendChild(dot);
+      });
+    }
+
+    /***************************************************************************
+     * 8. HUD INITIALIZATION, EXPLODE ANIMATION & OSCILLOSCOPE TELEMETRY
+     ***************************************************************************/
+    let currentExplode = 0;
+    let targetExplode = 0;
+    let selectedLayerId = null;
+    let isolatedLayerId = null;
+    let isXRay = false;
+    let autoRotate = false;
+    let pulseTimer = 0;
+
+    // Populate Left Panel 8-Layer List
+    const layerListEl = document.getElementById('layer-list');
+    const showAllBtn = document.getElementById('btn-show-all-layers');
+
+    function renderLayerList() {
+      layerListEl.innerHTML = '';
+      HARDWARE_LAYERS.forEach(layer => {
+        const isSelected = selectedLayerId === layer.id;
+        const isIsolated = isolatedLayerId === layer.id;
+        const item = document.createElement('div');
+        item.className = `p-2 rounded-lg border transition cursor-pointer flex items-center justify-between ${
+          isSelected
+            ? 'bg-sky-500/20 border-sky-400/60 text-white'
+            : 'bg-slate-900/60 border-slate-800/90 text-slate-300 hover:border-slate-700'
+        }`;
+        item.innerHTML = `
+          <div class="flex items-center gap-2.5 min-w-0">
+            <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${layer.color}"></span>
+            <div class="truncate">
+              <div class="font-mono-tech text-[10px] text-slate-400">${layer.code}</div>
+              <div class="text-xs font-medium truncate">${layer.name}</div>
+            </div>
+          </div>
+          <button data-isolate="${layer.id}" class="px-1.5 py-0.5 rounded text-[10px] font-mono-tech ${
+            isIsolated ? 'bg-sky-400 text-slate-950 font-bold' : 'bg-slate-800 text-slate-400 hover:text-white'
+          }" title="Isolate Subsystem">
+            ${isIsolated ? 'SOLO' : 'ISO'}
+          </button>
+        `;
+        item.addEventListener('click', (e) => {
+          if (e.target.dataset.isolate) {
+            toggleIsolateLayer(layer.id);
+          } else {
+            selectLayer(layer.id);
+          }
+        });
+        layerListEl.appendChild(item);
+      });
+    }
+
+    function selectLayer(layerId) {
+      selectedLayerId = layerId;
+      const layer = HARDWARE_LAYERS.find(l => l.id === layerId);
+      if (layer) {
+        sfx.playLayerWhoosh(1 + layer.index * 0.08);
+        document.getElementById('detail-code').textContent = layer.code;
+        document.getElementById('detail-mat').textContent = layer.material;
+        document.getElementById('detail-title').textContent = layer.name;
+        document.getElementById('detail-desc').textContent = layer.desc;
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({
+            type: 'teardown-select',
+            device: 'fx991',
+            id: layer.id,
+            code: layer.code,
+            name: layer.name,
+            explode: Math.round(targetExplode * 100),
+            xray: isXRay,
+            busflow: isBusFlow
+          }, '*');
+        }
+      }
+      renderLayerList();
+    }
+
+    function toggleIsolateLayer(layerId) {
+      if (isolatedLayerId === layerId) {
+        isolatedLayerId = null;
+        showAllBtn.classList.add('hidden');
+        HARDWARE_LAYERS.forEach(l => (layerGroups[l.id].visible = true));
+      } else {
+        isolatedLayerId = layerId;
+        selectedLayerId = layerId;
+        showAllBtn.classList.remove('hidden');
+        HARDWARE_LAYERS.forEach(l => {
+          layerGroups[l.id].visible = l.id === layerId;
+        });
+        selectLayer(layerId);
+      }
+      renderLayerList();
+    }
+
+    showAllBtn.addEventListener('click', () => {
+      isolatedLayerId = null;
+      showAllBtn.classList.add('hidden');
+      HARDWARE_LAYERS.forEach(l => (layerGroups[l.id].visible = true));
+      renderLayerList();
+    });
+
+    renderLayerList();
+
+    // Populate 9x6 Key Matrix Scan Visualizer Grid
+    const matrixGridEl = document.getElementById('matrix-grid');
+    const matrixCells = [];
+    for (let r = 0; r < 9; r++) {
+      for (let c = 0; c < 6; c++) {
+        const cell = document.createElement('div');
+        cell.className = 'scan-grid-cell';
+        matrixGridEl.appendChild(cell);
+        matrixCells.push({ r, c, el: cell });
+      }
+    }
+
+    // Contact Bounce & Scan Pulse Oscilloscope Canvas
+    const scopeCanvas = document.getElementById('scope-canvas');
+    const scopeCtx = scopeCanvas.getContext('2d');
+    let scopeTriggerTime = -999;
+
+    function drawOscilloscope(time) {
+      const w = scopeCanvas.width;
+      const h = scopeCanvas.height;
+      scopeCtx.fillStyle = '#020617';
+      scopeCtx.fillRect(0, 0, w, h);
+
+      // Grid lines
+      scopeCtx.strokeStyle = 'rgba(56, 189, 248, 0.12)';
+      scopeCtx.lineWidth = 1;
+      scopeCtx.beginPath();
+      scopeCtx.moveTo(0, h / 2);
+      scopeCtx.lineTo(w, h / 2);
+      scopeCtx.stroke();
+
+      // Waveform
+      const dt = time - scopeTriggerTime;
+      scopeCtx.strokeStyle = dt < 1.2 ? '#38bdf8' : '#10b981';
+      scopeCtx.lineWidth = 1.6;
+      scopeCtx.beginPath();
+      for (let x = 0; x < w; x++) {
+        const t = x / w;
+        let y = h * 0.25;
+        if (dt < 1.2) {
+          // Show contact bounce ringing leading into active low scan strobe
+          if (t > 0.15 && t < 0.35) {
+            y = h * (0.5 + 0.32 * Math.sin((t - 0.15) * 140) * Math.exp(-(t - 0.15) * 12));
+          } else if (t >= 0.35 && t < 0.82) {
+            y = h * 0.78;
+          }
+        } else {
+          // Idle 32.768 kHz standby tick pulses
+          y = ((x + Math.floor(time * 30)) % 18 < 3) ? h * 0.35 : h * 0.65;
+        }
+        if (x === 0) scopeCtx.moveTo(x, y);
+        else scopeCtx.lineTo(x, y);
+      }
+      scopeCtx.stroke();
+    }
+
+    /***************************************************************************
+     * 9. INTERACTIVE KEYSTROKE ACTUATION (3D Key Travel + Dome + PCB Trace)
+     ***************************************************************************/
+    function triggerCalculatorKey(keyIndex) {
+      const k = KEY_DEFINITIONS[keyIndex];
+      if (!k) return;
+
+      sfx.playKeyClick(k.type === 'num' || k.type === 'dpad');
+
+      // 1. Physical 3D Keycap downward travel (-1.8mm)
+      const keyGrp = layerGroups['keycaps'].children[keyIndex];
+      if (keyGrp) {
+        keyGrp.userData.pressOffset = -0.22;
+      }
+
+      // 2. Silicone Dome compression
+      const domeGrp = domeMeshes[keyIndex];
+      if (domeGrp) {
+        domeGrp.scale.y = 0.45;
+      }
+
+      // 3. Flash PCB Trace from pressed key pad to COB ASIC
+      if (tracePulseGeo) {
+        const pts = [
+          new THREE.Vector3(k.x, 0.03, -k.y),
+          new THREE.Vector3(k.x, 0.03, -1.55),
+          new THREE.Vector3(0, 0.03, -1.55)
+        ];
+        tracePulseGeo.setFromPoints(pts);
+        tracePulseLines.visible = true;
+        pulseTimer = 0.55;
+      }
+
+      // 4. Update Live Natural-V.P.A.M. LCD Screen
+      lcdDisplay.pressKey(k.id);
+
+      // 5. Update Right HUD Key Matrix Scan Visualizer
+      matrixCells.forEach(cell => {
+        cell.el.classList.toggle('active', cell.r === k.row && cell.c === k.col);
+      });
+      document.getElementById('matrix-coord-badge').textContent = `SCAN R${k.row}:C${k.col}`;
+      document.getElementById('last-key-label').textContent = `[ ${k.label || k.id} ] (R${k.row}:C${k.col})`;
+      document.getElementById('clock-state-label').textContent = 'ACTIVE SOLVE (38µA)';
+      scopeTriggerTime = performance.now() * 0.001;
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: 'teardown-key',
+          device: 'fx991',
+          keyId: k.id,
+          row: k.row,
+          col: k.col
+        }, '*');
+      }
+    }
+
+    /***************************************************************************
+     * 10. RAYCASTER FOR 3D KEYCLICKING & SUBSYSTEM SELECTION
+     ***************************************************************************/
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+    let pointerDownPos = { x: 0, y: 0 };
+
+    renderer.domElement.addEventListener('pointerdown', (e) => {
+      pointerDownPos = { x: e.clientX, y: e.clientY };
+    });
+
+    renderer.domElement.addEventListener('pointerup', (e) => {
+      const dist = Math.hypot(e.clientX - pointerDownPos.x, e.clientY - pointerDownPos.y);
+      if (dist > 6) return; // Ignore camera orbit drags
+
+      pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+      pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      raycaster.setFromCamera(pointer, camera);
+
+      // First test 50 Keycaps
+      if (layerGroups['keycaps'].visible) {
+        const keyHits = raycaster.intersectObjects(keycapMeshes, true);
+        if (keyHits.length > 0) {
+          let obj = keyHits[0].object;
+          while (obj && !obj.userData.isKeycap && obj.parent) obj = obj.parent;
+          if (obj && obj.userData.isKeycap) {
+            triggerCalculatorKey(obj.userData.keyIndex);
+            selectLayer('keycaps');
+            return;
+          }
+        }
+      }
+
+      // Otherwise check all visible hardware subsystems
+      const allHits = raycaster.intersectObjects(calcRoot.children, true);
+      if (allHits.length > 0) {
+        let obj = allHits[0].object;
+        while (obj && !obj.userData.layerId && obj.parent) obj = obj.parent;
+        if (obj && obj.userData.layerId) {
+          selectLayer(obj.userData.layerId);
+        }
+      }
+    });
+
+    /***************************************************************************
+     * 11. UI CONTROLS, PRESETS & TWO-WAY POWER LUX SIMULATOR
+     ***************************************************************************/
+    const explodeSlider = document.getElementById('explode-slider');
+    const explodeValLabel = document.getElementById('explode-val-label');
+    let isBusFlow = false;
+
+    function notifyParentState() {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: 'teardown-state',
+          device: 'fx991',
+          explode: Math.round(targetExplode * 100),
+          xray: isXRay,
+          busflow: isBusFlow,
+          lux: parseFloat(document.getElementById('lux-slider')?.value || 640),
+          selectedId: selectedLayerId
+        }, '*');
+      }
+    }
+
+    function setExplodeTarget(val) {
+      targetExplode = val / 100;
+      explodeSlider.value = val;
+      explodeValLabel.textContent = `${Math.round(val)}%`;
+      notifyParentState();
+    }
+
+    explodeSlider.addEventListener('input', (e) => {
+      setExplodeTarget(parseFloat(e.target.value));
+    });
+
+    // Camera Smooth Tween Helper
+    let camTween = null;
+    function tweenCamera(targetPos, targetLookAt, duration = 0.85) {
+      camTween = {
+        startPos: camera.position.clone(),
+        endPos: targetPos.clone(),
+        startLook: controls.target.clone(),
+        endLook: targetLookAt.clone(),
+        elapsed: 0,
+        duration
+      };
+    }
+
+    // Teardown State Presets
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const preset = btn.dataset.preset;
+        sfx.playLayerWhoosh(1.1);
+        isolatedLayerId = null;
+        showAllBtn.classList.add('hidden');
+        HARDWARE_LAYERS.forEach(l => (layerGroups[l.id].visible = true));
+
+        if (preset === 'assembled') {
+          setExplodeTarget(0);
+          tweenCamera(new THREE.Vector3(0, 18.5, 14.5), new THREE.Vector3(0, 0, 0.4));
+          selectLayer('bezel');
+        } else if (preset === 'exploded') {
+          setExplodeTarget(85);
+          tweenCamera(new THREE.Vector3(16.5, 14.0, 18.5), new THREE.Vector3(0, 1.0, 0));
+          selectLayer('pcb');
+        } else if (preset === 'cob') {
+          setExplodeTarget(65);
+          isXRay = true;
+          updateXRayState();
+          tweenCamera(new THREE.Vector3(3.2, 4.2, 4.5), new THREE.Vector3(0, -0.7, -1.55));
+          selectLayer('pcb');
+        } else if (preset === 'lcd') {
+          setExplodeTarget(55);
+          tweenCamera(new THREE.Vector3(-5.5, 6.5, 5.2), new THREE.Vector3(0, 1.6, -3.2));
+          selectLayer('lcd');
+        }
+      });
+    });
+
+    // COB Epoxy X-Ray Toggle
+    const btnXRay = document.getElementById('btn-xray');
+    function updateXRayState() {
+      if (cobEpoxyMesh) {
+        cobEpoxyMesh.material.opacity = isXRay ? 0.22 : 1.0;
+        cobEpoxyMesh.material.needsUpdate = true;
+      }
+      document.getElementById('xray-dot').className = `w-2 h-2 rounded-full ${isXRay ? 'bg-emerald-400 shadow-[0_0_8px_#10b981]' : 'bg-amber-400'}`;
+      notifyParentState();
+    }
+    btnXRay.addEventListener('click', () => {
+      isXRay = !isXRay;
+      sfx.playKeyClick();
+      updateXRayState();
+      if (isXRay) selectLayer('pcb');
+    });
+
+    // Power Bus Trace Toggle
+    const btnBusFlow = document.getElementById('btn-busflow');
+    if (btnBusFlow) {
+      btnBusFlow.addEventListener('click', () => {
+        isBusFlow = !isBusFlow;
+        sfx.playKeyClick();
+        if (powerBusLineMesh) powerBusLineMesh.visible = isBusFlow;
+        const dot = document.getElementById('busflow-dot');
+        if (dot) dot.className = `w-2 h-2 rounded-full ${isBusFlow ? 'bg-rose-400 shadow-[0_0_8px_#f43f5e]' : 'bg-slate-600'}`;
+        if (isBusFlow) {
+          if (targetExplode < 0.45) setExplodeTarget(65);
+          selectLayer('schottky');
+        }
+        notifyParentState();
+      });
+    }
+
+    // 3D Callouts Toggle
+    document.getElementById('btn-callouts').addEventListener('click', () => {
+      showCallouts = !showCallouts;
+      document.getElementById('callouts-dot').className = `w-2 h-2 rounded-full ${showCallouts ? 'bg-sky-400' : 'bg-slate-600'}`;
+    });
+
+    // Auto-Orbit Toggle
+    document.getElementById('btn-autorotate').addEventListener('click', (e) => {
+      autoRotate = !autoRotate;
+      controls.autoRotate = autoRotate;
+      controls.autoRotateSpeed = 1.6;
+      e.currentTarget.classList.toggle('text-sky-300', autoRotate);
+      e.currentTarget.classList.toggle('border-sky-400/50', autoRotate);
+    });
+
+    // Sound Toggle
+    document.getElementById('btn-audio').addEventListener('click', () => {
+      sfx.enabled = !sfx.enabled;
+      document.getElementById('audio-icon').textContent = sfx.enabled ? '🔊' : '🔇';
+    });
+
+    // Reset View
+    document.getElementById('btn-reset-cam').addEventListener('click', () => {
+      tweenCamera(new THREE.Vector3(0, 18.5, 14.5), new THREE.Vector3(0, 0, 0.4));
+    });
+
+    // Natural-V.P.A.M. Expression Preset Buttons
+    document.querySelectorAll('.expr-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const expr = btn.dataset.expr;
+        sfx.playKeyClick(true);
+        if (expr === 'sd') {
+          lcdDisplay.pressKey('SD');
+        } else {
+          lcdDisplay.setPreset(expr);
+        }
+        scopeTriggerTime = performance.now() * 0.001;
+      });
+    });
+
+    // Two-Way Power Ambient Lux Simulator
+    const luxSlider = document.getElementById('lux-slider');
+    luxSlider.addEventListener('input', (e) => {
+      const lux = parseFloat(e.target.value);
+      const isSolarActive = lux >= 180;
+
+      // Compute realistic amorphous silicon PV open-circuit / loaded voltage
+      const vpv = lux === 0 ? 0.0 : Math.min(1.85, 0.45 + Math.log10(lux + 1) * 0.46);
+      const ibat = isSolarActive ? 0.0 : (4.2 - (lux / 180) * 3.8);
+      const vdd = isSolarActive ? Math.max(1.50, vpv - 0.12) : 1.48;
+
+      let envDesc = 'Office Light';
+      if (lux < 50) envDesc = 'Dark Room';
+      else if (lux < 180) envDesc = 'Dim Indoor';
+      else if (lux > 750) envDesc = 'Bright Daylight';
+
+      document.getElementById('lux-label').textContent = `${lux} lx (${envDesc})`;
+      document.getElementById('telemetry-vpv').textContent = `${vpv.toFixed(2)} V`;
+      document.getElementById('telemetry-ibat').textContent = `${Math.max(0, ibat).toFixed(1)} µA`;
+      document.getElementById('telemetry-vdd').textContent = `${vdd.toFixed(2)} V`;
+
+      const badge = document.getElementById('power-source-badge');
+      if (isSolarActive) {
+        badge.textContent = 'SOLAR PRIMARY';
+        badge.className = 'font-mono-tech text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40';
+      } else {
+        badge.textContent = 'LR44 BACKUP';
+        badge.className = 'font-mono-tech text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/40';
+      }
+
+      // Adjust 3D scene directional light intensity slightly with lux
+      keyLight.intensity = 0.75 + (lux / 1000) * 0.85;
+      notifyParentState();
+    });
+
+    // Parent Window Game Command Bridge (for Hardware Teardown Lab Game)
+    window.addEventListener('message', (e) => {
+      const d = e.data;
+      if (!d || d.type !== 'teardown-cmd') return;
+      if (typeof d.explode === 'number') {
+        setExplodeTarget(d.explode);
+      }
+      if (typeof d.xray === 'boolean') {
+        isXRay = d.xray;
+        updateXRayState();
+      }
+      if (typeof d.busflow === 'boolean') {
+        isBusFlow = d.busflow;
+        if (powerBusLineMesh) powerBusLineMesh.visible = isBusFlow;
+        const dot = document.getElementById('busflow-dot');
+        if (dot) dot.className = `w-2 h-2 rounded-full ${isBusFlow ? 'bg-rose-400 shadow-[0_0_8px_#f43f5e]' : 'bg-slate-600'}`;
+      }
+      if (typeof d.lux === 'number') {
+        luxSlider.value = d.lux;
+        luxSlider.dispatchEvent(new Event('input'));
+      }
+      if (d.expr) {
+        lcdDisplay.setPreset(d.expr);
+      }
+      if (d.selectId) {
+        selectLayer(d.selectId);
+      }
+      if (d.faultId !== undefined) {
+        activeFaultLayerId = d.faultId;
+        faultBeaconGrp.visible = Boolean(activeFaultLayerId);
+      }
+    });
+
+    /***************************************************************************
+     * 12. MAIN RENDER & PHYSICS ANIMATION LOOP
+     ***************************************************************************/
+    let lastTime = performance.now() * 0.001;
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      const now = performance.now() * 0.001;
+      const dt = Math.min(0.1, now - lastTime);
+      lastTime = now;
+
+      // 1. Smoothly interpolate Explode Factor
+      currentExplode += (targetExplode - currentExplode) * Math.min(1, dt * 8.5);
+
+      HARDWARE_LAYERS.forEach(layer => {
+        const grp = layerGroups[layer.id];
+        if (!grp) return;
+        grp.position.y = THREE.MathUtils.lerp(layer.baseY, layer.explodeY, currentExplode);
+        grp.rotation.x = THREE.MathUtils.lerp(0, layer.explodeRotX, currentExplode);
+      });
+
+      // Unscrew rotation animation on 6x M1.4 screws during teardown
+      for (let i = 0; i < screwMeshesList.length; i++) {
+        screwMeshesList[i].rotation.y = currentExplode * Math.PI * 8;
+      }
+
+      // Pulse 3D Fault Diagnostic Beacon on active faulty layer
+      if (activeFaultLayerId && layerGroups[activeFaultLayerId]) {
+        const targetGrp = layerGroups[activeFaultLayerId];
+        faultBeaconGrp.visible = true;
+        faultBeaconGrp.position.set(0, targetGrp.position.y + 0.25, 0);
+        const s = 1 + 0.18 * Math.sin(now * 6.5);
+        faultRingMesh.scale.set(s, s, 1);
+        faultGlowSphere.scale.setScalar(0.85 + 0.25 * Math.cos(now * 8));
+      } else {
+        faultBeaconGrp.visible = false;
+      }
+
+      // 2. Spring-return animation for pressed 3D Keycaps & Silicone Domes
+      const keyChildren = layerGroups['keycaps'].children;
+      for (let i = 0; i < keyChildren.length; i++) {
+        const kg = keyChildren[i];
+        kg.userData.pressOffset += (0 - kg.userData.pressOffset) * Math.min(1, dt * 16);
+        kg.position.y = kg.userData.baseY + kg.userData.pressOffset;
+
+        const dg = domeMeshes[i];
+        if (dg) {
+          dg.scale.y += (1.0 - dg.scale.y) * Math.min(1, dt * 14);
+        }
+      }
+
+      // 3. Fade out PCB trace pulse after keystroke
+      if (pulseTimer > 0) {
+        pulseTimer -= dt;
+        if (pulseTimer <= 0 && tracePulseLines) {
+          tracePulseLines.visible = false;
+          document.getElementById('clock-state-label').textContent = 'STANDBY (0.8µA)';
+        }
+      }
+
+      // 4. Camera Tweening
+      if (camTween) {
+        camTween.elapsed += dt;
+        const t = Math.min(1, camTween.elapsed / camTween.duration);
+        const ease = 1 - Math.pow(1 - t, 3);
+        camera.position.lerpVectors(camTween.startPos, camTween.endPos, ease);
+        controls.target.lerpVectors(camTween.startLook, camTween.endLook, ease);
+        if (t >= 1) camTween = null;
+      }
+
+      controls.update();
+      renderer.render(scene, camera);
+      updateCalloutsOverlay();
+      drawOscilloscope(now);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    window.onload = function () {
+      animate();
+    };
+  </script>
+</body>
+</html>

@@ -106,6 +106,93 @@ $('#meme-file').onchange=async e=>{attachedImage=null;const file=e.target.files[
 $('#create-form').onsubmit=e=>{e.preventDefault();const f=new FormData(e.currentTarget),list=k=>String(f.get(k)||'').split(',').map(s=>s.trim()).filter(Boolean),answer=String(f.get('answer')).trim(),options=String(f.get('options')).split(/\r?\n/).map(s=>s.trim()).filter(Boolean);if(options.length!==4||new Set(options.map(normalize)).size!==4||!options.some(t=>normalize(t)===normalize(answer))){$('#create-error').textContent='Add exactly four different choices, including the correct answer.';return;}const item={id:'custom-'+Date.now(),title:String(f.get('title')).trim(),specialty:String(f.get('specialty')).trim(),question:String(f.get('question')).trim(),answer,options,aliases:list('aliases'),partials:[{terms:list('classTerms'),points:65,relation:'Author-defined same-class answer; not the expected specific answer.'},{terms:list('relatedTerms'),points:30,relation:'Author-defined related concept or partial answer.'}],explanation:String(f.get('explanation')).trim(),image:attachedImage,memeTop:'THE CHART HAS ENTERED THE CHAT',memeBottom:'A CASE FROM YOUR OWN WARD'};const next=[...custom,item];if(!storage.write('ward-rounds-custom-v1',next))return;custom=next;drugHelper?.setQuestions([...bank,...custom]);$('#bank-count').textContent=bank.length+custom.length;practiceIndex=bank.length+custom.length-1;$('#create-dialog').close();e.currentTarget.reset();attachedImage=null;$('#meme-file-label').textContent='Attach a meme · image or GIF · up to 2 MB';$('#create-error').textContent='';setView('practice');toast('Case saved in this browser. Your practice shift is ready.');};
 $('#export-cases').onclick=()=>{if(!custom.length){toast('Create a case first, then export your question bank.');return;}const url=URL.createObjectURL(new Blob([JSON.stringify(custom,null,2)],{type:'application/json'}));const a=el('a');a.href=url;a.download='ward-rounds-my-cases.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
 $('#share-result').onclick=async()=>{const text=`Ward Rounds · ${view==='daily'?today:'Practice'}\n${round.status==='won'?'Patient saved':'Shift over'} · ${round.best} pts\n${round.guesses.map(g=>g.correct?'🟩':g.points?'🟨':'⬜').join('')}\n${round.guesses.length}/7 guesses`;try{await navigator.clipboard.writeText(text);toast('Result copied. No answer spoilers.');}catch{toast('Clipboard unavailable in this browser. Your result stays visible here.');}};
-function drawEcg(){const c=$('#ecg'),ctx=c.getContext('2d'),stage=round?activeState():0,w=c.width,h=c.height;ctx.clearRect(0,0,w,h);ctx.strokeStyle=stage>=6?'#b68f70':'#a3be78';ctx.lineWidth=1.7;ctx.beginPath();const age=ward?.getBeatAge()||0;for(let x=0;x<w;x++){const y=h*.57-(ward?.getWave(age+(w-x)/105)||0)*19;if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();requestAnimationFrame(drawEcg);}
+let ecgLastTime=0,ecgPhase=0,ecgSmoothHr=78;
+function sampleEcgMorphology(cyclePhase,hr,stage){
+  if(hr<=0||stage===7)return Math.sin(cyclePhase*18)*.018;
+  const p=((cyclePhase%1)+1)%1;
+  const g=(center,width)=>Math.exp(-Math.pow((p-center)/width,2));
+  const tachyFactor=Math.min(1,Math.max(0,(hr-80)/70));
+  const pWave=.17*g(.14,.032-.006*tachyFactor);
+  const qDip=-.15*g(.236,.011);
+  const rPeak=(1.05+.15*tachyFactor)*g(.26,.0125);
+  const sDip=(-.34-.06*tachyFactor)*g(.287,.013);
+  const stDepression=stage>=5?-.09*g(.35,.045):0;
+  const tWave=(.28-.04*tachyFactor)*g(.45-.03*tachyFactor,.046);
+  const uWave=.04*g(.60,.028);
+  const ectopy=stage===6?Math.sin(cyclePhase*9.5)*.035:0;
+  return pWave+qDip+rPeak+sDip+stDepression+tWave+uWave+ectopy;
+}
+function drawEcg(now=performance.now()){
+  const c=$('#ecg');
+  if(!c){requestAnimationFrame(drawEcg);return;}
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  const cssW=c.clientWidth||230,cssH=c.clientHeight||34;
+  if(c.width!==Math.round(cssW*dpr)||c.height!==Math.round(cssH*dpr)){
+    c.width=Math.round(cssW*dpr);
+    c.height=Math.round(cssH*dpr);
+  }
+  const ctx=c.getContext('2d');
+  ctx.save();
+  ctx.scale(dpr,dpr);
+  const w=cssW,h=cssH;
+  const dt=ecgLastTime?Math.min(.05,(now-ecgLastTime)/1000):.016;
+  ecgLastTime=now;
+  const stage=round?activeState():0;
+  const domHr=parseInt($('#vital-hr')?.textContent||'',10);
+  const targetHr=round?.status==='won'?72:Number.isFinite(domHr)?domHr:(STAGES[stage]?.hr??78);
+  ecgSmoothHr+=(targetHr-ecgSmoothHr)*Math.min(1,dt*6);
+  const effectiveHr=targetHr===0?0:Math.max(40,ecgSmoothHr);
+  ecgPhase+=dt*(effectiveHr/60);
+  ctx.clearRect(0,0,w,h);
+  // Clinical ECG millimeter paper grid
+  ctx.strokeStyle=stage>=6?'rgba(185, 74, 52, 0.12)':'rgba(23, 62, 52, 0.08)';
+  ctx.lineWidth=0.75;
+  for(let gx=0;gx<w;gx+=12){ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,h);ctx.stroke();}
+  for(let gy=0;gy<h;gy+=8){ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(w,gy);ctx.stroke();}
+  const strokeMain=targetHr===0?'#b91c1c':effectiveHr>=130?'#dc2626':effectiveHr>=100?'#d97706':'#2f7a4f';
+  const strokeGlow=targetHr===0?'rgba(185,28,28,0.28)':effectiveHr>=130?'rgba(220,38,38,0.26)':effectiveHr>=100?'rgba(217,119,6,0.24)':'rgba(47,122,79,0.24)';
+  const baseline=h*0.60,amp=h*0.38;
+  const visibleSeconds=2.35;
+  const cyclesPerPx=(effectiveHr/60)*(visibleSeconds/w);
+  const leadX=w-6;
+  // Soft phosphor glow under-stroke
+  ctx.strokeStyle=strokeGlow;
+  ctx.lineWidth=3.8;
+  ctx.lineCap='round';
+  ctx.lineJoin='round';
+  ctx.beginPath();
+  for(let x=0;x<=leadX;x++){
+    const lookbackCycles=(leadX-x)*cyclesPerPx;
+    const val=sampleEcgMorphology(ecgPhase-lookbackCycles,effectiveHr,stage);
+    const y=baseline-val*amp;
+    if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  // Crisp primary ECG waveform with tail fade gradient
+  const grad=ctx.createLinearGradient(0,0,leadX,0);
+  grad.addColorStop(0,'rgba(47,122,79,0.10)');
+  grad.addColorStop(0.22,strokeMain);
+  grad.addColorStop(1,strokeMain);
+  ctx.strokeStyle=grad;
+  ctx.lineWidth=1.85;
+  ctx.beginPath();
+  let headY=baseline;
+  for(let x=0;x<=leadX;x++){
+    const lookbackCycles=(leadX-x)*cyclesPerPx;
+    const val=sampleEcgMorphology(ecgPhase-lookbackCycles,effectiveHr,stage);
+    const y=baseline-val*amp;
+    if(x===leadX)headY=y;
+    if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  // Glowing phosphor lead head dot
+  ctx.fillStyle=strokeMain;
+  ctx.beginPath();
+  ctx.arc(leadX,headY,2.6,0,Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+  requestAnimationFrame(drawEcg);
+}
 try{bank=await fetch('./cases.json').then(r=>{if(!r.ok)throw new Error('Cases unavailable');return r.json();});custom=storage.read('ward-rounds-custom-v1',[]);if(!Array.isArray(custom))custom=[];drugHelperEnabled=storage.read('ward-rounds-drug-helper-v1',true)!==false;$('#bank-count').textContent=bank.length+custom.length;loadDaily();render();loadDrugRecognition([...bank,...custom]).then(result=>{drugHelper=result.adapter;drugHelperStatus=result.status;renderDrugHelper();});ward=createWard($('#scene'),{skipIntro:round.guesses.length>0,liftContainer:$('#lift-scene'),onLiftUpdate:renderLiftUpdate});ward.setRound(q,round);ward.setCondition(activeState(),round.status==='won');requestAnimationFrame(drawEcg);}catch(error){$('#question').textContent='The ward could not load. Please reload the page.';$('#scene-loader').textContent='The scene could not load. Please reload.';console.error(error);}
 setInterval(()=>{if(view==='daily'&&today!==dayKey()){loadDaily();render();toast('A new daily case has arrived.');}},60000);
+

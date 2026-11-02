@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BenchWorks XP — 3D Hardware Teardown & Forensics Lab</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; user-select: none; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #060a12;
+      color: #f1f5f9;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .font-mono-tech {
+      font-family: 'JetBrains Mono', monospace;
+      font-variant-numeric: tabular-nums;
+    }
+    .bench-panel {
+      background: rgba(10, 16, 29, 0.92);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.65);
+    }
+    .step-done {
+      border-color: rgba(16, 185, 129, 0.55) !important;
+      background: rgba(6, 78, 59, 0.28) !important;
+    }
+    .step-active {
+      border-color: rgba(56, 189, 248, 0.75) !important;
+      background: rgba(14, 116, 144, 0.25) !important;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.18);
+    }
+    @keyframes pulseBorder {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.45); }
+      50% { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
+    }
+    .cta-pulse {
+      animation: pulseBorder 1.8s infinite;
+    }
+  </style>
+</head>
+<body class="flex flex-col w-screen h-screen overflow-hidden">
+
+  <!-- TOP BENCH COMMAND BAR -->
+  <header class="h-12 shrink-0 bg-slate-950/95 border-b border-slate-800 px-3 flex items-center justify-between gap-2 z-30">
+    <!-- Left: Brand & Device Switcher -->
+    <div class="flex items-center gap-2.5">
+      <div class="flex items-center gap-2 pr-2 border-r border-slate-800">
+        <div class="w-7 h-7 rounded bg-amber-500/20 border border-amber-400/50 flex items-center justify-center text-amber-300 font-mono-tech font-bold text-xs">
+          3D
+        </div>
+        <div>
+          <div class="text-xs font-bold tracking-wide text-white leading-tight flex items-center gap-1.5">
+            <span>BENCHWORKS XP</span>
+            <span class="text-[10px] font-mono-tech px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-400/30">FORENSICS & REPAIR</span>
+          </div>
+          <div class="text-[10px] font-mono-tech text-slate-400">Interactive Multi-Device 3D Teardown Bench</div>
+        </div>
+      </div>
+
+      <!-- Device Bench Selector -->
+      <div class="flex items-center bg-slate-900 p-0.5 rounded-lg border border-slate-800">
+        <button id="tab-mavic3" class="px-2.5 py-1 rounded-md text-xs font-semibold transition flex items-center gap-1.5 bg-amber-500 text-slate-950">
+          <span>🚁</span>
+          <span>DJI Mavic 3 Pro</span>
+          <span class="font-mono-tech text-[10px] px-1 rounded bg-slate-950/30">22 SYS</span>
+        </button>
+        <button id="tab-fx991" class="px-2.5 py-1 rounded-md text-xs font-semibold transition flex items-center gap-1.5 text-slate-300 hover:text-white">
+          <span>🖩</span>
+          <span>CTIFREE fx-991ES+</span>
+          <span class="font-mono-tech text-[10px] px-1 rounded bg-slate-800 text-sky-300">12 LAYERS</span>
+        </button>
+      </div>
+
+      <!-- Mode Switcher (Repair Campaign vs Free Sandbox) -->
+      <div class="hidden md:flex items-center bg-slate-900 p-0.5 rounded-lg border border-slate-800">
+        <button id="mode-campaign" class="px-2.5 py-1 rounded-md text-[11px] font-mono-tech font-semibold bg-sky-500/25 text-sky-300 border border-sky-400/40">
+          🛠️ WORK ORDERS (GAME)
+        </button>
+        <button id="mode-sandbox" class="px-2.5 py-1 rounded-md text-[11px] font-mono-tech text-slate-400 hover:text-white">
+          🔬 FREE SANDBOX
+        </button>
+      </div>
+    </div>
+
+    <!-- Center: Live Multimeter / Diagnostic Probe Readout -->
+    <div class="hidden xl:flex items-center gap-3 bg-slate-900/90 border border-slate-800 px-3 py-1 rounded-lg">
+      <div class="flex items-center gap-1.5">
+        <span id="probe-status-dot" class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+        <span class="text-[10px] font-mono-tech uppercase tracking-wider text-slate-400">BENCH DMM:</span>
+      </div>
+      <div id="dmm-readout" class="font-mono-tech text-xs font-bold text-emerald-400">
+        V_BUS: 15.40V | R_ISO: 12.4MΩ | READY
+      </div>
+    </div>
+
+    <!-- Right: Career Score, Cleared Tickets & Mission Panel Toggle -->
+    <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-lg">
+        <div class="text-right">
+          <div class="text-[9px] font-mono-tech uppercase text-slate-400">CREDITS / SCORE</div>
+          <div id="score-readout" class="text-xs font-mono-tech font-bold text-amber-400">0 PTS</div>
+        </div>
+        <div class="h-5 w-px bg-slate-800"></div>
+        <div class="text-right">
+          <div class="text-[9px] font-mono-tech uppercase text-slate-400">WORK ORDERS</div>
+          <div id="tickets-readout" class="text-xs font-mono-tech font-bold text-sky-300">0 / 6</div>
+        </div>
+        <div class="h-5 w-px bg-slate-800"></div>
+        <div class="text-right">
+          <div class="text-[9px] font-mono-tech uppercase text-slate-400">RANK</div>
+          <div id="rank-readout" class="text-[11px] font-mono-tech font-bold text-emerald-400">JR. TECH</div>
+        </div>
+      </div>
+
+      <button id="btn-toggle-hud" class="px-2.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-mono-tech text-sky-300 flex items-center gap-1.5 transition" title="Minimize/Restore Repair Ticket Overlay">
+        <span id="hud-toggle-label">HIDE TICKET</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN 3D TEARDOWN STAGE + FLOATING REPAIR WORK ORDER HUD -->
+  <div class="relative flex-1 w-full h-full overflow-hidden bg-slate-950">
+
+    <!-- Embedded 3D Teardown Simulator Iframe -->
+    <iframe
+      id="teardown-frame"
+      src="./mavic3.html"
+      class="w-full h-full border-0 block"
+      title="3D Hardware Teardown Simulator"
+    ></iframe>
+
+    <!-- FLOATING REPAIR WORK ORDER DRAWER (Bottom-Center / Compact & Non-Intrusive) -->
+    <div id="mission-drawer" class="fixed bottom-3 left-1/2 -translate-x-1/2 z-20 w-[96%] max-w-[820px] bench-panel rounded-xl p-3 transition-all duration-200">
+      <!-- Top Row: Ticket Selector Pills & Ticket Header -->
+      <div class="flex flex-wrap items-center justify-between gap-2 pb-2 mb-2 border-b border-slate-800/90">
+        <div class="flex items-center gap-1.5 flex-wrap" id="mission-pills"></div>
+        <div class="flex items-center gap-2">
+          <span id="mission-device-badge" class="text-[10px] font-mono-tech font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-400/40">
+            MAVIC 3 PRO
+          </span>
+          <span id="mission-reward-badge" class="text-[10px] font-mono-tech font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">
+            +350 PTS
+          </span>
+          <button id="btn-hint" class="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-sky-300 border border-slate-700 transition">
+            💡 AUTO-LOCATE FAULT
+          </button>
+        </div>
+      </div>
+
+      <!-- Middle Row: Fault Symptom & 4-Step Interactive Checklist -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-center">
+        <!-- Left 5 Cols: Symptom Brief & Live Telemetry Clue -->
+        <div class="lg:col-span-5 space-y-1">
+          <div class="flex items-center gap-1.5">
+            <span id="mission-code" class="font-mono-tech text-[11px] font-bold text-rose-400">WO #101</span>
+            <h2 id="mission-title" class="text-xs font-bold text-white truncate">ESC Phase MOSFET Thermal Runaway</h2>
+          </div>
+          <p id="mission-symptom" class="text-[11px] text-slate-300 leading-snug">
+            Drone aborts takeoff with OVERCURRENT_ERR. Disassemble to ≥50% or activate Thermal IR, probe the overheating 60A ESC board, reflow MOSFETs, and spool motors to ≥50% RPM.
+          </p>
+          <div class="flex items-center justify-between text-[10px] font-mono-tech pt-0.5 text-slate-400">
+            <span>INSPECTED: <strong id="inspected-part-label" class="text-sky-300">NONE (Click 3D Part)</strong></span>
+            <span>EXPLODE: <strong id="explode-readout-label" class="text-amber-300">0%</strong></span>
+          </div>
+        </div>
+
+        <!-- Right 7 Cols: 4 Interactive Steps + Primary Action Button -->
+        <div class="lg:col-span-7 flex flex-col gap-2">
+          <div class="grid grid-cols-4 gap-1.5">
+            <div id="step-card-1" class="p-1.5 rounded-lg border border-slate-800 bg-slate-900/70">
+              <div class="flex items-center justify-between text-[9px] font-mono-tech text-slate-400">
+                <span>STEP 1</span>
+                <span id="step-icon-1">⏳</span>
+              </div>
+              <div id="step-label-1" class="text-[10px] font-semibold text-slate-200 truncate mt-0.5">Unscrew ≥50%</div>
+            </div>
+
+            <div id="step-card-2" class="p-1.5 rounded-lg border border-slate-800 bg-slate-900/70">
+              <div class="flex items-center justify-between text-[9px] font-mono-tech text-slate-400">
+                <span>STEP 2</span>
+                <span id="step-icon-2">⏳</span>
+              </div>
+              <div id="step-label-2" class="text-[10px] font-semibold text-slate-200 truncate mt-0.5">Probe 3D Fault</div>
+            </div>
+
+            <div id="step-card-3" class="p-1.5 rounded-lg border border-slate-800 bg-slate-900/70">
+              <div class="flex items-center justify-between text-[9px] font-mono-tech text-slate-400">
+                <span>STEP 3</span>
+                <span id="step-icon-3">⏳</span>
+              </div>
+              <div id="step-label-3" class="text-[10px] font-semibold text-slate-200 truncate mt-0.5">Bench Repair</div>
+            </div>
+
+            <div id="step-card-4" class="p-1.5 rounded-lg border border-slate-800 bg-slate-900/70">
+              <div class="flex items-center justify-between text-[9px] font-mono-tech text-slate-400">
+                <span>STEP 4</span>
+                <span id="step-icon-4">⏳</span>
+              </div>
+              <div id="step-label-4" class="text-[10px] font-semibold text-slate-200 truncate mt-0.5">QC Bench Test</div>
+            </div>
+          </div>
+
+          <!-- Quick Bench Tool Bar & Primary Repair/QC Action CTA -->
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-1">
+              <button id="quick-explode" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[10px] font-mono-tech text-slate-200 border border-slate-700 transition" title="Explode 3D Layers to 75%">
+                🔩 Explode 75%
+              </button>
+              <button id="quick-scan" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[10px] font-mono-tech text-amber-300 border border-slate-700 transition" title="Toggle Thermal IR / Power Bus Trace">
+                🌡️ Diagnostic Vision
+              </button>
+              <button id="quick-assemble" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[10px] font-mono-tech text-slate-200 border border-slate-700 transition" title="Reassemble to 0%">
+                🔧 Reassemble
+              </button>
+            </div>
+
+            <button
+              id="btn-primary-action"
+              class="flex-1 py-1.5 px-3 rounded-lg font-mono-tech text-xs font-bold transition flex items-center justify-center gap-1.5 bg-slate-800 text-slate-400 border border-slate-700 cursor-not-allowed"
+              disabled
+            >
+              <span id="primary-action-text">1. DISASSEMBLE TO ≥50% OR SCAN</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /***************************************************************************
+     * 1. SYNTHESIZED WEBAUDIO BENCH SOUND EFFECTS
+     ***************************************************************************/
+    class BenchAudio {
+      constructor() {
+        this.ctx = null;
+      }
+      init() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) this.ctx = new AudioCtx();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+      }
+      playBeep(freq = 880, dur = 0.08, type = 'sine') {
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + dur);
+      }
+      playRepairSuccess() {
+        this.playBeep(587.33, 0.09, 'triangle');
+        setTimeout(() => this.playBeep(880, 0.12, 'triangle'), 90);
+        setTimeout(() => this.playBeep(1174.66, 0.18, 'sine'), 190);
+      }
+    }
+    const sfx = new BenchAudio();
+
+    /***************************************************************************
+     * 2. SIX ENGINEERING WORK ORDERS ACROSS BOTH 3D TEARDOWNS
+     ***************************************************************************/
+    const WORK_ORDERS = [
+      {
+        id: 'wo-101',
+        code: 'WO #101',
+        device: 'mavic3',
+        deviceLabel: 'MAVIC 3 PRO',
+        title: '60A 4-in-1 ESC Phase MOSFET Thermal Runaway',
+        symptom: 'Rear-right motor stutters on spool-up with 94°C hotspot on power stage. Unscrew/explode to ≥50% (or enable Thermal IR), click [09] 60A 4-in-1 ESC Power Board, reflow the shorted MOSFETs, then verify hover RPM ≥45%.',
+        targetId: 'esc',
+        targetName: '[09] 60A 4-in-1 Sinusoidal ESC Power Board',
+        faultDmm: 'V_PHASE_B: 0.08V (SHORT) | T_IR: 94.2°C CRITICAL',
+        healthyDmm: 'V_PHASE_ABC: BALANCED 15.4V | T_IR: 44.0°C NOMINAL',
+        repairButtonLabel: '🔥 REFLOW 60A ESC MOSFETs & REPLACE SHUNT',
+        qcHintLabel: '⚡ SPOOL MOTORS TO ≥45% HOVER RPM (OR CLICK AUTO-QC)',
+        qcType: 'mavic_rpm',
+        reward: 350
+      },
+      {
+        id: 'wo-102',
+        code: 'WO #102',
+        device: 'mavic3',
+        deviceLabel: 'MAVIC 3 PRO',
+        title: 'Centrifugal Cooling Fan Seizure & SoC Overheat',
+        symptom: 'O3+ video feed drops frames after 3 minutes due to clogged 16-blade centrifugal fan impeller. Disassemble ≥50%, probe [20] Centrifugal Cooling Fan & Impeller, replace bearing & apply cryo paste, then run fan/motor test.',
+        targetId: 'cooling_fan',
+        targetName: '[20] Centrifugal Cooling Fan & 16-Blade Impeller',
+        faultDmm: 'FAN_TACH: 0 RPM (STALLED) | T_SOC: 88.6°C THROTTLING',
+        healthyDmm: 'FAN_TACH: 5,800 RPM | T_SOC: 51.2°C NOMINAL',
+        repairButtonLabel: '🌀 CLEAR IMPELLER & APPLY CRYO THERMAL PASTE',
+        qcHintLabel: '⚡ TEST COOLING AIRFLOW AT ≥40% RPM (OR CLICK AUTO-QC)',
+        qcType: 'mavic_rpm',
+        reward: 400
+      },
+      {
+        id: 'wo-103',
+        code: 'WO #103',
+        device: 'mavic3',
+        deviceLabel: 'MAVIC 3 PRO',
+        title: 'Gimbal Micro-Coax LVDS Signal Integrity Fault',
+        symptom: 'Hasselblad L2D-20c 4/3" CMOS reports intermittent MIPI CSI-2 CRC errors during pitch sweeps. Disassemble ≥50%, probe [19] Gimbal Micro-Coax LVDS Harness, reseat 36-pin micro-coax loom, and test f/2.8–f/11 iris.',
+        targetId: 'coax_harness',
+        targetName: '[19] Gimbal Micro-Coax LVDS & Power Harness',
+        faultDmm: 'LVDS_PAIR_3: OPEN CIRCUIT (∞ Ω) | EYE JITTER: 410ps',
+        healthyDmm: 'LVDS_DIFF: 100.0 Ω MATCHED | EYE JITTER: 18ps PASS',
+        repairButtonLabel: '🔌 REPLACE 36-PIN MICRO-COAX LVDS LOOM',
+        qcHintLabel: '📷 DEPLOY ARMS OR SWEEP IRIS APERTURE (OR CLICK AUTO-QC)',
+        qcType: 'mavic_cam',
+        reward: 450
+      },
+      {
+        id: 'wo-201',
+        code: 'WO #201',
+        device: 'fx991',
+        deviceLabel: 'FX-991ES PLUS',
+        title: 'Two-Way Power Schottky OR-ing Diode Breakdown',
+        symptom: 'Calculator resets whenever ambient light drops below 200 Lux because solar & LR44 rails fight each other. Explode ≥50% (or toggle Power Trace), probe [L06] Schottky OR-ing Diode, replace BAT54C, and test Lux slider.',
+        targetId: 'schottky',
+        targetName: 'L06 — SOT-23 Schottky OR-ing Diode & 10µF Cap',
+        faultDmm: 'V_DROP_D1: 0.01V (LEAKAGE) | V_DD: 0.92V BROWNOUT',
+        healthyDmm: 'V_DROP_D1: 0.19V SCHOTTKY | V_DD: 1.52V ROCK SOLID',
+        repairButtonLabel: '⚡ SOLDER NEW BAT54C SCHOTTKY & 10µF TANTALUM CAP',
+        qcHintLabel: '☀️ SWEEP AMBIENT LUX SLIDER OR PRESS ANY 3D KEY',
+        qcType: 'fx_power',
+        reward: 350
+      },
+      {
+        id: 'wo-202',
+        code: 'WO #202',
+        device: 'fx991',
+        deviceLabel: 'FX-991ES PLUS',
+        title: '96×31 Natural-V.P.A.M. LCD Zebra Strip Delamination',
+        symptom: 'Upper textbook fraction rows on the 96×31 dot-matrix display show missing pixel columns. Disassemble ≥50%, probe [L04] 96×31 STN LCD & Zebra Strip, thermally re-bond the elastomeric connector, and solve an integral.',
+        targetId: 'lcd',
+        targetName: 'L04 — 96×31 Natural-V.P.A.M. LCD & Zebra Strip',
+        faultDmm: 'SEG_COL_14..28: 4.8 MΩ (OPEN ZEBRA CARBON PITCH)',
+        healthyDmm: 'SEG_COL_01..96: 1.1 kΩ UNIFORM | 1/3-BIAS OK',
+        repairButtonLabel: '🔬 RE-ALIGN CARBON-SILICONE ZEBRA CONNECTOR',
+        qcHintLabel: '🧮 PRESS ANY 3D CALCULATOR KEY OR SOLVE INTEGRAL',
+        qcType: 'fx_key',
+        reward: 400
+      },
+      {
+        id: 'wo-203',
+        code: 'WO #203',
+        device: 'fx991',
+        deviceLabel: 'FX-991ES PLUS',
+        title: 'COB ASIC Wire-Bond & ESD Guard Ring Fault',
+        symptom: 'Static discharge on keypad caused KI4/KO2 matrix latch-up. Disassemble ≥50% and enable COB X-Ray, probe [L07] FR-4 Main PCB & COB ASIC (or [L08] ESD Guard Ring), bond new gold wire & test key scan.',
+        targetId: 'pcb',
+        targetName: 'L07 — FR-4 Main PCB & COB Wire-Bonded ASIC',
+        faultDmm: 'SCAN_KI4: STUCK LOW (0.04V) | ESD_SPARK_GAP: TRIPPED',
+        healthyDmm: 'SCAN_9x6: 32.768 kHz ACTIVE | I_SLEEP: 0.8µA PASS',
+        repairButtonLabel: '🧬 ULTRASONIC WEDGE-BOND 25µm GOLD DIE WIRE',
+        qcHintLabel: '🧮 CLICK ANY 3D KEYCAP TO VERIFY 9×6 MATRIX SCAN',
+        qcType: 'fx_key',
+        reward: 500
+      }
+    ];
+
+    /***************************************************************************
+     * 3. GAME STATE & PERSISTENCE
+     ***************************************************************************/
+    const STORAGE_KEY = 'xp_teardown_lab_save_v1';
+    let state = {
+      currentDevice: 'mavic3',
+      mode: 'campaign', // 'campaign' | 'sandbox'
+      activeMissionIndex: 0,
+      completedIds: [],
+      score: 0,
+      step1Disassembled: false,
+      step2Probed: false,
+      step3Repaired: false,
+      step4Verified: false,
+      lastSelectedPart: null,
+      currentExplode: 0
+    };
+
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+      if (saved && Array.isArray(saved.completedIds)) {
+        state.completedIds = saved.completedIds;
+        state.score = Number(saved.score) || 0;
+      }
+    } catch (_) {}
+
+    function saveProgress() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          completedIds: state.completedIds,
+          score: state.score
+        }));
+      } catch (_) {}
+    }
+
+    const iframeEl = document.getElementById('teardown-frame');
+
+    function sendCmdToIframe(cmdObj) {
+      if (iframeEl && iframeEl.contentWindow) {
+        iframeEl.contentWindow.postMessage({ type: 'teardown-cmd', ...cmdObj }, '*');
+      }
+    }
+
+    function getActiveMission() {
+      return WORK_ORDERS[state.activeMissionIndex] || WORK_ORDERS[0];
+    }
+
+    function getRankTitle(score, count) {
+      if (count >= 6 || score >= 2200) return 'PRINCIPAL ARCHITECT';
+      if (count >= 4 || score >= 1400) return 'SR. FORENSICS ENG';
+      if (count >= 2 || score >= 700) return 'BENCH SPECIALIST';
+      return 'JR. TECH';
+    }
+
+    /***************************************************************************
+     * 4. MISSION LIFECYCLE & UI RENDERING
+     ***************************************************************************/
+    function selectMission(index) {
+      state.activeMissionIndex = index;
+      const m = getActiveMission();
+      state.step1Disassembled = state.currentExplode >= 50;
+      state.step2Probed = false;
+      state.step3Repaired = false;
+      state.step4Verified = false;
+
+      // Switch device iframe if needed
+      if (state.currentDevice !== m.device) {
+        switchDevice(m.device, false);
+      } else {
+        setTimeout(() => {
+          sendCmdToIframe({ faultId: m.targetId });
+        }, 120);
+      }
+
+      renderHUD();
+    }
+
+    function switchDevice(device, autoPickMission = true) {
+      state.currentDevice = device;
+      state.lastSelectedPart = null;
+      state.currentExplode = 0;
+      const targetSrc = device === 'mavic3' ? './mavic3.html' : './fx991.html';
+      if (!iframeEl.getAttribute('src').includes(targetSrc)) {
+        iframeEl.src = targetSrc;
+      }
+
+      if (autoPickMission) {
+        const firstForDevice = WORK_ORDERS.findIndex(w => w.device === device && !state.completedIds.includes(w.id));
+        const fallbackForDevice = WORK_ORDERS.findIndex(w => w.device === device);
+        state.activeMissionIndex = firstForDevice !== -1 ? firstForDevice : fallbackForDevice;
+        state.step1Disassembled = false;
+        state.step2Probed = false;
+        state.step3Repaired = false;
+        state.step4Verified = false;
+      }
+
+      renderHUD();
+    }
+
+    iframeEl.addEventListener('load', () => {
+      const m = getActiveMission();
+      if (state.mode === 'campaign' && m.device === state.currentDevice && !state.step3Repaired) {
+        sendCmdToIframe({ faultId: m.targetId });
+      } else {
+        sendCmdToIframe({ faultId: null });
+      }
+    });
+
+    function renderHUD() {
+      const m = getActiveMission();
+      const isMavic = state.currentDevice === 'mavic3';
+
+      // Device Tabs
+      document.getElementById('tab-mavic3').className = `px-2.5 py-1 rounded-md text-xs font-semibold transition flex items-center gap-1.5 ${
+        isMavic ? 'bg-amber-500 text-slate-950 shadow' : 'text-slate-300 hover:text-white'
+      }`;
+      document.getElementById('tab-fx991').className = `px-2.5 py-1 rounded-md text-xs font-semibold transition flex items-center gap-1.5 ${
+        !isMavic ? 'bg-sky-400 text-slate-950 shadow' : 'text-slate-300 hover:text-white'
+      }`;
+
+      // Score & Rank
+      document.getElementById('score-readout').textContent = `${state.score} PTS`;
+      document.getElementById('tickets-readout').textContent = `${state.completedIds.length} / ${WORK_ORDERS.length}`;
+      document.getElementById('rank-readout').textContent = getRankTitle(state.score, state.completedIds.length);
+
+      // Mission Pills
+      const pillsEl = document.getElementById('mission-pills');
+      pillsEl.innerHTML = '';
+      WORK_ORDERS.forEach((wo, idx) => {
+        const done = state.completedIds.includes(wo.id);
+        const active = idx === state.activeMissionIndex;
+        const btn = document.createElement('button');
+        btn.className = `px-2 py-0.5 rounded text-[10px] font-mono-tech font-bold border transition flex items-center gap-1 ${
+          active
+            ? 'bg-sky-500/30 text-white border-sky-400'
+            : done
+            ? 'bg-emerald-950/60 text-emerald-300 border-emerald-600/40'
+            : 'bg-slate-900 text-slate-400 border-slate-800 hover:text-slate-200'
+        }`;
+        btn.innerHTML = `<span>${done ? '✓' : (wo.device === 'mavic3' ? '🚁' : '🖩')}</span><span>${wo.code}</span>`;
+        btn.addEventListener('click', () => {
+          sfx.playBeep(660, 0.05);
+          selectMission(idx);
+        });
+        pillsEl.appendChild(btn);
+      });
+
+      // Mission Details
+      document.getElementById('mission-device-badge').textContent = m.deviceLabel;
+      document.getElementById('mission-reward-badge').textContent = `+${m.reward} PTS`;
+      document.getElementById('mission-code').textContent = m.code;
+      document.getElementById('mission-title').textContent = m.title;
+      document.getElementById('mission-symptom').textContent = m.symptom;
+      document.getElementById('explode-readout-label').textContent = `${state.currentExplode}%`;
+
+      // DMM Readout
+      const dmmEl = document.getElementById('dmm-readout');
+      const dotEl = document.getElementById('probe-status-dot');
+      if (state.step3Repaired) {
+        dmmEl.textContent = m.healthyDmm;
+        dmmEl.className = 'font-mono-tech text-xs font-bold text-emerald-400';
+        dotEl.className = 'w-2 h-2 rounded-full bg-emerald-400';
+      } else if (state.step2Probed) {
+        dmmEl.textContent = `FAULT LOCKED: ${m.faultDmm}`;
+        dmmEl.className = 'font-mono-tech text-xs font-bold text-rose-400';
+        dotEl.className = 'w-2 h-2 rounded-full bg-rose-500 animate-ping';
+      } else {
+        dmmEl.textContent = `PROBING ${m.deviceLabel} | TARGET: ${m.code}`;
+        dmmEl.className = 'font-mono-tech text-xs font-bold text-amber-300';
+        dotEl.className = 'w-2 h-2 rounded-full bg-amber-400 animate-pulse';
+      }
+
+      // 4 Step Cards
+      const steps = [
+        { done: state.step1Disassembled, label: '1. Expose ≥50%' },
+        { done: state.step2Probed, label: '2. Probe Fault' },
+        { done: state.step3Repaired, label: '3. Bench Repair' },
+        { done: state.step4Verified, label: '4. Live QC Pass' }
+      ];
+      let activeIdx = steps.findIndex(s => !s.done);
+      if (activeIdx === -1) activeIdx = 3;
+
+      steps.forEach((st, i) => {
+        const card = document.getElementById(`step-card-${i + 1}`);
+        const icon = document.getElementById(`step-icon-${i + 1}`);
+        const lbl = document.getElementById(`step-label-${i + 1}`);
+        lbl.textContent = st.label;
+        card.className = 'p-1.5 rounded-lg border border-slate-800 bg-slate-900/70 transition';
+        if (st.done) {
+          card.classList.add('step-done');
+          icon.textContent = '✅';
+        } else if (i === activeIdx) {
+          card.classList.add('step-active');
+          icon.textContent = '👉';
+        } else {
+          icon.textContent = '⏳';
+        }
+      });
+
+      // Primary Action CTA Button
+      const primaryBtn = document.getElementById('btn-primary-action');
+      const primaryTxt = document.getElementById('primary-action-text');
+
+      if (!state.step1Disassembled) {
+        primaryBtn.disabled = false;
+        primaryBtn.className = 'flex-1 py-1.5 px-3 rounded-lg font-mono-tech text-xs font-bold transition flex items-center justify-center gap-1.5 bg-sky-500 hover:bg-sky-400 text-slate-950 shadow cta-pulse cursor-pointer';
+        primaryTxt.textContent = '🔩 STEP 1: UNSCREW & EXPLODE TO 70%';
+      } else if (!state.step2Probed) {
+        primaryBtn.disabled = false;
+        primaryBtn.className = 'flex-1 py-1.5 px-3 rounded-lg font-mono-tech text-xs font-bold transition flex items-center justify-center gap-1.5 bg-amber-500/90 hover:bg-amber-400 text-slate-950 shadow cursor-pointer';
+        primaryTxt.textContent = `🔍 CLICK ${m.targetName.split(' ')[0]} IN 3D (OR PROBE NOW)`;
+      } else if (!state.step3Repaired) {
+        primaryBtn.disabled = false;
+        primaryBtn.className = 'flex-1 py-1.5 px-3 rounded-lg font-mono-tech text-xs font-bold transition flex items-center justify-center gap-1.5 bg-rose-500 hover:bg-rose-400 text-white shadow cta-pulse cursor-pointer';
+        primaryTxt.textContent = m.repairButtonLabel;
+      } else if (!state.step4Verified) {
+        primaryBtn.disabled = false;
+        primaryBtn.className = 'flex-1 py-1.5 px-3 rounded-lg font-mono-tech text-xs font-bold transition flex items-center justify-center gap-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow cta-pulse cursor-pointer';
+        primaryTxt.textContent = m.qcHintLabel;
+      } else {
+        primaryBtn.disabled = false;
+        primaryBtn.className = 'flex-1 py-1.5 px-3 rounded-lg font-mono-tech text-xs font-bold transition flex items-center justify-center gap-1.5 bg-sky-400 hover:bg-sky-300 text-slate-950 shadow cursor-pointer';
+        primaryTxt.textContent = '🎉 WORK ORDER CERTIFIED — NEXT TICKET →';
+      }
+    }
+
+    /***************************************************************************
+     * 5. LISTEN TO 3D IFRAME TELEMETRY & SELECTION EVENTS
+     ***************************************************************************/
+    window.addEventListener('message', (e) => {
+      const d = e.data;
+      if (!d || typeof d.type !== 'string') return;
+      const m = getActiveMission();
+
+      if (d.type === 'teardown-select') {
+        state.lastSelectedPart = `${d.code || ''} ${d.name || d.id}`;
+        document.getElementById('inspected-part-label').textContent = state.lastSelectedPart;
+        if (typeof d.explode === 'number') {
+          state.currentExplode = d.explode;
+        }
+        if (state.currentExplode >= 45 || d.xray || d.thermal || d.busflow) {
+          state.step1Disassembled = true;
+        }
+        if (d.id === m.targetId && m.device === state.currentDevice) {
+          state.step1Disassembled = true;
+          if (!state.step2Probed) {
+            state.step2Probed = true;
+            sfx.playBeep(1046.5, 0.12, 'triangle');
+          }
+        }
+        renderHUD();
+      } else if (d.type === 'teardown-state') {
+        if (typeof d.explode === 'number') {
+          state.currentExplode = d.explode;
+        }
+        if (state.currentExplode >= 45 || d.xray || d.thermal || d.busflow) {
+          if (!state.step1Disassembled) {
+            state.step1Disassembled = true;
+            sfx.playBeep(784, 0.08);
+          }
+        }
+        // Check if Step 4 Live QC Verification is satisfied by user interacting inside 3D simulator
+        if (state.step3Repaired && !state.step4Verified && m.device === state.currentDevice) {
+          if (m.qcType === 'mavic_rpm' && d.rpm >= 40) {
+            completeWorkOrder();
+          } else if (m.qcType === 'mavic_cam' && (d.armsDeployed || d.aperture >= 4.0)) {
+            completeWorkOrder();
+          } else if (m.qcType === 'fx_power' && typeof d.lux === 'number') {
+            completeWorkOrder();
+          }
+        }
+        renderHUD();
+      } else if (d.type === 'teardown-key') {
+        if (state.step3Repaired && !state.step4Verified && m.device === 'fx991') {
+          completeWorkOrder();
+        }
+      }
+    });
+
+    function completeWorkOrder() {
+      const m = getActiveMission();
+      if (state.step4Verified) return;
+      state.step4Verified = true;
+      if (!state.completedIds.includes(m.id)) {
+        state.completedIds.push(m.id);
+        state.score += m.reward;
+      } else {
+        state.score += 100; // Repeat bench bonus
+      }
+      saveProgress();
+      sfx.playRepairSuccess();
+      renderHUD();
+    }
+
+    /***************************************************************************
+     * 6. BUTTON HANDLERS (PRIMARY ACTION, QUICK BENCH TOOLS & TABS)
+     ***************************************************************************/
+    document.getElementById('btn-primary-action').addEventListener('click', () => {
+      const m = getActiveMission();
+
+      if (!state.step1Disassembled) {
+        sfx.playBeep(660, 0.08);
+        state.step1Disassembled = true;
+        state.currentExplode = 75;
+        sendCmdToIframe({ explode: 75, faultId: m.targetId });
+        renderHUD();
+        return;
+      }
+
+      if (!state.step2Probed) {
+        sfx.playBeep(987.77, 0.1, 'triangle');
+        state.step2Probed = true;
+        sendCmdToIframe({ explode: Math.max(state.currentExplode, 70), selectId: m.targetId, faultId: m.targetId });
+        renderHUD();
+        return;
+      }
+
+      if (!state.step3Repaired) {
+        sfx.playRepairSuccess();
+        state.step3Repaired = true;
+        // Clear 3D red fault beacon upon component replacement/reflow
+        sendCmdToIframe({ faultId: null, selectId: m.targetId });
+        renderHUD();
+        return;
+      }
+
+      if (!state.step4Verified) {
+        // Trigger automated live bench QC sequence inside the 3D simulator!
+        if (m.device === 'mavic3') {
+          sendCmdToIframe({ explode: 0, deployArms: true, rpm: 58, aperture: 5.6, thermal: false, xray: false });
+        } else {
+          sendCmdToIframe({ explode: 0, lux: 820, expr: 'integral', xray: false, busflow: true });
+        }
+        completeWorkOrder();
+        return;
+      }
+
+      // Advance to next incomplete Work Order
+      const nextIncomplete = WORK_ORDERS.findIndex((wo, idx) => idx > state.activeMissionIndex && !state.completedIds.includes(wo.id));
+      const anyIncomplete = WORK_ORDERS.findIndex(wo => !state.completedIds.includes(wo.id));
+      const nextIdx = nextIncomplete !== -1 ? nextIncomplete : (anyIncomplete !== -1 ? anyIncomplete : (state.activeMissionIndex + 1) % WORK_ORDERS.length);
+      selectMission(nextIdx);
+    });
+
+    document.getElementById('btn-hint').addEventListener('click', () => {
+      const m = getActiveMission();
+      sfx.playBeep(880, 0.08);
+      state.step1Disassembled = true;
+      state.step2Probed = true;
+      sendCmdToIframe({
+        explode: 75,
+        selectId: m.targetId,
+        faultId: state.step3Repaired ? null : m.targetId
+      });
+      renderHUD();
+    });
+
+    document.getElementById('quick-explode').addEventListener('click', () => {
+      const m = getActiveMission();
+      sfx.playBeep(520, 0.06);
+      state.step1Disassembled = true;
+      state.currentExplode = 75;
+      sendCmdToIframe({ explode: 75, faultId: state.step3Repaired ? null : m.targetId });
+      renderHUD();
+    });
+
+    document.getElementById('quick-scan').addEventListener('click', () => {
+      sfx.playBeep(740, 0.07);
+      state.step1Disassembled = true;
+      if (state.currentDevice === 'mavic3') {
+        sendCmdToIframe({ thermal: true, explode: Math.max(state.currentExplode, 55) });
+      } else {
+        sendCmdToIframe({ busflow: true, xray: true, explode: Math.max(state.currentExplode, 60) });
+      }
+      renderHUD();
+    });
+
+    document.getElementById('quick-assemble').addEventListener('click', () => {
+      sfx.playBeep(440, 0.06);
+      state.currentExplode = 0;
+      sendCmdToIframe({ explode: 0, thermal: false, xray: false, busflow: false });
+      renderHUD();
+    });
+
+    document.getElementById('tab-mavic3').addEventListener('click', () => {
+      sfx.playBeep(600, 0.05);
+      switchDevice('mavic3', true);
+    });
+
+    document.getElementById('tab-fx991').addEventListener('click', () => {
+      sfx.playBeep(680, 0.05);
+      switchDevice('fx991', true);
+    });
+
+    const drawerEl = document.getElementById('mission-drawer');
+    const toggleHudBtn = document.getElementById('btn-toggle-hud');
+    const toggleHudLbl = document.getElementById('hud-toggle-label');
+    let hudVisible = true;
+
+    function setHudVisible(vis) {
+      hudVisible = vis;
+      drawerEl.style.display = hudVisible ? 'block' : 'none';
+      toggleHudLbl.textContent = hudVisible ? 'HIDE TICKET' : 'SHOW TICKET';
+    }
+
+    toggleHudBtn.addEventListener('click', () => {
+      setHudVisible(!hudVisible);
+    });
+
+    document.getElementById('mode-campaign').addEventListener('click', (e) => {
+      state.mode = 'campaign';
+      setHudVisible(true);
+      e.currentTarget.className = 'px-2.5 py-1 rounded-md text-[11px] font-mono-tech font-semibold bg-sky-500/25 text-sky-300 border border-sky-400/40';
+      document.getElementById('mode-sandbox').className = 'px-2.5 py-1 rounded-md text-[11px] font-mono-tech text-slate-400 hover:text-white';
+      const m = getActiveMission();
+      sendCmdToIframe({ faultId: state.step3Repaired ? null : m.targetId });
+    });
+
+    document.getElementById('mode-sandbox').addEventListener('click', (e) => {
+      state.mode = 'sandbox';
+      setHudVisible(false);
+      e.currentTarget.className = 'px-2.5 py-1 rounded-md text-[11px] font-mono-tech font-semibold bg-amber-500/25 text-amber-300 border border-amber-400/40';
+      document.getElementById('mode-campaign').className = 'px-2.5 py-1 rounded-md text-[11px] font-mono-tech text-slate-400 hover:text-white';
+      sendCmdToIframe({ faultId: null });
+    });
+
+    // Initialize HUD
+    renderHUD();
+  </script>
+</body>
+</html>

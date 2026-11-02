@@ -5,7 +5,6 @@ coverage/
 .DS_Store
 *.log
 *.zip
-public/assets/aistudio/
 .env*
 !.env.example
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 type WallpaperId = 'bliss' | 'luna' | 'teal' | 'autumn';
-type AccountMode = 'hospital' | 'cash' | 'outbreak';
+type AccountMode = 'hospital' | 'cash' | 'outbreak' | 'teardown';
 
 interface WinInstance {
   id: string;
@@ -18,7 +18,7 @@ interface WinInstance {
 
 interface AccountConfig {
   mode: AccountMode;
-  gameId: 'ward' | 'cash' | 'outbreak';
+  gameId: 'ward' | 'cash' | 'outbreak' | 'teardown';
   gameTitle: string;
   gameShortTitle: string;
   gameSub: string;
@@ -128,6 +128,36 @@ const ACCOUNT_CONFIGS: Record<AccountMode, AccountConfig> = {
       'Handle 15 distinct window types: close ordinary errors, cancel rogue installers, reject fake antivirus prompts, verify security codes, and end frozen tasks in Task Manager.',
       'Spend earned credits on Upgrades (Interns, Antivirus, RAM) that persist even if memory hits 100%.',
       'Complete all 4 recovery tasks in Security Center to disinfect and restart the computer.',
+    ],
+  },
+  teardown: {
+    mode: 'teardown',
+    gameId: 'teardown',
+    gameTitle: 'Hardware Teardown Lab (3D)',
+    gameShortTitle: 'Teardown Lab 3D',
+    gameSub: '3D Forensics & Repair',
+    gameIcon: '/assets/icon-36.ico',
+    windowTitle: 'BenchWorks XP — 3D Hardware Teardown & Forensics Lab',
+    accountLabel: 'Hardware Lab · 3D Teardown & Repair',
+    watermarkSub: 'Hardware Lab · Mavic 3 Pro (22-Part) & fx-991ES+ (12-Layer)',
+    notesFilename: 'Bench Notes.txt',
+    defaultNotes:
+      `=== BENCHWORKS XP — 3D HARDWARE TEARDOWN & REPAIR LAB ===\n` +
+      `Lead Forensics Engineer: Dr. Player\n` +
+      `Active Benches: DJI Mavic 3 Pro (22 Subsystems) & CTIFREE fx-991ES PLUS (12 Layers)\n\n` +
+      `1. Step 1 (Disassemble): Unscrew & explode the 3D assembly to >=50% or activate Thermal IR / Power Trace / X-Ray.\n` +
+      `2. Step 2 (Probe Fault): Click the pulsing faulty 3D subsystem in the viewport to lock onto the root cause.\n` +
+      `3. Step 3 (Bench Repair): Reflow MOSFETs, clear cooling impellers, re-bond LCD zebra strips, or solder Schottky diodes.\n` +
+      `4. Step 4 (Live QC Test): Spool drone motors, sweep camera aperture, adjust solar Lux, or press 3D calculator keys!\n`,
+    driveLabel: '3D CAD Schematics (D:)',
+    driveSub: 'Mavic 3 Pro (22-Part) & fx-991ES+ (12-Layer)',
+    helpTitle: 'Hardware Teardown Lab — 3D Forensics & Repair Guide',
+    helpIntro:
+      'Welcome to the Hardware Teardown Lab desktop. Double-click Hardware Teardown Lab (3D) on the desktop or select it from the Start menu to open the 3D repair bench.',
+    helpBullets: [
+      'Switch freely between the DJI Mavic 3 Pro (22 interactive 3D subsystems + Thermal IR + spinning fan & propellers) and the CTIFREE fx-991ES PLUS (12 hardware layers + live Natural-V.P.A.M. LCD & 50 clickable 3D keys).',
+      'Complete 6 Engineering Work Orders across both devices: unscrew & explode the 3D stack, probe the faulty component highlighted by the 3D beacon, execute precision bench repairs, and run live QC verification.',
+      'Toggle between Work Orders (Game Mode) and Free 3D Sandbox Mode anytime from the top bench bar.',
     ],
   },
 };
@@ -246,7 +276,7 @@ export default function App() {
   const openWindow = (id: string) => {
     // Prevent opening another account's game inside the current account's desktop
     const resolvedId =
-      id === 'ward' || id === 'cash' || id === 'outbreak' || id === 'deadline'
+      id === 'ward' || id === 'cash' || id === 'outbreak' || id === 'teardown' || id === 'deadline'
         ? activeAccount.gameId
         : id;
 
@@ -293,6 +323,16 @@ export default function App() {
         y: 20,
         width: Math.min(1120, vw - 110),
         height: Math.min(700, vh - 68),
+        minimized: false,
+        maximized: false,
+      },
+      teardown: {
+        title: ACCOUNT_CONFIGS.teardown.windowTitle,
+        icon: ACCOUNT_CONFIGS.teardown.gameIcon,
+        x: Math.max(105, Math.round((vw - Math.min(1220, vw - 115)) / 2)),
+        y: 12,
+        width: Math.min(1220, vw - 115),
+        height: Math.min(740, vh - 60),
         minimized: false,
         maximized: false,
       },
@@ -411,6 +451,8 @@ export default function App() {
       cmd.includes('hospital') ||
       cmd.includes('cash') ||
       cmd.includes('outbreak') ||
+      cmd.includes('teardown') ||
+      cmd.includes('bench') ||
       cmd.includes('game')
     ) {
       openWindow(activeAccount.gameId);
@@ -613,6 +655,23 @@ export default function App() {
                 </div>
                 <div className="xp-statusbar">
                   <span>Daily case and practice ward · Progress saved for {profile}</span>
+                </div>
+              </>
+            )}
+
+            {/* Hardware Teardown Lab 3D Game Window */}
+            {win.id === 'teardown' && accountMode === 'teardown' && (
+              <>
+                <div className="xp-window-body">
+                  <iframe
+                    title="BenchWorks XP — 3D Hardware Teardown & Forensics Lab"
+                    src={`/teardown/index.html?xpPlayer=${encodeURIComponent(profile)}`}
+                    style={{ width: '100%', height: '100%', border: 0, display: 'block' }}
+                    allow="autoplay; fullscreen"
+                  />
+                </div>
+                <div className="xp-statusbar">
+                  <span>DJI Mavic 3 Pro (22-Part) & CTIFREE fx-991ES PLUS (12-Layer) · Engineer: {profile}</span>
                 </div>
               </>
             )}
@@ -1274,6 +1333,20 @@ export default function App() {
                   <strong style={{ fontSize: '16px', display: 'block' }}>Virus Outbreak</strong>
                   <span style={{ fontSize: '12px', color: '#dbeafe' }}>
                     15 Desktop Challenges, Upgrades & System Recovery
+                  </span>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                className={`xp-account-tile ${accountMode === 'teardown' ? 'active' : ''}`}
+                onClick={() => handleLoginAccount('teardown')}
+              >
+                <img src="/assets/icon-36.ico" alt="" />
+                <div>
+                  <strong style={{ fontSize: '16px', display: 'block' }}>Hardware Teardown Lab (3D Repair)</strong>
+                  <span style={{ fontSize: '12px', color: '#dbeafe' }}>
+                    Mavic 3 Pro (22-Part) & fx-991ES+ (12-Layer) Forensics Game
                   </span>
                 </div>
               </button>
